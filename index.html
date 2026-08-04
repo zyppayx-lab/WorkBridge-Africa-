@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>🌍 WorkBridge Africa | Find Businesses & Jobs Across Africa</title>
+
+    <meta name="description"
+        content="Discover trusted businesses, explore job opportunities, and connect with professionals across Africa on WorkBridge Africa.">
+
+    <meta name="keywords"
+        content="Africa businesses, African jobs, business directory, jobs in Africa, companies, careers">
+
+    <meta name="author"
+        content="WorkBridge Africa">
+
+    <meta property="og:title"
+        content="🌍 WorkBridge Africa">
+
+    <meta property="og:description"
+        content="Find Businesses. Discover Jobs. Connect Across Africa.">
+
+    <meta property="og:type"
+        content="website">
+
+    <meta property="og:image"
+        content="assets/logo.png">
+
+    <meta property="og:url"
+        content="/">
+
+    <link rel="canonical"
+        href="/">
+
+    <link rel="stylesheet"
+        href="index.css">
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <script defer src="index.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+
+            🌍
+
+            <span>
+
+                WorkBridge Africa
+
+            </span>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+
+                <a href="businesses.html">
+
+                    Businesses
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="jobs.html">
+
+                    Jobs
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="about.html">
+
+                    About
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="contact.html">
+
+                    Contact
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <button
+            id="menuButton">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+    </nav>
+
+</header>
+
+<div
+    id="mobileMenu">
+
+    <a href="businesses.html">
+
+        Businesses
+
+    </a>
+
+    <a href="jobs.html">
+
+        Jobs
+
+    </a>
+
+    <a href="about.html">
+
+        About
+
+    </a>
+
+    <a href="contact.html">
+
+        Contact
+
+    </a>
+
+</div>
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="hero-badge">
+
+            🌍 Africa's Business & Career Network
+
+        </span>
+
+        <h1>
+
+            Discover Businesses,
+            Find Jobs,
+            Build Connections.
+
+        </h1>
+
+        <p>
+
+            WorkBridge Africa helps you discover trusted businesses,
+            explore employment opportunities,
+            and connect with companies across Africa from one powerful platform.
+
+        </p>
+
+        <form
+            id="searchForm"
+            class="search-box">
+
+            <div class="search-input">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Search businesses, services or jobs...">
+
+            </div>
+
+            <button
+                type="submit">
+
+                Search
+
+            </button>
+
+        </form>
+
+        <div class="quick-links">
+
+            <a href="businesses.html">
+
+                <i class="fa-solid fa-building"></i>
+
+                Browse Businesses
+
+            </a>
+
+            <a href="jobs.html">
+
+                <i class="fa-solid fa-briefcase"></i>
+
+                Browse Jobs
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <aside class="hero-side">
+
+        <article class="featured-highlight">
+
+            <span>
+
+                FEATURED TODAY
+
+            </span>
+
+            <h2>
+
+                Thousands of Businesses
+                and New Jobs Added Regularly
+
+            </h2>
+
+            <p>
+
+                Search by country,
+                state,
+                category,
+                company,
+                or profession.
+
+            </p>
+
+            <ul>
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Trusted Businesses
+
+                </li>
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Verified Listings
+
+                </li>
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Direct Contact Details
+
+                </li>
+
+                <li>
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                    Updated Job Opportunities
+
+                </li>
+
+            </ul>
+
+        </article>
+
+    </aside>
+
+</section>
+
+<section class="stats">
+
+    <div class="stat">
+
+        <h2 id="businessCount">
+
+            --
+
+        </h2>
+
+        <p>
+
+            Businesses Listed
+
+        </p>
+
+    </div>
+
+    <div class="stat">
+
+        <h2 id="jobCount">
+
+            --
+
+        </h2>
+
+        <p>
+
+            Active Jobs
+
+        </p>
+
+    </div>
+
+    <div class="stat">
+
+        <h2 id="countryCount">
+
+            54
+
+        </h2>
+
+        <p>
+
+            African Countries
+
+        </p>
+
+    </div>
+
+    <div class="stat">
+
+        <h2>
+
+            24/7
+
+        </h2>
+
+        <p>
+
+            Platform Availability
+
+        </p>
+
+    </div>
+
+</section>
+
+<section class="section-heading">
+
+    <span>
+
+        Discover
+
+    </span>
+
+    <h2>
+
+        Featured Businesses
+
+    </h2>
+
+    <p>
+
+        Explore verified and recently featured businesses from different industries across Africa.
+
+    </p>
+
+</section>
+
+<section
+    id="featuredBusinesses"
+    class="business-grid">
+
+    <!-- Loaded dynamically by index.js -->
+
+</section>
+<!-- ===================================== -->
+<!-- LATEST JOBS -->
+<!-- ===================================== -->
+
+<section class="section-heading">
+
+    <span>
+
+        Careers
+
+    </span>
+
+    <h2>
+
+        Latest Job Opportunities
+
+    </h2>
+
+    <p>
+
+        Browse recently published jobs from businesses
+        across Africa.
+
+    </p>
+
+</section>
+
+<section
+    id="latestJobs"
+    class="jobs-grid">
+
+    <!-- Rendered by index.js -->
+
+</section>
+
+<!-- ===================================== -->
+<!-- BROWSE CATEGORIES -->
+<!-- ===================================== -->
+
+<section class="categories-section">
+
+    <div class="section-heading">
+
+        <span>
+
+            Explore
+
+        </span>
+
+        <h2>
+
+            Browse Popular Categories
+
+        </h2>
+
+        <p>
+
+            Discover businesses by industry.
+
+        </p>
+
+    </div>
+
+    <div
+        id="categoriesGrid"
+        class="categories-grid">
+
+        <!-- Generated from businesses.categories -->
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- BROWSE COUNTRIES -->
+<!-- ===================================== -->
+
+<section class="countries-section">
+
+    <div class="section-heading">
+
+        <span>
+
+            Locations
+
+        </span>
+
+        <h2>
+
+            Browse African Countries
+
+        </h2>
+
+    </div>
+
+    <div
+        id="countriesGrid"
+        class="country-grid">
+
+        <!-- Generated dynamically -->
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- WHY WORKBRIDGE -->
+<!-- ===================================== -->
+
+<section class="why-section">
+
+    <div class="section-heading">
+
+        <span>
+
+            Why Choose Us
+
+        </span>
+
+        <h2>
+
+            Built For Africa
+
+        </h2>
+
+        <p>
+
+            One platform for businesses,
+            professionals,
+            customers
+            and employers.
+
+        </p>
+
+    </div>
+
+    <div class="features">
+
+        <article>
+
+            <i class="fa-solid fa-building"></i>
+
+            <h3>
+
+                Business Directory
+
+            </h3>
+
+            <p>
+
+                Discover verified businesses
+                from different industries.
+
+            </p>
+
+        </article>
+
+        <article>
+
+            <i class="fa-solid fa-briefcase"></i>
+
+            <h3>
+
+                Job Discovery
+
+            </h3>
+
+            <p>
+
+                Find jobs directly from employers.
+
+            </p>
+
+        </article>
+
+        <article>
+
+            <i class="fa-solid fa-phone"></i>
+
+            <h3>
+
+                Direct Contact
+
+            </h3>
+
+            <p>
+
+                Contact businesses instantly
+                using their published phone,
+                WhatsApp or email.
+
+            </p>
+
+        </article>
+
+        <article>
+
+            <i class="fa-solid fa-earth-africa"></i>
+
+            <h3>
+
+                Across Africa
+
+            </h3>
+
+            <p>
+
+                Search opportunities across
+                African countries,
+                states
+                and cities.
+
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- LATEST BUSINESSES -->
+<!-- ===================================== -->
+
+<section class="latest-businesses">
+
+    <div class="section-heading">
+
+        <span>
+
+            Recently Added
+
+        </span>
+
+        <h2>
+
+            New Businesses
+
+        </h2>
+
+        <p>
+
+            Fresh businesses joining
+            WorkBridge Africa.
+
+        </p>
+
+    </div>
+
+    <div
+        id="recentBusinesses"
+        class="business-grid">
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- BLOG STYLE INFO -->
+<!-- ===================================== -->
+
+<section class="editorial">
+
+    <article>
+
+        <h2>
+
+            Helping African Businesses
+            Reach More Customers
+
+        </h2>
+
+        <p>
+
+            WorkBridge Africa is designed to make businesses
+            easier to discover while helping people
+            find trusted services and genuine employment
+            opportunities.
+
+            Whether you're looking for a plumber,
+            a photographer,
+            a restaurant,
+            a software developer
+            or your next career opportunity,
+            everything starts with a simple search.
+
+        </p>
+
+        <p>
+
+            Businesses can publish detailed profiles,
+            while job seekers can browse opportunities
+            posted directly by employers.
+
+            Every listing contains direct contact
+            information,
+            making communication quick and transparent.
+
+        </p>
+
+    </article>
+
+</section>
+<!-- ===================================== -->
+<!-- BUSINESS OWNER CTA -->
+<!-- ===================================== -->
+
+<section class="business-cta">
+
+    <div class="cta-content">
+
+        <span>
+
+            Own a Business?
+
+        </span>
+
+        <h2>
+
+            Reach More Customers Across Africa
+
+        </h2>
+
+        <p>
+
+            List your business on WorkBridge Africa and
+            make it easier for customers to discover your
+            services. You can also publish job vacancies,
+            update your business profile, and grow your
+            visibility from one dashboard.
+
+        </p>
+
+        <a
+            href="signup.html?role=business"
+            class="cta-button">
+
+            List Your Business
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- NEWSLETTER -->
+<!-- ===================================== -->
+
+<section class="newsletter">
+
+    <div class="newsletter-content">
+
+        <h2>
+
+            Stay Updated
+
+        </h2>
+
+        <p>
+
+            Receive updates about newly listed businesses,
+            job opportunities and important platform news.
+
+        </p>
+
+        <form id="newsletterForm">
+
+            <input
+                type="email"
+                placeholder="Enter your email address">
+
+            <button type="submit">
+
+                Subscribe
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <h2>
+
+                🌍 WorkBridge Africa
+
+            </h2>
+
+            <p>
+
+                Connecting businesses,
+                professionals and opportunities
+                across Africa.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <div>
+
+                <h3>
+
+                    Discover
+
+                </h3>
+
+                <a href="businesses.html">
+
+                    Businesses
+
+                </a>
+
+                <a href="jobs.html">
+
+                    Jobs
+
+                </a>
+
+                <a href="about.html">
+
+                    About
+
+                </a>
+
+                <a href="contact.html">
+
+                    Contact
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Business
+
+                </h3>
+
+                <a href="signup.html?role=business">
+
+                    List Your Business
+
+                </a>
+
+                <a href="login.html">
+
+                    Business Login
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Legal
+
+                </h3>
+
+                <a href="privacy.html">
+
+                    Privacy Policy
+
+                </a>
+
+                <a href="terms.html">
+
+                    Terms & Conditions
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+
+            © 2026 WorkBridge Africa. All rights reserved.
+
+        </p>
+
+        <div class="social-links">
+
+            <a href="#" aria-label="Facebook">
+
+                <i class="fab fa-facebook-f"></i>
+
+            </a>
+
+            <a href="#" aria-label="Instagram">
+
+                <i class="fab fa-instagram"></i>
+
+            </a>
+
+            <a href="#" aria-label="X">
+
+                <i class="fab fa-x-twitter"></i>
+
+            </a>
+
+            <a href="#" aria-label="LinkedIn">
+
+                <i class="fab fa-linkedin-in"></i>
+
+            </a>
+
+            <a href="#" aria-label="YouTube">
+
+                <i class="fab fa-youtube"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+
+  </html>
