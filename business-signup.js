@@ -454,64 +454,151 @@ async function registerBusiness(data){
         data.address,
 
 
-        phone:
-
-        data.phone,
-
-
-        whatsapp:
-
-        data.whatsapp,
+//======================================================
+// WorkBridge Africa 🌍
+// business-signup.js
+// Supabase Auth v2
+// Part 2 (Updated)
+//======================================================
 
 
-        telegram:
+//==============================
+// REGISTER BUSINESS
+//==============================
 
-        data.telegram,
+async function registerBusiness(data){
 
+    // Create Auth account
+    const {
 
-        email:
+        data: authData,
 
-        data.email,
+        error: authError
 
+    } = await client.auth.signUp({
 
-        website:
+        email: data.email,
 
-        data.website,
-
-
-        facebook:
-
-        data.facebook,
-
-
-        instagram:
-
-        data.instagram,
-
-
-        x:
-
-        data.x,
-
-
-        logo_url:
-
-        logoUrl,
-
-
-        country:
-
-        data.country,
-
-
-        verified:false,
-
-
-        status:"active"
-
+        password: data.password
 
     });
 
+
+    if(authError){
+
+        throw authError;
+
+    }
+
+
+    let user = authData.user;
+
+
+    if(!user){
+
+        throw new Error(
+            "Unable to create account."
+        );
+
+    }
+
+
+    // Ensure we have an authenticated session
+    if(!authData.session){
+
+        const {
+
+            data: loginData,
+
+            error: loginError
+
+        } = await client.auth.signInWithPassword({
+
+            email: data.email,
+
+            password: data.password
+
+        });
+
+
+        if(loginError){
+
+            throw loginError;
+
+        }
+
+
+        user = loginData.user;
+
+    }
+
+
+    // Upload logo
+    let logoUrl = null;
+
+    if(data.logo){
+
+        logoUrl = await uploadLogo(
+
+            user.id,
+
+            data.logo
+
+        );
+
+    }
+
+
+    // Create business profile
+    const {
+
+        error: profileError
+
+    } = await client
+
+    .from("businesses")
+
+    .insert({
+
+        owner_id: user.id,
+
+        business_name: data.business_name,
+
+        description: data.description,
+
+        categories: data.categories,
+
+        state: data.state,
+
+        lga: data.lga,
+
+        address: data.address,
+
+        phone: data.phone,
+
+        whatsapp: data.whatsapp,
+
+        telegram: data.telegram,
+
+        email: data.email,
+
+        website: data.website,
+
+        facebook: data.facebook,
+
+        instagram: data.instagram,
+
+        x: data.x,
+
+        logo_url: logoUrl,
+
+        country: data.country,
+
+        verified: false,
+
+        status: "active"
+
+    });
 
 
     if(profileError){
@@ -519,7 +606,6 @@ async function registerBusiness(data){
         throw profileError;
 
     }
-
 
 
     showMessage(
@@ -531,21 +617,16 @@ async function registerBusiness(data){
     );
 
 
-
-    // Give database time to finish
-
     setTimeout(()=>{
-
 
         window.location.href =
 
         "businessdashboard.html";
 
-
     },1200);
 
-
-}
+        }
+        
 //======================================================
 // WorkBridge Africa 🌍
 // business-signup.js
