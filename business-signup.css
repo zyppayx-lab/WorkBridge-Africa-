@@ -1,0 +1,749 @@
+/*=========================================================
+    WorkBridge Africa 🌍
+    business-signup.css
+    Part 1
+=========================================================*/
+
+:root{
+
+    --primary:#166534;
+    --primary-light:#22c55e;
+    --dark:#0f172a;
+    --text:#475569;
+    --white:#ffffff;
+    --background:#f8fafc;
+    --border:#e2e8f0;
+    --shadow:0 15px 40px rgba(15,23,42,.08);
+    --radius:24px;
+    --container:1200px;
+
+}
+
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    line-height:1.7;
+
+}
+
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+
+input,
+textarea,
+button{
+
+    font-family:inherit;
+
+}
+
+
+textarea{
+
+    resize:vertical;
+
+}
+
+
+/*=========================================================
+    HEADER
+=========================================================*/
+
+
+.header{
+
+    background:#fff;
+
+    border-bottom:1px solid var(--border);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+
+.navbar{
+
+    width:min(var(--container),92%);
+
+    height:80px;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:1.4rem;
+
+    font-weight:800;
+
+    color:var(--dark);
+
+}
+
+
+.nav-actions a{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    padding:12px 20px;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}
+
+
+.nav-actions a:hover{
+
+    background:#ecfdf5;
+
+}
+
+
+
+/*=========================================================
+    MAIN CONTAINER
+=========================================================*/
+
+
+.signup-container{
+
+    width:min(var(--container),92%);
+
+    margin:70px auto;
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:60px;
+
+    align-items:start;
+
+}
+
+
+
+/*=========================================================
+    INTRO SECTION
+=========================================================*/
+
+
+.signup-intro{
+
+    padding-top:40px;
+
+}
+
+
+.signup-intro h1{
+
+    font-family:'Poppins',sans-serif;
+
+    font-size:3rem;
+
+    line-height:1.25;
+
+    color:var(--dark);
+
+    margin-bottom:22px;
+
+}
+
+
+.signup-intro h1 span{
+
+    color:var(--primary);
+
+}
+
+
+.signup-intro p{
+
+    font-size:1.1rem;
+
+    color:#64748b;
+
+    max-width:500px;
+
+    margin-bottom:35px;
+
+}
+
+
+
+.benefits{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+
+.benefits div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    font-weight:600;
+
+    color:var(--dark);
+
+}
+
+
+.benefits i{
+
+    width:34px;
+
+    height:34px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#dcfce7;
+
+    color:#166534;
+
+    font-style:normal;
+
+    font-weight:800;
+
+}
+/*=========================================================
+    SIGNUP CARD
+=========================================================*/
+
+
+.signup-card{
+
+    background:#fff;
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:40px;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.signup-card h2{
+
+    font-family:'Poppins',sans-serif;
+
+    color:var(--dark);
+
+    font-size:2rem;
+
+    margin-bottom:10px;
+
+}
+
+
+.form-note{
+
+    background:#ecfdf5;
+
+    color:#166534;
+
+    padding:14px 18px;
+
+    border-radius:14px;
+
+    font-size:.92rem;
+
+    margin-bottom:30px;
+
+}
+
+
+
+/*=========================================================
+    FORM
+=========================================================*/
+
+
+#businessSignupForm{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+
+.form-row{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+
+.form-group label{
+
+    color:var(--dark);
+
+    font-weight:700;
+
+    font-size:.95rem;
+
+}
+
+
+.form-group input,
+
+.form-group textarea{
+
+    width:100%;
+
+    border:1px solid var(--border);
+
+    background:#fff;
+
+    border-radius:14px;
+
+    padding:15px 16px;
+
+    font-size:1rem;
+
+    color:var(--dark);
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+
+.form-group input:focus,
+
+.form-group textarea:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 4px rgba(34,197,94,.12);
+
+}
+
+
+
+/*=========================================================
+    FILE INPUT
+=========================================================*/
+
+
+input[type="file"]{
+
+    padding:12px;
+
+    background:#f8fafc;
+
+    cursor:pointer;
+
+}
+
+
+input[type="file"]::file-selector-button{
+
+    border:none;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    margin-right:12px;
+
+    cursor:pointer;
+
+}
+
+
+
+/*=========================================================
+    CHECKBOX
+=========================================================*/
+
+
+.terms-box{
+
+    margin-top:10px;
+
+}
+
+
+.checkbox{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:flex-start;
+
+    color:#64748b;
+
+    font-size:.9rem;
+
+    cursor:pointer;
+
+}
+
+
+.checkbox input{
+
+    width:18px;
+
+    height:18px;
+
+    margin-top:4px;
+
+    accent-color:var(--primary);
+
+}
+
+
+
+/*=========================================================
+    BUTTON
+=========================================================*/
+
+
+.submit-button{
+
+    width:100%;
+
+    height:58px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-size:1.05rem;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+
+.submit-button:hover{
+
+    background:#14532d;
+
+    transform:translateY(-2px);
+
+}
+
+
+.submit-button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+
+
+/*=========================================================
+    MESSAGE
+=========================================================*/
+
+
+.message{
+
+    text-align:center;
+
+    margin-top:10px;
+
+    font-weight:600;
+
+}
+
+
+.message.success{
+
+    color:#166534;
+
+}
+
+
+.message.error{
+
+    color:#dc2626;
+
+}
+
+
+
+/*=========================================================
+    FOOTER
+=========================================================*/
+
+
+footer{
+
+    margin-top:80px;
+
+    background:#0f172a;
+
+    color:#cbd5e1;
+
+    text-align:center;
+
+    padding:30px 20px;
+
+}
+
+
+footer p{
+
+    font-size:.95rem;
+
+}
+/*=========================================================
+    RESPONSIVE DESIGN
+=========================================================*/
+
+
+@media(max-width:1000px){
+
+    .signup-container{
+
+        grid-template-columns:1fr;
+
+        gap:40px;
+
+        margin-top:40px;
+
+    }
+
+
+    .signup-intro{
+
+        padding-top:0;
+
+        text-align:center;
+
+    }
+
+
+    .signup-intro p{
+
+        margin-left:auto;
+
+        margin-right:auto;
+
+    }
+
+
+    .benefits{
+
+        align-items:center;
+
+    }
+
+}
+
+
+
+@media(max-width:700px){
+
+
+    .navbar{
+
+        height:70px;
+
+    }
+
+
+    .logo{
+
+        font-size:1.15rem;
+
+    }
+
+
+    .nav-actions a{
+
+        padding:10px 14px;
+
+        font-size:.9rem;
+
+    }
+
+
+
+    .signup-intro h1{
+
+        font-size:2.1rem;
+
+    }
+
+
+
+    .signup-card{
+
+        padding:25px 20px;
+
+        border-radius:20px;
+
+    }
+
+
+
+    .signup-card h2{
+
+        font-size:1.6rem;
+
+    }
+
+
+
+    .form-row{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+
+    .form-group input,
+
+    .form-group textarea{
+
+        padding:14px;
+
+    }
+
+
+
+    .submit-button{
+
+        height:54px;
+
+    }
+
+}
+
+
+
+@media(max-width:420px){
+
+
+    .signup-container{
+
+        width:94%;
+
+    }
+
+
+    .signup-intro h1{
+
+        font-size:1.8rem;
+
+    }
+
+
+    .benefits div{
+
+        font-size:.9rem;
+
+    }
+
+
+    .nav-actions a{
+
+        font-size:.8rem;
+
+    }
+
+  }
