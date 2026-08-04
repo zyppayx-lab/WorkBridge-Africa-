@@ -7,23 +7,14 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Business Registration | 🌍 WorkBridge Africa</title>
+<title>Create Business Account | WorkBridge Africa</title>
 
 <meta name="description"
-content="Register your business on WorkBridge Africa and connect with job seekers across Africa.">
-
-<meta name="keywords"
-content="register business, Africa jobs, business directory, WorkBridge Africa">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+content="Create a business account on WorkBridge Africa and connect with job seekers across Africa.">
 
 <link rel="stylesheet" href="business-signup.css">
 
-<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script defer src="business-signup.js"></script>
 
@@ -33,104 +24,54 @@ content="register business, Africa jobs, business directory, WorkBridge Africa">
 <body>
 
 
-<header class="header">
+<header class="site-header">
 
-<nav class="navbar">
+    <a href="index.html" class="logo">
+        🌍 WorkBridge Africa
+    </a>
 
-
-<a href="index.html" class="logo">
-
-🌍
-
-<span>
-
-WorkBridge Africa
-
-</span>
-
-</a>
-
-
-<div class="nav-actions">
-
-<a href="business-login.html">
-
-Already have an account?
-
-Login
-
-</a>
-
-</div>
-
-
-</nav>
+    <a href="business-login.html" class="login-link">
+        Already have an account?
+    </a>
 
 </header>
 
 
 
-<main>
+<main class="signup-page">
 
 
-<section class="signup-container">
+<section class="signup-wrapper">
 
 
-<div class="signup-intro">
+<div class="signup-info">
 
 
 <h1>
-
-Register Your Business on
-
-<span>
-
-WorkBridge Africa 🌍
-
-</span>
-
+Create your business profile
 </h1>
 
 
 <p>
-
-Create your business profile, post job opportunities,
-and connect directly with job seekers across Africa.
-
+Join WorkBridge Africa and publish job opportunities while allowing job seekers to discover your business.
 </p>
 
 
-<div class="benefits">
+<ul>
 
+<li>
+✓ No account required for job seekers
+</li>
 
-<div>
+<li>
+✓ Direct contact with applicants
+</li>
 
-<i>✓</i>
+<li>
+✓ Verified business profiles
+</li>
 
-Get discovered by job seekers
-
-</div>
-
-
-<div>
-
-<i>✓</i>
-
-Post job opportunities easily
-
-</div>
-
-
-<div>
-
-<i>✓</i>
-
-Build trust with verification badges
-
-</div>
-
-
-</div>
+</ul>
 
 
 </div>
@@ -141,475 +82,289 @@ Build trust with verification badges
 
 
 <h2>
-
-Create Business Account
-
+Business Registration
 </h2>
-
-
-<p class="form-note">
-
-No email verification required. You can access your business dashboard immediately after registration.
-
-</p>
-
 
 
 <form id="businessSignupForm">
 
 
-<div class="form-group">
+
+<div class="field">
 
 <label>
-
 Business Name
-
 </label>
 
 <input
-
-type="text"
-
 id="businessName"
-
-placeholder="Enter business name"
-
+type="text"
+placeholder="Business name"
 required>
 
 </div>
 
 
-<div class="form-row">
 
-
-<div class="form-group">
+<div class="field">
 
 <label>
-
 Email
-
 </label>
 
 <input
-
-type="email"
-
 id="email"
-
+type="email"
 placeholder="Business email"
-
 required>
 
 </div>
 
 
-<div class="form-group">
+
+<div class="field">
 
 <label>
-
 Password
-
 </label>
 
 <input
-
-type="password"
-
 id="password"
-
+type="password"
 placeholder="Create password"
-
+min="6"
 required>
 
 </div>
 
 
-</div>
 
-
-<div class="form-row">
-
-
-<div class="form-group">
+<div class="field">
 
 <label>
-
 Phone Number
-
 </label>
 
 <input
-
-type="tel"
-
 id="phone"
-
-placeholder="Business phone number"
-
+type="tel"
+placeholder="Phone number"
 required>
 
 </div>
 
 
-<div class="form-group">
+
+<div class="field">
 
 <label>
-
 WhatsApp Number
-
 </label>
 
 <input
-
-type="tel"
-
 id="whatsapp"
-
+type="tel"
 placeholder="WhatsApp number">
 
 </div>
-
-
-</div>
-
-
-<div class="form-row">
-
-
-<div class="form-group">
+<div class="field">
 
 <label>
-
 Country
-
 </label>
 
 <input
-
-type="text"
-
 id="country"
-
+type="text"
 placeholder="Country"
-
 required>
 
 </div>
 
 
-<div class="form-group">
+
+<div class="field">
 
 <label>
-
 State
-
 </label>
 
 <input
-
-type="text"
-
 id="state"
-
+type="text"
 placeholder="State"
-
 required>
 
 </div>
 
 
-</div>
 
-
-<div class="form-group">
+<div class="field">
 
 <label>
-
 LGA / City
-
 </label>
 
 <input
-
-type="text"
-
 id="lga"
-
-placeholder="Local government area or city"
-
-required>
-
-</div>
-<div class="form-group">
-
-<label>
-
-Business Address
-
-</label>
-
-<textarea
-
-id="address"
-
-rows="4"
-
-placeholder="Enter your business address"
-
-required></textarea>
-
-</div>
-
-
-
-<div class="form-group">
-
-<label>
-
-Business Category
-
-</label>
-
-
-<input
-
 type="text"
-
-id="categories"
-
-placeholder="Example: Construction, Restaurant, Technology"
-
+placeholder="Local government area or city"
 required>
 
-
 </div>
 
 
 
-<div class="form-group">
+<div class="field">
 
 <label>
-
-Business Description
-
+Business Address
 </label>
-
 
 <textarea
-
-id="description"
-
-rows="5"
-
-placeholder="Tell customers and job seekers about your business"
-
+id="address"
+rows="3"
+placeholder="Business address"
 required></textarea>
-
 
 </div>
 
 
 
-<div class="form-group">
-
+<div class="field">
 
 <label>
-
-Business Logo
-
+Business Category
 </label>
 
+<input
+id="categories"
+type="text"
+placeholder="Example: Construction, Retail, Technology"
+required>
+
+</div>
+
+
+
+<div class="field">
+
+<label>
+Business Description
+</label>
+
+<textarea
+id="description"
+rows="5"
+placeholder="Describe your business"
+required></textarea>
+
+</div>
+
+
+
+<div class="field">
+
+<label>
+Business Logo
+</label>
 
 <input
-
-type="file"
-
 id="logo"
-
+type="file"
 accept="image/*">
 
-
 </div>
 
 
 
-<div class="form-group">
-
+<div class="field">
 
 <label>
-
-Website (Optional)
-
+Website (optional)
 </label>
 
-
 <input
-
-type="url"
-
 id="website"
-
+type="url"
 placeholder="https://example.com">
 
-
 </div>
 
 
 
-<div class="form-row">
-
-
-<div class="form-group">
-
+<div class="field">
 
 <label>
-
-Facebook (Optional)
-
+Facebook (optional)
 </label>
 
-
 <input
-
-type="url"
-
 id="facebook"
-
-placeholder="Facebook page link">
-
+type="url"
+placeholder="Facebook page URL">
 
 </div>
 
 
 
-<div class="form-group">
-
+<div class="field">
 
 <label>
-
-Instagram (Optional)
-
+Instagram (optional)
 </label>
 
-
 <input
-
-type="url"
-
 id="instagram"
-
-placeholder="Instagram profile link">
-
-
-</div>
-
-
-</div>
-
-
-
-<div class="form-row">
-
-
-<div class="form-group">
-
-
-<label>
-
-X / Twitter (Optional)
-
-</label>
-
-
-<input
-
 type="url"
-
-id="x"
-
-placeholder="X profile link">
-
+placeholder="Instagram profile URL">
 
 </div>
 
 
 
-<div class="form-group">
-
+<div class="field">
 
 <label>
-
-Telegram (Optional)
-
+X / Twitter (optional)
 </label>
 
+<input
+id="x"
+type="url"
+placeholder="X profile URL">
+
+</div>
+
+
+
+<div class="field">
+
+<label>
+Telegram (optional)
+</label>
 
 <input
-
-type="text"
-
 id="telegram"
-
+type="text"
 placeholder="Telegram username">
-
-</div>
-
-
-</div>
-
-
-
-<div class="terms-box">
-
-
-<label class="checkbox">
-
-
-<input
-
-type="checkbox"
-
-id="agree"
-
-required>
-
-
-<span>
-
-I agree that my business information can be displayed publicly on WorkBridge Africa 🌍.
-
-</span>
-
-
-</label>
-
 
 </div>
 
 
 
 <button
-
 type="submit"
-
-class="submit-button"
-
 id="signupButton">
 
-
 Create Business Account
-
 
 </button>
 
 
 
 <p
-
-id="signupMessage"
-
-class="message">
-
+id="signupMessage">
 </p>
 
 
@@ -629,15 +384,9 @@ class="message">
 
 <footer>
 
-
 <p>
-
-© <span id="currentYear"></span>
-
-WorkBridge Africa 🌍. All Rights Reserved.
-
+© <span id="year"></span> WorkBridge Africa
 </p>
-
 
 </footer>
 
@@ -645,4 +394,4 @@ WorkBridge Africa 🌍. All Rights Reserved.
 
 </body>
 
-</html>
+  </html>
