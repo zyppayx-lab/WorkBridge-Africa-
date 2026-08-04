@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Jobs in Africa | 🌍 WorkBridge Africa</title>
+
+<meta name="description"
+content="Find verified jobs across Africa. Browse jobs from trusted businesses and contact employers directly by phone, WhatsApp or email.">
+
+<meta name="keywords"
+content="Jobs Africa,Nigeria jobs,Ghana jobs,Kenya jobs,Remote jobs,Vacancies,Employment,Careers">
+
+<meta property="og:type"
+content="website">
+
+<meta property="og:title"
+content="Jobs | 🌍 WorkBridge Africa">
+
+<meta property="og:description"
+content="Find jobs from trusted African businesses.">
+
+<meta property="og:image"
+content="assets/jobs-cover.jpg">
+
+<meta property="og:url"
+content="jobs.html">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet"
+href="jobs.css">
+
+<script defer
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script defer
+src="jobs.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<nav class="navbar">
+
+<a href="index.html"
+class="logo">
+
+🌍
+
+<span>
+
+WorkBridge Africa
+
+</span>
+
+</a>
+
+<ul class="nav-links">
+
+<li>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a href="businesses.html">
+
+Businesses
+
+</a>
+
+</li>
+
+<li>
+
+<a class="active"
+href="jobs.html">
+
+Jobs
+
+</a>
+
+</li>
+
+<li>
+
+<a href="about.html">
+
+About
+
+</a>
+
+</li>
+
+<li>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</li>
+
+</ul>
+
+<button id="menuButton">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
+</nav>
+
+</header>
+
+<div id="mobileMenu">
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="businesses.html">
+
+Businesses
+
+</a>
+
+<a href="jobs.html">
+
+Jobs
+
+</a>
+
+<a href="about.html">
+
+About
+
+</a>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</div>
+
+<main>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<span class="hero-tag">
+
+🌍 African Job Directory
+
+</span>
+
+<h1>
+
+Find Jobs Across Africa From Trusted Businesses
+
+</h1>
+
+<p>
+
+Browse verified job opportunities from companies and local businesses.
+Contact employers directly using the phone number, WhatsApp or email
+provided in each listing—no job seeker account required.
+
+</p>
+
+<form
+id="searchForm"
+class="search-box">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Job title, keyword or company...">
+
+<button type="submit">
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+Search Jobs
+
+</button>
+
+</form>
+
+</div>
+
+</section>
+
+<section class="filter-section">
+
+<div class="filters">
+
+<select id="countryFilter">
+
+<option value="">
+
+All Countries
+
+</option>
+
+</select>
+
+<select id="stateFilter">
+
+<option value="">
+
+All States
+
+</option>
+
+</select>
+
+<select id="categoryFilter">
+
+<option value="">
+
+All Categories
+
+</option>
+
+</select>
+
+<select id="sortFilter">
+
+<option value="latest">
+
+Latest Jobs
+
+</option>
+
+<option value="featured">
+
+Featured First
+
+</option>
+
+<option value="salary">
+
+Salary
+
+</option>
+
+<option value="title">
+
+A - Z
+
+</option>
+
+</select>
+
+</div>
+
+</section>
+
+<section class="results-header">
+
+<div>
+
+<h2>
+
+Latest Job Opportunities
+
+</h2>
+
+<p id="resultCount">
+
+Loading...
+
+</p>
+
+</div>
+
+</section>
+
+<section
+id="jobsGrid"
+class="jobs-grid">
+
+<div class="loading">
+
+Loading jobs...
+
+</div>
+
+</section>
+
+<section
+id="emptyState"
+class="empty-state hidden">
+
+<i class="fa-solid fa-briefcase"></i>
+
+<h2>
+
+No Jobs Found
+
+</h2>
+
+<p>
+
+Try changing your search keywords or filters.
+
+</p>
+
+</section>
+<!-- ===================================== -->
+<!-- PAGINATION -->
+<!-- ===================================== -->
+
+<section class="pagination-section">
+
+    <button
+    id="previousPage"
+    class="page-btn">
+
+        <i class="fa-solid fa-chevron-left"></i>
+
+        Previous
+
+    </button>
+
+    <span id="pageNumber">
+
+        Page 1
+
+    </span>
+
+    <button
+    id="nextPage"
+    class="page-btn">
+
+        Next
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+    </button>
+
+</section>
+
+<!-- ===================================== -->
+<!-- EMPLOYERS CTA -->
+<!-- ===================================== -->
+
+<section class="business-owner-section">
+
+    <div class="owner-content">
+
+        <span>
+
+            Hire Through WorkBridge Africa
+
+        </span>
+
+        <h2>
+
+            Looking for Employees?
+
+        </h2>
+
+        <p>
+
+            Publish your vacancies and reach thousands of job seekers
+            across Africa. Every listing includes direct contact
+            information so applicants can reach you immediately.
+
+        </p>
+
+        <a
+        href="business-signup.html"
+        class="owner-button">
+
+            Post a Job
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- SEO CONTENT -->
+<!-- ===================================== -->
+
+<section class="directory-info">
+
+    <article>
+
+        <h2>
+
+            Find Jobs Across Africa
+
+        </h2>
+
+        <p>
+
+            WorkBridge Africa connects job seekers with trusted
+            businesses across Nigeria, Ghana, Kenya, South Africa,
+            Uganda and many other African countries. Browse jobs in
+            technology, construction, hospitality, healthcare,
+            education, engineering, logistics, fashion, agriculture
+            and more.
+
+        </p>
+
+        <p>
+
+            Every job listing contains the employer's preferred contact
+            information, including phone numbers, WhatsApp, and email
+            addresses where available. This allows applicants to contact
+            businesses directly without creating an account.
+
+        </p>
+
+        <p>
+
+            New vacancies are published daily, making WorkBridge Africa
+            one of the fastest-growing employment directories focused
+            on African businesses and professionals.
+
+        </p>
+
+    </article>
+
+</section>
+
+<!-- ===================================== -->
+<!-- FAQ -->
+<!-- ===================================== -->
+
+<section class="faq-section">
+
+    <h2>
+
+        Frequently Asked Questions
+
+    </h2>
+
+    <div class="faq-container">
+
+        <article class="faq-item">
+
+            <h3>
+
+                Do I need an account to apply?
+
+            </h3>
+
+            <p>
+
+                No. Job seekers do not need to register. Simply open
+                the job and contact the employer using the provided
+                phone number, WhatsApp or email.
+
+            </p>
+
+        </article>
+
+        <article class="faq-item">
+
+            <h3>
+
+                Are the jobs verified?
+
+            </h3>
+
+            <p>
+
+                Jobs are posted by registered businesses. If you notice
+                suspicious activity, use the Report Job feature on the
+                job details page.
+
+            </p>
+
+        </article>
+
+        <article class="faq-item">
+
+            <h3>
+
+                How can my business post jobs?
+
+            </h3>
+
+            <p>
+
+                Register a business account, create your business
+                profile, then publish unlimited job listings from your
+                dashboard.
+
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <h2>
+
+                🌍 WorkBridge Africa
+
+            </h2>
+
+            <p>
+
+                WorkBridge Africa is an African business and employment
+                directory connecting businesses with customers and
+                helping job seekers discover verified opportunities
+                across the continent.
+
+            </p>
+
+            <div class="social-links">
+
+                <a href="#" aria-label="Facebook">
+
+                    <i class="fa-brands fa-facebook-f"></i>
+
+                </a>
+
+                <a href="#" aria-label="Instagram">
+
+                    <i class="fa-brands fa-instagram"></i>
+
+                </a>
+
+                <a href="#" aria-label="X">
+
+                    <i class="fa-brands fa-x-twitter"></i>
+
+                </a>
+
+                <a href="#" aria-label="LinkedIn">
+
+                    <i class="fa-brands fa-linkedin-in"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="footer-links">
+
+            <div>
+
+                <h3>
+
+                    Directory
+
+                </h3>
+
+                <a href="businesses.html">
+
+                    Businesses
+
+                </a>
+
+                <a href="jobs.html">
+
+                    Jobs
+
+                </a>
+
+                <a href="featured.html">
+
+                    Featured Listings
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Company
+
+                </h3>
+
+                <a href="about.html">
+
+                    About Us
+
+                </a>
+
+                <a href="contact.html">
+
+                    Contact
+
+                </a>
+
+                <a href="privacy.html">
+
+                    Privacy Policy
+
+                </a>
+
+                <a href="terms.html">
+
+                    Terms of Service
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Businesses
+
+                </h3>
+
+                <a href="business-signup.html">
+
+                    Register Business
+
+                </a>
+
+                <a href="business-login.html">
+
+                    Business Login
+
+                </a>
+
+                <a href="pricing.html">
+
+                    Featured Listings
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+
+            © <span id="currentYear"></span>
+            WorkBridge Africa 🌍.
+            All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- ===================================== -->
+<!-- STRUCTURED DATA -->
+<!-- ===================================== -->
+
+<script type="application/ld+json">
+
+{
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"Jobs | WorkBridge Africa",
+    "description":"Browse verified job opportunities across Africa from trusted businesses.",
+    "url":"jobs.html",
+    "mainEntity":{
+        "@type":"ItemList",
+        "name":"African Jobs Directory"
+    }
+}
+
+</script>
+
+</main>
+
+</body>
+
+  </html>
