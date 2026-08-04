@@ -1,21 +1,27 @@
 /*=========================================================
-    WorkBridge Africa 🌍
-    business-signup.css
-    Part 1
+ WorkBridge Africa
+ business-signup.css
+ Part 1
 =========================================================*/
+
 
 :root{
 
     --primary:#166534;
-    --primary-light:#22c55e;
+
+    --primary-hover:#14532d;
+
     --dark:#0f172a;
+
     --text:#475569;
-    --white:#ffffff;
-    --background:#f8fafc;
+
+    --light:#f8fafc;
+
     --border:#e2e8f0;
-    --shadow:0 15px 40px rgba(15,23,42,.08);
-    --radius:24px;
-    --container:1200px;
+
+    --white:#ffffff;
+
+    --radius:20px;
 
 }
 
@@ -33,13 +39,13 @@
 
 body{
 
-    font-family:'Inter',sans-serif;
+    font-family:Inter,Arial,sans-serif;
 
-    background:var(--background);
+    background:var(--light);
 
     color:var(--text);
 
-    line-height:1.7;
+    min-height:100vh;
 
 }
 
@@ -48,54 +54,22 @@ a{
 
     text-decoration:none;
 
-    color:inherit;
-
 }
 
 
-input,
-textarea,
-button{
 
-    font-family:inherit;
-
-}
+/*==============================
+ HEADER
+==============================*/
 
 
-textarea{
+.site-header{
 
-    resize:vertical;
-
-}
-
-
-/*=========================================================
-    HEADER
-=========================================================*/
-
-
-.header{
+    height:80px;
 
     background:#fff;
 
     border-bottom:1px solid var(--border);
-
-    position:sticky;
-
-    top:0;
-
-    z-index:100;
-
-}
-
-
-.navbar{
-
-    width:min(var(--container),92%);
-
-    height:80px;
-
-    margin:auto;
 
     display:flex;
 
@@ -103,18 +77,12 @@ textarea{
 
     align-items:center;
 
+    padding:0 5%;
+
 }
 
 
 .logo{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    font-family:'Poppins',sans-serif;
 
     font-size:1.4rem;
 
@@ -125,43 +93,35 @@ textarea{
 }
 
 
-.nav-actions a{
+.login-link{
 
     color:var(--primary);
 
     font-weight:700;
 
-    padding:12px 20px;
-
-    border-radius:12px;
-
-    transition:.3s;
-
-}
-
-
-.nav-actions a:hover{
-
-    background:#ecfdf5;
-
 }
 
 
 
-/*=========================================================
-    MAIN CONTAINER
-=========================================================*/
+/*==============================
+ PAGE
+==============================*/
 
 
-.signup-container{
+.signup-page{
 
-    width:min(var(--container),92%);
+    width:min(1200px,92%);
 
-    margin:70px auto;
+    margin:60px auto;
+
+}
+
+
+.signup-wrapper{
 
     display:grid;
 
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr 500px;
 
     gap:60px;
 
@@ -171,157 +131,107 @@ textarea{
 
 
 
-/*=========================================================
-    INTRO SECTION
-=========================================================*/
+/*==============================
+ INFORMATION SIDE
+==============================*/
 
 
-.signup-intro{
+.signup-info{
 
     padding-top:40px;
 
 }
 
 
-.signup-intro h1{
-
-    font-family:'Poppins',sans-serif;
+.signup-info h1{
 
     font-size:3rem;
 
-    line-height:1.25;
+    line-height:1.15;
 
     color:var(--dark);
 
-    margin-bottom:22px;
+    margin-bottom:20px;
 
 }
 
 
-.signup-intro h1 span{
-
-    color:var(--primary);
-
-}
-
-
-.signup-intro p{
+.signup-info p{
 
     font-size:1.1rem;
 
-    color:#64748b;
+    max-width:520px;
 
-    max-width:500px;
-
-    margin-bottom:35px;
-
-}
-
-
-
-.benefits{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
-
-}
-
-
-.benefits div{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    font-weight:600;
-
-    color:var(--dark);
-
-}
-
-
-.benefits i{
-
-    width:34px;
-
-    height:34px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:#dcfce7;
-
-    color:#166534;
-
-    font-style:normal;
-
-    font-weight:800;
-
-}
-/*=========================================================
-    SIGNUP CARD
-=========================================================*/
-
-
-.signup-card{
-
-    background:#fff;
-
-    border:1px solid var(--border);
-
-    border-radius:var(--radius);
-
-    padding:40px;
-
-    box-shadow:var(--shadow);
-
-}
-
-
-.signup-card h2{
-
-    font-family:'Poppins',sans-serif;
-
-    color:var(--dark);
-
-    font-size:2rem;
-
-    margin-bottom:10px;
-
-}
-
-
-.form-note{
-
-    background:#ecfdf5;
-
-    color:#166534;
-
-    padding:14px 18px;
-
-    border-radius:14px;
-
-    font-size:.92rem;
+    line-height:1.7;
 
     margin-bottom:30px;
 
 }
 
 
+.signup-info ul{
 
-/*=========================================================
-    FORM
-=========================================================*/
+    list-style:none;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+
+.signup-info li{
+
+    background:#fff;
+
+    padding:15px 20px;
+
+    border-radius:14px;
+
+    border:1px solid var(--border);
+
+    font-weight:600;
+
+    color:var(--dark);
+
+}
+/*==============================
+ SIGNUP CARD
+==============================*/
+
+
+.signup-card{
+
+    background:var(--white);
+
+    padding:40px;
+
+    border-radius:var(--radius);
+
+    border:1px solid var(--border);
+
+    box-shadow:0 20px 50px rgba(15,23,42,.08);
+
+}
+
+
+.signup-card h2{
+
+    color:var(--dark);
+
+    font-size:1.8rem;
+
+    margin-bottom:25px;
+
+}
+
+
+
+/*==============================
+ FORM
+==============================*/
 
 
 #businessSignupForm{
@@ -330,23 +240,12 @@ textarea{
 
     flex-direction:column;
 
-    gap:20px;
+    gap:18px;
 
 }
 
 
-.form-row{
-
-    display:grid;
-
-    grid-template-columns:repeat(2,1fr);
-
-    gap:20px;
-
-}
-
-
-.form-group{
+.field{
 
     display:flex;
 
@@ -357,60 +256,67 @@ textarea{
 }
 
 
-.form-group label{
+.field label{
 
-    color:var(--dark);
+    font-size:.95rem;
 
     font-weight:700;
 
-    font-size:.95rem;
+    color:var(--dark);
 
 }
 
 
-.form-group input,
+.field input,
 
-.form-group textarea{
+.field textarea{
 
     width:100%;
 
+    padding:14px 16px;
+
+    border-radius:12px;
+
     border:1px solid var(--border);
 
-    background:#fff;
-
-    border-radius:14px;
-
-    padding:15px 16px;
+    outline:none;
 
     font-size:1rem;
 
     color:var(--dark);
 
-    outline:none;
+    background:#fff;
 
-    transition:.3s;
+    transition:.2s;
 
 }
 
 
-.form-group input:focus,
+.field textarea{
 
-.form-group textarea:focus{
+    resize:vertical;
+
+}
+
+
+.field input:focus,
+
+.field textarea:focus{
 
     border-color:var(--primary);
 
-    box-shadow:0 0 0 4px rgba(34,197,94,.12);
+    box-shadow:0 0 0 4px rgba(22,101,52,.12);
 
 }
 
 
 
-/*=========================================================
-    FILE INPUT
-=========================================================*/
+/*==============================
+ FILE INPUT
+==============================*/
 
 
-input[type="file"]{
+.field input[type="file"]{
 
     padding:12px;
 
@@ -421,89 +327,48 @@ input[type="file"]{
 }
 
 
-input[type="file"]::file-selector-button{
-
-    border:none;
+.field input[type="file"]::file-selector-button{
 
     background:var(--primary);
 
-    color:#fff;
+    color:white;
 
-    padding:10px 16px;
+    border:none;
 
-    border-radius:10px;
+    padding:9px 14px;
 
-    margin-right:12px;
+    border-radius:8px;
 
     cursor:pointer;
+
+    margin-right:10px;
 
 }
 
 
 
-/*=========================================================
-    CHECKBOX
-=========================================================*/
+/*==============================
+ BUTTON
+==============================*/
 
 
-.terms-box{
+#signupButton{
 
     margin-top:10px;
 
-}
-
-
-.checkbox{
-
-    display:flex;
-
-    gap:12px;
-
-    align-items:flex-start;
-
-    color:#64748b;
-
-    font-size:.9rem;
-
-    cursor:pointer;
-
-}
-
-
-.checkbox input{
-
-    width:18px;
-
-    height:18px;
-
-    margin-top:4px;
-
-    accent-color:var(--primary);
-
-}
-
-
-
-/*=========================================================
-    BUTTON
-=========================================================*/
-
-
-.submit-button{
-
     width:100%;
 
-    height:58px;
+    height:55px;
 
     border:none;
 
-    border-radius:16px;
+    border-radius:14px;
 
     background:var(--primary);
 
-    color:#fff;
+    color:white;
 
-    font-size:1.05rem;
+    font-size:1rem;
 
     font-weight:800;
 
@@ -514,16 +379,14 @@ input[type="file"]::file-selector-button{
 }
 
 
-.submit-button:hover{
+#signupButton:hover{
 
-    background:#14532d;
-
-    transform:translateY(-2px);
+    background:var(--primary-hover);
 
 }
 
 
-.submit-button:disabled{
+#signupButton:disabled{
 
     opacity:.6;
 
@@ -533,30 +396,30 @@ input[type="file"]::file-selector-button{
 
 
 
-/*=========================================================
-    MESSAGE
-=========================================================*/
+/*==============================
+ MESSAGE
+==============================*/
 
 
-.message{
+#signupMessage{
 
     text-align:center;
 
-    margin-top:10px;
+    font-weight:700;
 
-    font-weight:600;
-
-}
-
-
-.message.success{
-
-    color:#166534;
+    min-height:25px;
 
 }
 
 
-.message.error{
+.success{
+
+    color:#15803d;
+
+}
+
+
+.error{
 
     color:#dc2626;
 
@@ -564,59 +427,47 @@ input[type="file"]::file-selector-button{
 
 
 
-/*=========================================================
-    FOOTER
-=========================================================*/
+/*==============================
+ FOOTER
+==============================*/
 
 
 footer{
 
-    margin-top:80px;
-
-    background:#0f172a;
-
-    color:#cbd5e1;
-
     text-align:center;
 
-    padding:30px 20px;
+    padding:30px;
+
+    color:#64748b;
 
 }
+/*==============================
+ RESPONSIVE DESIGN
+==============================*/
 
 
-footer p{
-
-    font-size:.95rem;
-
-}
-/*=========================================================
-    RESPONSIVE DESIGN
-=========================================================*/
+@media(max-width:1050px){
 
 
-@media(max-width:1000px){
-
-    .signup-container{
+    .signup-wrapper{
 
         grid-template-columns:1fr;
 
         gap:40px;
 
-        margin-top:40px;
-
     }
 
 
-    .signup-intro{
-
-        padding-top:0;
+    .signup-info{
 
         text-align:center;
 
+        padding-top:0;
+
     }
 
 
-    .signup-intro p{
+    .signup-info p{
 
         margin-left:auto;
 
@@ -625,125 +476,125 @@ footer p{
     }
 
 
-    .benefits{
+    .signup-info ul{
 
-        align-items:center;
+        max-width:500px;
+
+        margin:auto;
 
     }
+
 
 }
 
 
 
-@media(max-width:700px){
+@media(max-width:600px){
 
 
-    .navbar{
+    .site-header{
 
         height:70px;
+
+        padding:0 20px;
 
     }
 
 
     .logo{
 
-        font-size:1.15rem;
+        font-size:1.1rem;
 
     }
 
 
-    .nav-actions a{
+    .login-link{
 
-        padding:10px 14px;
-
-        font-size:.9rem;
+        font-size:.85rem;
 
     }
 
 
+    .signup-page{
 
-    .signup-intro h1{
+        width:94%;
 
-        font-size:2.1rem;
+        margin:30px auto;
 
     }
 
+
+    .signup-info h1{
+
+        font-size:2rem;
+
+    }
+
+
+    .signup-info p{
+
+        font-size:1rem;
+
+    }
 
 
     .signup-card{
 
-        padding:25px 20px;
+        padding:25px 18px;
 
-        border-radius:20px;
+        border-radius:16px;
 
     }
-
 
 
     .signup-card h2{
 
-        font-size:1.6rem;
+        font-size:1.5rem;
 
     }
 
 
+    .field input,
 
-    .form-row{
+    .field textarea{
 
-        grid-template-columns:1fr;
-
-    }
-
-
-
-    .form-group input,
-
-    .form-group textarea{
-
-        padding:14px;
+        padding:13px;
 
     }
 
 
+    #signupButton{
 
-    .submit-button{
-
-        height:54px;
+        height:52px;
 
     }
+
 
 }
 
 
 
-@media(max-width:420px){
+@media(max-width:380px){
 
 
-    .signup-container{
+    .site-header{
 
-        width:94%;
+        flex-direction:column;
 
-    }
+        height:auto;
 
+        gap:10px;
 
-    .signup-intro h1{
-
-        font-size:1.8rem;
-
-    }
-
-
-    .benefits div{
-
-        font-size:.9rem;
+        padding:15px;
 
     }
 
 
-    .nav-actions a{
+    .signup-info h1{
 
-        font-size:.8rem;
+        font-size:1.7rem;
 
     }
 
-  }
+
+    }
