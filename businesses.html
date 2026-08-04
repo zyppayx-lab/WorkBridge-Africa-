@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Businesses | 🌍 WorkBridge Africa</title>
+
+    <meta name="description"
+        content="Browse trusted businesses across Africa. Search by business name, category, country or state on WorkBridge Africa.">
+
+    <meta name="keywords"
+        content="African businesses,business directory,Nigeria businesses,Ghana businesses,Kenya businesses,services in Africa">
+
+    <meta property="og:title"
+        content="Businesses | WorkBridge Africa">
+
+    <meta property="og:description"
+        content="Discover trusted businesses across Africa.">
+
+    <meta property="og:type"
+        content="website">
+
+    <link rel="canonical"
+        href="/businesses.html">
+
+    <link rel="stylesheet"
+        href="businesses.css">
+
+    <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <script defer
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+    <script defer
+        src="businesses.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="index.html"
+            class="logo">
+
+            🌍
+
+            <span>
+
+                WorkBridge Africa
+
+            </span>
+
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+
+                <a class="active"
+                    href="businesses.html">
+
+                    Businesses
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="jobs.html">
+
+                    Jobs
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="about.html">
+
+                    About
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="contact.html">
+
+                    Contact
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <button id="menuButton">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+    </nav>
+
+</header>
+
+<div id="mobileMenu">
+
+    <a href="businesses.html">
+
+        Businesses
+
+    </a>
+
+    <a href="jobs.html">
+
+        Jobs
+
+    </a>
+
+    <a href="about.html">
+
+        About
+
+    </a>
+
+    <a href="contact.html">
+
+        Contact
+
+    </a>
+
+</div>
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span>
+
+            🌍 Business Directory
+
+        </span>
+
+        <h1>
+
+            Find Trusted Businesses Across Africa
+
+        </h1>
+
+        <p>
+
+            Search thousands of businesses by category,
+            country, state or business name.
+            Contact businesses directly using their phone,
+            WhatsApp or email.
+
+        </p>
+
+    </div>
+
+</section>
+
+<section class="search-section">
+
+    <form
+        id="searchForm"
+        class="search-box">
+
+        <div class="search-input">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search businesses...">
+
+        </div>
+
+        <button type="submit">
+
+            Search
+
+        </button>
+
+    </form>
+
+</section>
+
+<section class="filters">
+
+    <select id="countryFilter">
+
+        <option value="">
+
+            All Countries
+
+        </option>
+
+    </select>
+
+    <select id="stateFilter">
+
+        <option value="">
+
+            All States
+
+        </option>
+
+    </select>
+
+    <select id="categoryFilter">
+
+        <option value="">
+
+            All Categories
+
+        </option>
+
+    </select>
+
+    <select id="sortFilter">
+
+        <option value="latest">
+
+            Latest
+
+        </option>
+
+        <option value="featured">
+
+            Featured
+
+        </option>
+
+        <option value="popular">
+
+            Most Viewed
+
+        </option>
+
+        <option value="name">
+
+            A-Z
+
+        </option>
+
+    </select>
+
+</section>
+
+<section class="results-header">
+
+    <h2>
+
+        Businesses
+
+    </h2>
+
+    <span id="resultCount">
+
+        Loading...
+
+    </span>
+
+</section>
+
+<section
+    id="businessGrid"
+    class="business-grid">
+
+    <!-- Businesses rendered here -->
+
+</section>
+<!-- ===================================== -->
+<!-- PAGINATION -->
+<!-- ===================================== -->
+
+<section class="pagination-section">
+
+    <button
+        id="previousPage"
+        class="page-btn">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Previous
+
+    </button>
+
+
+    <span id="pageNumber">
+
+        Page 1
+
+    </span>
+
+
+    <button
+        id="nextPage"
+        class="page-btn">
+
+        Next
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </button>
+
+</section>
+
+
+<!-- ===================================== -->
+<!-- EMPTY STATE -->
+<!-- ===================================== -->
+
+<section
+    id="emptyState"
+    class="empty-state hidden">
+
+    <i class="fa-solid fa-building-circle-exclamation"></i>
+
+    <h2>
+
+        No Businesses Found
+
+    </h2>
+
+    <p>
+
+        We couldn't find a business matching your search.
+        Try another category, location, or keyword.
+
+    </p>
+
+</section>
+
+
+<!-- ===================================== -->
+<!-- BUSINESS OWNER CTA -->
+<!-- ===================================== -->
+
+<section class="business-owner-section">
+
+    <div class="owner-content">
+
+        <span>
+
+            Grow Your Business
+
+        </span>
+
+        <h2>
+
+            Is Your Business Missing?
+
+        </h2>
+
+        <p>
+
+            Add your business profile to WorkBridge Africa
+            and help customers discover your services.
+
+        </p>
+
+        <a
+            href="business-signup.html"
+            class="owner-button">
+
+            List Your Business
+
+            <i class="fa-solid fa-arrow-right"></i>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================== -->
+<!-- SEO CONTENT SECTION -->
+<!-- ===================================== -->
+
+<section class="directory-info">
+
+    <article>
+
+        <h2>
+
+            Explore Businesses Across Africa
+
+        </h2>
+
+        <p>
+
+            WorkBridge Africa helps people discover
+            businesses, professionals, and services
+            across African countries.
+
+            From local services to growing companies,
+            visitors can search businesses by category,
+            location, and industry.
+
+        </p>
+
+        <p>
+
+            Each business profile provides important
+            information such as business description,
+            location, phone number, WhatsApp contact,
+            website and social media links where available.
+
+        </p>
+
+    </article>
+
+</section>
+
+
+</main>
+
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <h2>
+
+                🌍 WorkBridge Africa
+
+            </h2>
+
+            <p>
+
+                Connecting customers with businesses
+                and opportunities across Africa.
+
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+
+            <div>
+
+                <h3>
+
+                    Explore
+
+                </h3>
+
+
+                <a href="businesses.html">
+
+                    Businesses
+
+                </a>
+
+
+                <a href="jobs.html">
+
+                    Jobs
+
+                </a>
+
+
+                <a href="about.html">
+
+                    About
+
+                </a>
+
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+
+                    Business
+
+                </h3>
+
+
+                <a href="business-signup.html">
+
+                    List Business
+
+                </a>
+
+
+                <a href="business-login.html">
+
+                    Business Login
+
+                </a>
+
+
+            </div>
+
+
+
+            <div>
+
+                <h3>
+
+                    Legal
+
+                </h3>
+
+
+                <a href="privacy.html">
+
+                    Privacy Policy
+
+                </a>
+
+
+                <a href="terms.html">
+
+                    Terms
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+
+        <p>
+
+            © 2026 🌍 WorkBridge Africa.
+            All rights reserved.
+
+        </p>
+
+
+    </div>
+
+
+</footer>
+
+
+</body>
+
+  </html>
