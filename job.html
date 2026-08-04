@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Job Details | 🌍 WorkBridge Africa</title>
+
+<meta
+name="description"
+content="View full job details and contact the employer directly on WorkBridge Africa.">
+
+<meta
+name="keywords"
+content="Africa jobs,Nigeria jobs,Careers,Employment,Vacancies">
+
+<meta
+property="og:type"
+content="website">
+
+<meta
+property="og:title"
+content="Job Details | 🌍 WorkBridge Africa">
+
+<meta
+property="og:description"
+content="Browse verified jobs from trusted African businesses.">
+
+<meta
+property="og:image"
+content="assets/job-cover.jpg">
+
+<meta
+property="og:url"
+content="job.html">
+
+<meta
+name="twitter:card"
+content="summary_large_image">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link
+rel="stylesheet"
+href="job.css">
+
+<script
+defer
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script
+defer
+src="job.js"></script>
+
+<script
+id="structuredData"
+type="application/ld+json">
+{}
+</script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<nav class="navbar">
+
+<a
+href="index.html"
+class="logo">
+
+🌍
+
+<span>
+
+WorkBridge Africa
+
+</span>
+
+</a>
+
+<ul class="nav-links">
+
+<li>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+</li>
+
+<li>
+
+<a href="businesses.html">
+
+Businesses
+
+</a>
+
+</li>
+
+<li>
+
+<a
+class="active"
+href="jobs.html">
+
+Jobs
+
+</a>
+
+</li>
+
+<li>
+
+<a href="about.html">
+
+About
+
+</a>
+
+</li>
+
+<li>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</li>
+
+</ul>
+
+<button id="menuButton">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
+</nav>
+
+</header>
+
+<div id="mobileMenu">
+
+<a href="index.html">Home</a>
+
+<a href="businesses.html">Businesses</a>
+
+<a href="jobs.html">Jobs</a>
+
+<a href="about.html">About</a>
+
+<a href="contact.html">Contact</a>
+
+</div>
+
+<main>
+
+<section class="breadcrumb">
+
+<div class="breadcrumb-container">
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<i class="fa-solid fa-angle-right"></i>
+
+<a href="jobs.html">
+
+Jobs
+
+</a>
+
+<i class="fa-solid fa-angle-right"></i>
+
+<span id="breadcrumbJob">
+
+Loading...
+
+</span>
+
+</div>
+
+</section>
+
+<section class="job-hero">
+
+<div class="company-box">
+
+<img
+id="companyLogo"
+src="assets/default-business.webp"
+alt="Business Logo">
+
+<div>
+
+<div class="badge-row">
+
+<span
+id="verifiedBadge"
+class="verified hidden">
+
+✔ Verified
+
+</span>
+
+<span
+id="featuredBadge"
+class="featured hidden">
+
+⭐ Featured
+
+</span>
+
+</div>
+
+<h1
+id="jobTitle">
+
+Loading...
+
+</h1>
+
+<h2
+id="companyName">
+
+Loading Business...
+
+</h2>
+
+<div
+id="jobMeta"
+class="job-meta">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="hero-actions">
+
+<a
+id="callButton"
+class="action-btn phone-btn">
+
+<i class="fa-solid fa-phone"></i>
+
+Call
+
+</a>
+
+<a
+id="whatsappButton"
+target="_blank"
+class="action-btn whatsapp-btn">
+
+<i class="fa-brands fa-whatsapp"></i>
+
+WhatsApp
+
+</a>
+
+<a
+id="emailButton"
+class="action-btn email-btn">
+
+<i class="fa-solid fa-envelope"></i>
+
+Email
+
+</a>
+
+</div>
+
+</section>
+
+<section class="content-layout">
+
+<div class="main-content">
+
+<article class="card">
+
+<h2>
+
+Job Description
+
+</h2>
+
+<div
+id="jobDescription">
+
+Loading...
+
+</div>
+
+</article>
+
+<article class="card">
+
+<h2>
+
+Requirements
+
+</h2>
+
+<div
+id="jobRequirements">
+
+<p>
+
+No additional requirements supplied by the employer.
+
+</p>
+
+</div>
+
+</article>
+
+<article class="card">
+
+<h2>
+
+About the Employer
+
+</h2>
+
+<div
+id="businessDescription">
+
+Loading...
+
+</div>
+
+<br>
+
+<a
+id="viewBusiness"
+class="business-link">
+
+View Business Profile →
+
+</a>
+
+</article>
+        </div>
+
+        <!-- ========================= -->
+        <!-- SIDEBAR -->
+        <!-- ========================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-card">
+
+                <h3>
+
+                    Job Summary
+
+                </h3>
+
+                <ul class="summary-list">
+
+                    <li>
+
+                        <i class="fa-solid fa-layer-group"></i>
+
+                        <div>
+
+                            <strong>
+
+                                Category
+
+                            </strong>
+
+                            <span id="summaryCategory">
+
+                                —
+
+                            </span>
+
+                        </div>
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-money-bill-wave"></i>
+
+                        <div>
+
+                            <strong>
+
+                                Salary
+
+                            </strong>
+
+                            <span id="summarySalary">
+
+                                Negotiable
+
+                            </span>
+
+                        </div>
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <div>
+
+                            <strong>
+
+                                Location
+
+                            </strong>
+
+                            <span id="summaryLocation">
+
+                                —
+
+                            </span>
+
+                        </div>
+
+                    </li>
+
+                    <li>
+
+                        <i class="fa-solid fa-calendar-days"></i>
+
+                        <div>
+
+                            <strong>
+
+                                Posted
+
+                            </strong>
+
+                            <span id="summaryDate">
+
+                                —
+
+                            </span>
+
+                        </div>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="sidebar-card">
+
+                <h3>
+
+                    Contact Employer
+
+                </h3>
+
+                <p>
+
+                    Contact this employer directly using their preferred
+                    contact details below.
+
+                </p>
+
+                <a
+                id="sideCallButton"
+                class="contact-button phone-btn">
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    Call Employer
+
+                </a>
+
+                <a
+                id="sideWhatsappButton"
+                target="_blank"
+                class="contact-button whatsapp-btn">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    WhatsApp
+
+                </a>
+
+                <a
+                id="sideEmailButton"
+                class="contact-button email-btn">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    Send Email
+
+                </a>
+
+            </div>
+
+            <div class="sidebar-card">
+
+                <h3>
+
+                    Report this Job
+
+                </h3>
+
+                <p>
+
+                    Found misleading information or a suspicious listing?
+                    Help keep WorkBridge Africa safe.
+
+                </p>
+
+                <button
+                id="reportJobButton"
+                class="report-button">
+
+                    <i class="fa-solid fa-flag"></i>
+
+                    Report Job
+
+                </button>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- RELATED JOBS -->
+    <!-- ========================= -->
+
+    <section class="related-section">
+
+        <div class="section-title">
+
+            <h2>
+
+                Related Jobs
+
+            </h2>
+
+            <p>
+
+                Similar opportunities you may also be interested in.
+
+            </p>
+
+        </div>
+
+        <div
+        id="relatedJobs"
+        class="related-grid">
+
+            <div class="loading">
+
+                Loading related jobs...
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- JOB SEEKER INFO -->
+    <!-- ========================= -->
+
+    <section class="seo-content">
+
+        <article>
+
+            <h2>
+
+                Apply Directly to Employers
+
+            </h2>
+
+            <p>
+
+                Every vacancy on WorkBridge Africa includes direct employer
+                contact information where provided. Instead of filling out
+                lengthy application forms, you can call, send a WhatsApp
+                message or email the employer directly.
+
+            </p>
+
+            <p>
+
+                Always verify job details before making payments or sharing
+                sensitive personal information. If you believe a listing is
+                fraudulent, use the Report Job button so our team can review
+                it promptly.
+
+            </p>
+
+        </article>
+
+    </section>
+    <!-- ===================================== -->
+    <!-- FAQ -->
+    <!-- ===================================== -->
+
+    <section class="faq-section">
+
+        <h2>
+
+            Frequently Asked Questions
+
+        </h2>
+
+        <div class="faq-grid">
+
+            <article class="faq-card">
+
+                <h3>
+
+                    Do I need an account to apply?
+
+                </h3>
+
+                <p>
+
+                    No. WorkBridge Africa allows job seekers to contact
+                    employers directly using the phone number, WhatsApp or
+                    email provided on each job listing.
+
+                </p>
+
+            </article>
+
+            <article class="faq-card">
+
+                <h3>
+
+                    Is this job verified?
+
+                </h3>
+
+                <p>
+
+                    Verified badges indicate businesses that have completed
+                    our verification process. Always review job details
+                    carefully before applying.
+
+                </p>
+
+            </article>
+
+            <article class="faq-card">
+
+                <h3>
+
+                    How do I report a suspicious job?
+
+                </h3>
+
+                <p>
+
+                    Click the <strong>Report Job</strong> button on this page,
+                    provide a reason, and our moderation team will review the
+                    listing as soon as possible.
+
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <h2>
+
+                🌍 WorkBridge Africa
+
+            </h2>
+
+            <p>
+
+                Connecting African businesses with customers and helping
+                job seekers discover trusted employment opportunities
+                across the continent.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <div>
+
+                <h3>
+
+                    Directory
+
+                </h3>
+
+                <a href="businesses.html">
+
+                    Businesses
+
+                </a>
+
+                <a href="jobs.html">
+
+                    Jobs
+
+                </a>
+
+                <a href="featured.html">
+
+                    Featured Listings
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Company
+
+                </h3>
+
+                <a href="about.html">
+
+                    About
+
+                </a>
+
+                <a href="contact.html">
+
+                    Contact
+
+                </a>
+
+                <a href="privacy.html">
+
+                    Privacy Policy
+
+                </a>
+
+                <a href="terms.html">
+
+                    Terms of Service
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Business
+
+                </h3>
+
+                <a href="business-signup.html">
+
+                    Register Business
+
+                </a>
+
+                <a href="business-login.html">
+
+                    Business Login
+
+                </a>
+
+                <a href="pricing.html">
+
+                    Featured Listings
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+
+            © <span id="currentYear"></span>
+            WorkBridge Africa 🌍. All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- ===================================== -->
+<!-- REPORT JOB MODAL -->
+<!-- ===================================== -->
+
+<div
+id="reportModal"
+class="modal hidden">
+
+    <div class="modal-content">
+
+        <button
+        id="closeReportModal"
+        class="close-modal">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+        <h2>
+
+            Report Job
+
+        </h2>
+
+        <p>
+
+            Tell us why you're reporting this listing.
+
+        </p>
+
+        <textarea
+        id="reportReason"
+        rows="6"
+        placeholder="Describe the issue..."></textarea>
+
+        <button
+        id="submitReport"
+        class="submit-report">
+
+            Submit Report
+
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+
+  </html>
