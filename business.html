@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Business | 🌍 WorkBridge Africa</title>
+
+<meta name="description"
+content="View verified businesses across Africa. Contact businesses directly by phone, WhatsApp, email or website.">
+
+<meta name="keywords"
+content="African businesses,business directory,services,companies,Nigeria,Ghana,Kenya">
+
+<meta property="og:type"
+content="website">
+
+<meta property="og:title"
+content="Business | WorkBridge Africa">
+
+<meta property="og:description"
+content="Discover trusted businesses across Africa.">
+
+<meta property="og:image"
+content="assets/cover.jpg">
+
+<meta property="og:url"
+content="business.html">
+
+<meta name="twitter:card"
+content="summary_large_image">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<link rel="stylesheet"
+href="business.css">
+
+<script defer
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script defer
+src="business.js"></script>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<nav class="navbar">
+
+<a href="index.html"
+class="logo">
+
+🌍
+
+<span>
+
+WorkBridge Africa
+
+</span>
+
+</a>
+
+<ul class="nav-links">
+
+<li>
+
+<a href="businesses.html">
+
+Businesses
+
+</a>
+
+</li>
+
+<li>
+
+<a href="jobs.html">
+
+Jobs
+
+</a>
+
+</li>
+
+<li>
+
+<a href="about.html">
+
+About
+
+</a>
+
+</li>
+
+<li>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</li>
+
+</ul>
+
+<button id="menuButton">
+
+<i class="fa-solid fa-bars"></i>
+
+</button>
+
+</nav>
+
+</header>
+
+<div id="mobileMenu">
+
+<a href="businesses.html">
+
+Businesses
+
+</a>
+
+<a href="jobs.html">
+
+Jobs
+
+</a>
+
+<a href="about.html">
+
+About
+
+</a>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</div>
+
+<main>
+
+<section id="coverSection"
+class="cover-section">
+
+<div class="cover-image">
+
+<img
+id="coverImage"
+src="assets/default-cover.webp"
+alt="Business Cover">
+
+</div>
+
+<div class="business-header">
+
+<div class="business-logo">
+
+<img
+id="businessLogo"
+src="assets/default-business.webp"
+alt="Business Logo">
+
+</div>
+
+<div class="business-summary">
+
+<div class="badges">
+
+<span
+id="featuredBadge"
+class="featured hidden">
+
+⭐ Featured
+
+</span>
+
+<span
+id="verifiedBadge"
+class="verified hidden">
+
+✔ Verified
+
+</span>
+
+</div>
+
+<h1 id="businessName">
+
+Loading...
+
+</h1>
+
+<p id="businessCategory">
+
+</p>
+
+<div class="business-meta">
+
+<span id="businessLocation">
+
+</span>
+
+<span id="businessViews">
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="content-layout">
+
+<div class="main-content">
+
+<section class="description-card">
+
+<h2>
+
+About this Business
+
+</h2>
+
+<p id="businessDescription">
+
+Loading...
+
+</p>
+
+</section>
+
+<section class="gallery-card">
+
+<h2>
+
+Gallery
+
+</h2>
+
+<div
+id="galleryGrid"
+class="gallery-grid">
+
+</div>
+
+</section>
+
+<section class="jobs-card">
+
+<h2>
+
+Jobs Posted
+
+</h2>
+
+<div
+id="businessJobs"
+class="jobs-grid">
+
+</div>
+
+</section>
+
+<section class="related-card">
+
+<h2>
+
+Related Businesses
+
+</h2>
+
+<div
+id="relatedBusinesses"
+class="business-grid">
+
+</div>
+
+</section>
+
+</div>
+
+<aside class="sidebar">
+
+<div class="contact-card">
+
+<h3>
+
+Contact Business
+
+</h3>
+
+<div id="phoneContainer"></div>
+
+<div id="whatsappContainer"></div>
+
+<div id="telegramContainer"></div>
+
+<div id="emailContainer"></div>
+
+<div id="websiteContainer"></div>
+
+<div id="facebookContainer"></div>
+
+<div id="instagramContainer"></div>
+
+<div id="xContainer"></div>
+
+<div id="addressContainer"></div>
+
+</div>
+
+<div class="action-card">
+
+<a
+id="reportButton"
+class="report-btn"
+href="#">
+
+Report Business
+
+</a>
+
+<a
+href="businesses.html"
+class="browse-btn">
+
+Browse More Businesses
+
+</a>
+
+</div>
+
+</aside>
+
+</section>
+<!-- ===================================== -->
+<!-- BREADCRUMB -->
+<!-- ===================================== -->
+
+<section class="breadcrumb">
+
+    <div class="breadcrumb-container">
+
+        <a href="index.html">
+
+            Home
+
+        </a>
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+        <a href="businesses.html">
+
+            Businesses
+
+        </a>
+
+        <i class="fa-solid fa-chevron-right"></i>
+
+        <span id="breadcrumbBusinessName">
+
+            Loading...
+
+        </span>
+
+    </div>
+
+</section>
+
+<!-- ===================================== -->
+<!-- FAQ (SEO) -->
+<!-- ===================================== -->
+
+<section class="faq-section">
+
+    <h2>
+
+        Frequently Asked Questions
+
+    </h2>
+
+    <div class="faq-container">
+
+        <article class="faq-item">
+
+            <h3>
+
+                How do I contact this business?
+
+            </h3>
+
+            <p>
+
+                Use the phone number, WhatsApp,
+                email address, website or social
+                media links provided on this page.
+
+            </p>
+
+        </article>
+
+        <article class="faq-item">
+
+            <h3>
+
+                Are businesses verified?
+
+            </h3>
+
+            <p>
+
+                Some businesses are verified by
+                WorkBridge Africa. Verified businesses
+                display a verification badge.
+
+            </p>
+
+        </article>
+
+        <article class="faq-item">
+
+            <h3>
+
+                Can I report incorrect information?
+
+            </h3>
+
+            <p>
+
+                Yes. Click the Report Business button
+                and tell us what information is incorrect
+                or misleading.
+
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- ===================================== -->
+<!-- FOOTER -->
+<!-- ===================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <h2>
+
+                🌍 WorkBridge Africa
+
+            </h2>
+
+            <p>
+
+                Discover trusted businesses,
+                professionals and opportunities
+                across Africa.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <div>
+
+                <h3>
+
+                    Explore
+
+                </h3>
+
+                <a href="businesses.html">
+
+                    Businesses
+
+                </a>
+
+                <a href="jobs.html">
+
+                    Jobs
+
+                </a>
+
+                <a href="about.html">
+
+                    About
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Business
+
+                </h3>
+
+                <a href="business-signup.html">
+
+                    List Your Business
+
+                </a>
+
+                <a href="business-login.html">
+
+                    Business Login
+
+                </a>
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Legal
+
+                </h3>
+
+                <a href="privacy.html">
+
+                    Privacy Policy
+
+                </a>
+
+                <a href="terms.html">
+
+                    Terms of Service
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <p>
+
+            © 2026 🌍 WorkBridge Africa.
+            All Rights Reserved.
+
+        </p>
+
+    </div>
+
+</footer>
+
+<!-- ===================================== -->
+<!-- JSON-LD PLACEHOLDER -->
+<!-- business.js will populate this dynamically -->
+<!-- ===================================== -->
+
+<script
+type="application/ld+json"
+id="structuredData">
+
+{}
+
+</script>
+
+</body>
+
+  </html>
