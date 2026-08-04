@@ -1,6 +1,7 @@
 //======================================================
 // WorkBridge Africa 🌍
 // business-signup.js
+// Supabase Auth v2
 // Part 1
 //======================================================
 
@@ -11,12 +12,10 @@
 
 const SUPABASE_URL = "https://razemjveqtmnutvluxab.supabase.co";
 
-const SUPABASE_ANON_KEY = "sb_publishable_2utxbSM-OS6QTitKo6MobA_spBvL_2r";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
 
 
-const supabase =
-
-window.supabase.createClient(
+const client = supabase.createClient(
 
     SUPABASE_URL,
 
@@ -27,49 +26,42 @@ window.supabase.createClient(
 
 
 //==============================
-// DOM ELEMENTS
+// ELEMENTS
 //==============================
 
 
-const form =
-
-document.getElementById(
+const form = document.getElementById(
 
     "businessSignupForm"
 
 );
 
 
-const signupButton =
-
-document.getElementById(
+const button = document.getElementById(
 
     "signupButton"
 
 );
 
 
-const message =
-
-document.getElementById(
+const message = document.getElementById(
 
     "signupMessage"
 
 );
 
 
-const currentYear =
 
-document.getElementById(
+const year = document.getElementById(
 
-    "currentYear"
+    "year"
 
 );
 
 
-if(currentYear){
+if(year){
 
-    currentYear.textContent =
+    year.textContent =
 
     new Date().getFullYear();
 
@@ -78,7 +70,7 @@ if(currentYear){
 
 
 //==============================
-// FORM SUBMIT
+// SUBMIT
 //==============================
 
 
@@ -86,65 +78,61 @@ form.addEventListener(
 
 "submit",
 
-async(event)=>{
+async(e)=>{
 
 
-    event.preventDefault();
+    e.preventDefault();
 
 
 
-    signupButton.disabled = true;
+    button.disabled = true;
 
 
-    signupButton.textContent =
+    button.textContent =
 
-    "Creating Account...";
+    "Creating account...";
 
 
-    message.textContent="";
+    clearMessage();
 
 
 
     try{
 
 
-        const businessData =
-
-        getFormData();
+        const data = getBusinessData();
 
 
 
-        await createBusinessAccount(
-
-            businessData
-
-        );
+        await registerBusiness(data);
 
 
 
     }catch(error){
 
 
-        console.error(error);
+        console.error(
 
+            "Signup error:",
+
+            error
+
+        );
 
 
         showMessage(
 
-            error.message ||
-
-            "Something went wrong. Please try again.",
+            error.message,
 
             "error"
 
         );
 
 
+        button.disabled = false;
 
-        signupButton.disabled=false;
 
-
-        signupButton.textContent=
+        button.textContent =
 
         "Create Business Account";
 
@@ -152,17 +140,16 @@ async(event)=>{
     }
 
 
-
 });
 
 
 
 //==============================
-// GET FORM DATA
+// COLLECT FORM DATA
 //==============================
 
 
-function getFormData(){
+function getBusinessData(){
 
 
     return {
@@ -344,27 +331,27 @@ function getFormData(){
 //======================================================
 // WorkBridge Africa 🌍
 // business-signup.js
+// Supabase Auth v2
 // Part 2
 //======================================================
 
 
 //==============================
-// CREATE BUSINESS ACCOUNT
+// REGISTER BUSINESS
 //==============================
 
-async function createBusinessAccount(data){
+async function registerBusiness(data){
 
 
-    // Create Supabase Auth account
-    // Email confirmation is disabled in Supabase settings
+    // 1. Create Supabase Auth user
 
     const {
 
-        data:userData,
+        data:authData,
 
         error:authError
 
-    } = await supabase.auth.signUp({
+    } = await client.auth.signUp({
 
         email:data.email,
 
@@ -382,9 +369,7 @@ async function createBusinessAccount(data){
 
 
 
-    const user =
-
-    userData.user;
+    const user = authData.user;
 
 
 
@@ -392,7 +377,7 @@ async function createBusinessAccount(data){
 
         throw new Error(
 
-            "Account creation failed."
+            "Unable to create account."
 
         );
 
@@ -400,18 +385,16 @@ async function createBusinessAccount(data){
 
 
 
+    // 2. Upload logo if provided
+
     let logoUrl = null;
 
 
 
-    // Upload logo if provided
-
     if(data.logo){
 
 
-        logoUrl =
-
-        await uploadLogo(
+        logoUrl = await uploadLogo(
 
             user.id,
 
@@ -424,63 +407,116 @@ async function createBusinessAccount(data){
 
 
 
-    // Insert business profile
+    // 3. Create business profile
+
 
     const {
 
-        error:businessError
+        error:profileError
 
-    } = await supabase
+    } = await client
 
     .from("businesses")
 
     .insert({
 
+
         owner_id:user.id,
 
-        business_name:data.business_name,
 
-        description:data.description,
+        business_name:
 
-        categories:data.categories,
+        data.business_name,
 
-        state:data.state,
 
-        lga:data.lga,
+        description:
 
-        address:data.address,
+        data.description,
 
-        phone:data.phone,
 
-        whatsapp:data.whatsapp,
+        categories:
 
-        telegram:data.telegram,
+        data.categories,
 
-        email:data.email,
 
-        website:data.website,
+        state:
 
-        facebook:data.facebook,
+        data.state,
 
-        instagram:data.instagram,
 
-        x:data.x,
+        lga:
 
-        logo_url:logoUrl,
+        data.lga,
 
-        country:data.country,
+
+        address:
+
+        data.address,
+
+
+        phone:
+
+        data.phone,
+
+
+        whatsapp:
+
+        data.whatsapp,
+
+
+        telegram:
+
+        data.telegram,
+
+
+        email:
+
+        data.email,
+
+
+        website:
+
+        data.website,
+
+
+        facebook:
+
+        data.facebook,
+
+
+        instagram:
+
+        data.instagram,
+
+
+        x:
+
+        data.x,
+
+
+        logo_url:
+
+        logoUrl,
+
+
+        country:
+
+        data.country,
+
 
         verified:false,
 
+
         status:"active"
+
 
     });
 
 
 
-    if(businessError){
+    if(profileError){
 
-        throw businessError;
+        throw profileError;
 
     }
 
@@ -488,13 +524,15 @@ async function createBusinessAccount(data){
 
     showMessage(
 
-        "Business account created successfully. Redirecting...",
+        "Business account created successfully.",
 
         "success"
 
     );
 
 
+
+    // Give database time to finish
 
     setTimeout(()=>{
 
@@ -504,19 +542,21 @@ async function createBusinessAccount(data){
         "businessdashboard.html";
 
 
-    },1500);
+    },1200);
 
 
 }
 //======================================================
 // WorkBridge Africa 🌍
 // business-signup.js
+// Supabase Auth v2
 // Part 3
 //======================================================
 
 
 //==============================
 // UPLOAD BUSINESS LOGO
+// uploads bucket ONLY
 //==============================
 
 async function uploadLogo(
@@ -528,7 +568,49 @@ async function uploadLogo(
 ){
 
 
-    const fileExtension =
+    const allowedTypes = [
+
+        "image/jpeg",
+
+        "image/png",
+
+        "image/webp"
+
+    ];
+
+
+
+    if(!allowedTypes.includes(file.type)){
+
+
+        throw new Error(
+
+            "Logo must be JPG, PNG, or WEBP."
+
+        );
+
+
+    }
+
+
+
+    // Limit logo size to 3MB
+
+    if(file.size > 3 * 1024 * 1024){
+
+
+        throw new Error(
+
+            "Logo size must be less than 3MB."
+
+        );
+
+
+    }
+
+
+
+    const extension =
 
     file.name
 
@@ -538,17 +620,19 @@ async function uploadLogo(
 
 
 
-    const filePath =
+    const path =
 
-    `business-logos/${userId}.${fileExtension}`;
+    `business-logos/${userId}.${extension}`;
+
+
 
 
 
     const {
 
-        error:uploadError
+        error
 
-    } = await supabase
+    } = await client
 
     .storage
 
@@ -556,7 +640,7 @@ async function uploadLogo(
 
     .upload(
 
-        filePath,
+        path,
 
         file,
 
@@ -572,9 +656,9 @@ async function uploadLogo(
 
 
 
-    if(uploadError){
+    if(error){
 
-        throw uploadError;
+        throw error;
 
     }
 
@@ -584,7 +668,7 @@ async function uploadLogo(
 
         data
 
-    } = supabase
+    } = client
 
     .storage
 
@@ -592,7 +676,7 @@ async function uploadLogo(
 
     .getPublicUrl(
 
-        filePath
+        path
 
     );
 
@@ -606,8 +690,9 @@ async function uploadLogo(
 
 
 //==============================
-// MESSAGE HELPER
+// MESSAGE HELPERS
 //==============================
+
 
 function showMessage(
 
@@ -621,9 +706,20 @@ function showMessage(
     message.textContent = text;
 
 
-    message.className =
+    message.className = type;
 
-    `message ${type}`;
+
+}
+
+
+
+function clearMessage(){
+
+
+    message.textContent = "";
+
+
+    message.className = "";
 
 
 }
@@ -631,73 +727,23 @@ function showMessage(
 
 
 //==============================
-// PASSWORD VISIBILITY
-// OPTIONAL
+// CHECK EXISTING SESSION
 //==============================
 
 
-const passwordInput =
-
-document.getElementById(
-
-    "password"
-
-);
+async function checkSession(){
 
 
+    const {
 
-if(passwordInput){
+        data
 
+    } = await client
 
-    passwordInput.addEventListener(
+    .auth
 
-        "input",
+    .getSession();
 
-        ()=>{
-
-
-            if(passwordInput.value.length < 6){
-
-
-                passwordInput.setCustomValidity(
-
-                    "Password must be at least 6 characters."
-
-                );
-
-
-            }else{
-
-
-                passwordInput.setCustomValidity(
-
-                    ""
-
-                );
-
-
-            }
-
-
-        }
-
-    );
-
-
-}
-
-
-
-//==============================
-// SESSION CHECK
-//==============================
-
-
-supabase.auth
-
-.getSession()
-
-.then(({data})=>{
 
 
     if(data.session){
@@ -705,7 +751,7 @@ supabase.auth
 
         console.log(
 
-            "Existing session detected",
+            "Active session:",
 
             data.session.user.id
 
@@ -715,4 +761,8 @@ supabase.auth
     }
 
 
-});
+}
+
+
+
+checkSession();
