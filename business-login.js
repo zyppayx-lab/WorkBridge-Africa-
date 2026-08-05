@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY =
 
 
 const loginFunctionUrl =
-`${SUPABASE_URL}/functions/v1/business-login`;
+`${SUPABASE_URL}/functions/v1/login`;
 
 
 const form =
