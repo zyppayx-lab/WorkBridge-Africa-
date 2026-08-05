@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Verify Account | WorkBridge Africa</title>
+
+<meta name="description"
+content="Verify your WorkBridge Africa business account.">
+
+<link rel="stylesheet" href="business-verify.css">
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <a href="index.html" class="logo">
+        🌍 WorkBridge Africa
+    </a>
+
+</header>
+
+
+
+<main class="verify-page">
+
+
+<section class="verify-card">
+
+
+<h1>
+Verify your email
+</h1>
+
+
+<p>
+Enter the 6-digit verification code sent to your email address.
+</p>
+
+
+
+<form id="verifyForm">
+
+
+<div class="otp-box">
+
+
+<input
+id="otp"
+type="text"
+inputmode="numeric"
+maxlength="6"
+placeholder="000000"
+required>
+
+
+</div>
+
+
+
+<button
+type="submit"
+id="verifyButton">
+
+Verify Account
+
+</button>
+
+
+
+<p id="verifyMessage"></p>
+
+
+</form>
+// Part 2
+
+<div class="resend-section">
+
+<p>
+Didn't receive the code?
+</p>
+
+
+<button
+type="button"
+id="resendButton">
+
+Resend Code
+
+</button>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+<footer>
+
+<p>
+© <span id="year"></span> WorkBridge Africa
+</p>
+
+</footer>
+
+
+
+<script>
+
+document.getElementById("year").textContent =
+new Date().getFullYear();
+
+</script>
+
+
+<script src="business-verify.js"></script>
+
+
+</body>
+
+      </html>
