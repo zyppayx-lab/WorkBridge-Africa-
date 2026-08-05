@@ -99,55 +99,60 @@ menuButton?.addEventListener(
 
 async function loadStats(){
 
-    const {
+    try{
 
-        count:businesses
+        const { count: businesses } =
+        await supabase
+        .from("businesses")
+        .select("id",{
+            count:"exact"
+        })
+        .eq("status","active");
 
-    } = await supabase
 
-    .from("businesses")
+        const { count: jobs } =
+        await supabase
+        .from("jobs")
+        .select("id",{
+            count:"exact"
+        })
+        .eq("status","active");
 
-    .select("*",{
 
-        count:"exact",
+        if(businessCount){
 
-        head:true
+            businessCount.textContent =
+            businesses || 0;
 
-    })
+        }
 
-    .eq(
-        "status",
-        "active"
-    );
 
-    const {
+        if(jobCount){
 
-        count:jobs
+            jobCount.textContent =
+            jobs || 0;
 
-    } = await supabase
+        }
 
-    .from("jobs")
+    }catch(error){
 
-    .select("*",{
+        console.error(error);
 
-        count:"exact",
+        if(businessCount){
 
-        head:true
+            businessCount.textContent = "0";
 
-    })
+        }
 
-    .eq(
-        "status",
-        "active"
-    );
+        if(jobCount){
 
-    businessCount.textContent =
-    businesses ?? 0;
+            jobCount.textContent = "0";
 
-    jobCount.textContent =
-    jobs ?? 0;
+        }
 
-}
+    }
+
+            }
 
 //==============================
 // FEATURED BUSINESSES
