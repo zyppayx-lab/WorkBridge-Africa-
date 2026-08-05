@@ -122,7 +122,6 @@ form.addEventListener("submit", async(e)=>{
             );
 
         }
-// Part 2
 
 
         message.textContent =
