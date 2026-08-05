@@ -189,23 +189,28 @@ form.addEventListener("submit", async (e)=>{
         }
 
 
-
-        message.textContent =
-        "Verification code sent. Check your email.";
-
-
-        sessionStorage.setItem(
-            "signup_email",
-            payload.email
-        );
+message.textContent =
+"Verification code sent. Check your email.";
 
 
-        setTimeout(()=>{
+sessionStorage.setItem(
+    "signup_email",
+    payload.email
+);
 
-            window.location.href =
-            "business-verify.html";
 
-        },1000);
+sessionStorage.setItem(
+    "signup_password",
+    payload.password
+);
+
+
+setTimeout(()=>{
+
+    window.location.href =
+    "business-verify.html";
+
+},1000);
 
 
 
