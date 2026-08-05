@@ -14,10 +14,6 @@ content="Create a business account on WorkBridge Africa and connect with job see
 
 <link rel="stylesheet" href="business-signup.css">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script defer src="business-signup.js"></script>
-
 </head>
 
 
@@ -46,7 +42,6 @@ content="Create a business account on WorkBridge Africa and connect with job see
 
 <div class="signup-info">
 
-
 <h1>
 Create your business profile
 </h1>
@@ -60,15 +55,15 @@ Join WorkBridge Africa and publish job opportunities while allowing job seekers 
 <ul>
 
 <li>
-✓ No account required for job seekers
+✓ Publish job opportunities
 </li>
 
 <li>
-✓ Direct contact with applicants
+✓ Connect directly with applicants
 </li>
 
 <li>
-✓ Verified business profiles
+✓ Build a trusted business profile
 </li>
 
 </ul>
@@ -86,8 +81,8 @@ Business Registration
 </h2>
 
 
-<form id="businessSignupForm">
 
+<form id="businessSignupForm">
 
 
 <div class="field">
@@ -125,23 +120,6 @@ required>
 <div class="field">
 
 <label>
-Password
-</label>
-
-<input
-id="password"
-type="password"
-placeholder="Create password"
-min="6"
-required>
-
-</div>
-
-
-
-<div class="field">
-
-<label>
 Phone Number
 </label>
 
@@ -167,6 +145,9 @@ type="tel"
 placeholder="WhatsApp number">
 
 </div>
+
+
+
 <div class="field">
 
 <label>
@@ -212,8 +193,7 @@ placeholder="Local government area or city"
 required>
 
 </div>
-
-
+// Part 2
 
 <div class="field">
 
@@ -353,6 +333,23 @@ placeholder="Telegram username">
 
 
 
+<div class="field">
+
+<label>
+Password
+</label>
+
+<input
+id="password"
+type="password"
+placeholder="Create password"
+minlength="6"
+required>
+
+</div>
+
+
+
 <button
 type="submit"
 id="signupButton">
@@ -363,10 +360,7 @@ Create Business Account
 
 
 
-<p
-id="signupMessage">
-</p>
-
+<p id="signupMessage"></p>
 
 
 </form>
@@ -392,6 +386,15 @@ id="signupMessage">
 
 
 
+<script>
+document.getElementById("year").textContent =
+new Date().getFullYear();
+</script>
+
+
+<script src="business-signup.js"></script>
+
+
 </body>
 
-  </html>
+    </html>
