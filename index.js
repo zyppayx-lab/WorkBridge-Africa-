@@ -11,7 +11,7 @@ const SUPABASE_URL =
 "https://razemjveqtmnutvluxab.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
+"YOUR_ANON_KEY";
 
 const supabase =
 window.supabase.createClient(
@@ -68,10 +68,6 @@ document.getElementById(
 "searchInput"
 );
 
-//==============================
-// MOBILE MENU
-//==============================
-
 const menuButton =
 document.getElementById(
 "menuButton"
@@ -82,16 +78,24 @@ document.getElementById(
 "mobileMenu"
 );
 
+const newsletterForm =
+document.getElementById(
+"newsletterForm"
+);
+
+//==============================
+// MOBILE MENU
+//==============================
+
 menuButton?.addEventListener(
 "click",
 ()=>{
 
-    mobileMenu.classList.toggle(
-    "active"
+    mobileMenu?.classList.toggle(
+        "active"
     );
 
-}
-);
+});
 
 //==============================
 // PLATFORM STATS
@@ -99,60 +103,79 @@ menuButton?.addEventListener(
 
 async function loadStats(){
 
-    try{
+    if(businessCount){
 
-        const { count: businesses } =
-        await supabase
-        .from("businesses")
-        .select("id",{
-            count:"exact"
-        })
-        .eq("status","active");
-
-
-        const { count: jobs } =
-        await supabase
-        .from("jobs")
-        .select("id",{
-            count:"exact"
-        })
-        .eq("status","active");
-
-
-        if(businessCount){
-
-            businessCount.textContent =
-            businesses || 0;
-
-        }
-
-
-        if(jobCount){
-
-            jobCount.textContent =
-            jobs || 0;
-
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-        if(businessCount){
-
-            businessCount.textContent = "0";
-
-        }
-
-        if(jobCount){
-
-            jobCount.textContent = "0";
-
-        }
+        businessCount.textContent =
+        "...";
 
     }
 
-            }
+    if(jobCount){
+
+        jobCount.textContent =
+        "...";
+
+    }
+
+    const {
+
+        count:businesses
+
+    } = await supabase
+
+    .from("businesses")
+
+    .select("*",{
+
+        count:"exact",
+        head:true
+
+    })
+
+    .eq(
+        "status",
+        "active"
+    );
+
+
+
+    const {
+
+        count:jobs
+
+    } = await supabase
+
+    .from("jobs")
+
+    .select("*",{
+
+        count:"exact",
+        head:true
+
+    })
+
+    .eq(
+        "status",
+        "active"
+    );
+
+
+
+    if(businessCount){
+
+        businessCount.textContent =
+        businesses ?? 0;
+
+    }
+
+    if(jobCount){
+
+        jobCount.textContent =
+        jobs ?? 0;
+
+    }
+
+}
 
 //==============================
 // FEATURED BUSINESSES
@@ -162,8 +185,9 @@ async function loadFeaturedBusinesses(){
 
     if(!featuredBusinesses) return;
 
-    featuredBusinesses.innerHTML = `
-    <p class="loading">
+    featuredBusinesses.innerHTML =
+
+    `<p class="loading">
     Loading businesses...
     </p>`;
 
@@ -216,7 +240,6 @@ async function loadFeaturedBusinesses(){
     }
 
     featuredBusinesses.innerHTML = "";
-
     data.forEach(business=>{
 
         featuredBusinesses.innerHTML += `
@@ -228,34 +251,32 @@ src="${
 business.logo_url ||
 "assets/default-business.jpg"
 }"
-alt="${
-business.business_name
-}">
+alt="${business.business_name}">
 
 <div class="business-content">
 
 <span class="business-category">
 
 ${
-business.categories?.[0] ||
-"Business"
+Array.isArray(business.categories)
+? business.categories[0]
+: "Business"
 }
 
 </span>
 
 <h3>
 
-${
-business.business_name
-}
+${business.business_name}
 
 </h3>
 
 <p>
 
 ${
-business.description?.substring(0,120) ||
-"No description available."
+business.description
+? business.description.substring(0,120)
+: "No description available."
 }
 
 ...
@@ -300,10 +321,6 @@ View Business
     });
 
 }
-//======================================================
-// index.js (Part 2)
-// WorkBridge Africa
-//======================================================
 
 //==============================
 // LATEST JOBS
@@ -314,9 +331,12 @@ async function loadLatestJobs(){
     if(!latestJobs) return;
 
     latestJobs.innerHTML =
-    `<p class="loading">
-    Loading latest jobs...
-    </p>`;
+
+`<p class="loading">
+
+Loading latest jobs...
+
+</p>`;
 
     const {
 
@@ -385,7 +405,7 @@ ${job.title}
 
 <i class="fa-solid fa-location-dot"></i>
 
-${job.state || "Unknown"},
+${job.state},
 ${job.country}
 
 </p>
@@ -402,12 +422,14 @@ ${job.salary || "Negotiable"}
 
 <span>
 
-${new Date(job.created_at)
-.toLocaleDateString()}
+${new Date(
+job.created_at
+).toLocaleDateString()}
 
 </span>
 
-<a href="job.html?id=${job.id}">
+<a
+href="job.html?id=${job.id}">
 
 View Job
 
@@ -432,9 +454,12 @@ async function loadRecentBusinesses(){
     if(!recentBusinesses) return;
 
     recentBusinesses.innerHTML =
-    `<p class="loading">
-    Loading businesses...
-    </p>`;
+
+`<p class="loading">
+
+Loading businesses...
+
+</p>`;
 
     const {
 
@@ -471,7 +496,6 @@ async function loadRecentBusinesses(){
     }
 
     recentBusinesses.innerHTML = "";
-
     data.forEach(business=>{
 
         recentBusinesses.innerHTML += `
@@ -489,7 +513,11 @@ alt="${business.business_name}">
 
 <span class="business-category">
 
-${business.categories?.[0] || "Business"}
+${
+Array.isArray(business.categories)
+? business.categories[0]
+: "Business"
+}
 
 </span>
 
@@ -501,7 +529,11 @@ ${business.business_name}
 
 <p>
 
-${business.description?.substring(0,120) || ""}
+${
+business.description
+? business.description.substring(0,120)
+: "No description available."
+}
 
 ...
 
@@ -529,8 +561,8 @@ ${business.views || 0}
 </div>
 
 <a
-href="business.html?slug=${business.slug}"
-class="business-btn">
+class="business-btn"
+href="business.html?slug=${business.slug}">
 
 View Business
 
@@ -545,10 +577,6 @@ View Business
     });
 
 }
-//======================================================
-// index.js (Part 3)
-// WorkBridge Africa
-//======================================================
 
 //==============================
 // LOAD CATEGORIES
@@ -600,7 +628,9 @@ async function loadCategories(){
     categoriesGrid.innerHTML = "";
 
     [...categories]
+
     .sort()
+
     .forEach(category=>{
 
         categoriesGrid.innerHTML += `
@@ -619,7 +649,7 @@ ${category}
 
 <p>
 
-Browse businesses
+Browse Businesses
 
 </p>
 
@@ -673,7 +703,9 @@ async function loadCountries(){
     countriesGrid.innerHTML = "";
 
     [...countries]
+
     .sort()
+
     .forEach(country=>{
 
         countriesGrid.innerHTML += `
@@ -713,77 +745,8 @@ async function smartSearch(keyword){
 
     if(keyword==="") return;
 
-    const {
-
-        data:businesses,
-        error:businessError
-
-    } = await supabase
-
-    .from("businesses")
-
-    .select("id")
-
-    .eq(
-        "status",
-        "active"
-    )
-
-    .or(
-`business_name.ilike.%${keyword}%,description.ilike.%${keyword}%`
-    )
-
-    .limit(1);
-
-    if(
-        !businessError &&
-        businesses.length
-    ){
-
-        window.location.href =
-`businesses.html?search=${encodeURIComponent(keyword)}`;
-
-        return;
-
-    }
-
-    const {
-
-        data:jobs,
-        error:jobError
-
-    } = await supabase
-
-    .from("jobs")
-
-    .select("id")
-
-    .eq(
-        "status",
-        "active"
-    )
-
-    .or(
-`title.ilike.%${keyword}%,description.ilike.%${keyword}%`
-    )
-
-    .limit(1);
-
-    if(
-        !jobError &&
-        jobs.length
-    ){
-
-        window.location.href =
-`jobs.html?search=${encodeURIComponent(keyword)}`;
-
-        return;
-
-    }
-
-    alert(
-        "No businesses or jobs found."
-    );
+    window.location.href =
+`search.html?q=${encodeURIComponent(keyword)}`;
 
 }
 //======================================================
@@ -811,14 +774,11 @@ async(e)=>{
 
 }
 
+);
+
 //==============================
 // NEWSLETTER
 //==============================
-
-const newsletterForm =
-document.getElementById(
-"newsletterForm"
-);
 
 newsletterForm?.addEventListener(
 
@@ -831,7 +791,7 @@ function(e){
     const email =
 
     this.querySelector(
-    "input"
+        "input"
     ).value.trim();
 
     if(email===""){
@@ -841,17 +801,21 @@ function(e){
     }
 
     alert(
+
 `Thank you for subscribing!
 
 You'll receive updates from WorkBridge Africa.`
+
     );
 
     this.reset();
 
 }
 
+);
+
 //==============================
-// SCROLL TO TOP
+// SCROLL EFFECT
 //==============================
 
 window.addEventListener(
@@ -863,18 +827,20 @@ window.addEventListener(
     if(window.scrollY>120){
 
         document.body.classList.add(
-        "scrolled"
+            "scrolled"
         );
 
     }else{
 
         document.body.classList.remove(
-        "scrolled"
+            "scrolled"
         );
 
     }
 
-});
+}
+
+);
 
 //==============================
 // IMAGE FALLBACK
@@ -909,23 +875,24 @@ document.addEventListener(
 
 "DOMContentLoaded",
 
-()=>{
+async()=>{
 
-    loadStats();
+    await loadStats();
 
-    loadFeaturedBusinesses();
+    await loadFeaturedBusinesses();
 
-    loadLatestJobs();
+    await loadLatestJobs();
 
-    loadRecentBusinesses();
+    await loadRecentBusinesses();
 
-    loadCategories();
+    await loadCategories();
 
-    loadCountries();
+    await loadCountries();
 
-});
+}
 
+);
 
 //======================================================
 // END OF index.js
-//======================================================
+//======================================================l
