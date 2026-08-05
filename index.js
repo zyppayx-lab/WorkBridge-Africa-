@@ -23,77 +23,40 @@ window.supabase.createClient(
 // DOM
 //==============================
 
-const featuredBusinesses =
-document.getElementById(
-"featuredBusinesses"
-);
-
-const latestJobs =
-document.getElementById(
-"latestJobs"
-);
-
-const recentBusinesses =
-document.getElementById(
-"recentBusinesses"
-);
-
-const categoriesGrid =
-document.getElementById(
-"categoriesGrid"
-);
-
-const countriesGrid =
-document.getElementById(
-"countriesGrid"
-);
-
 const businessCount =
-document.getElementById(
-"businessCount"
-);
+document.getElementById("businessCount");
 
 const jobCount =
-document.getElementById(
-"jobCount"
-);
+document.getElementById("jobCount");
+
+const categoriesGrid =
+document.getElementById("categoriesGrid");
+
+const countriesGrid =
+document.getElementById("countriesGrid");
 
 const searchForm =
-document.getElementById(
-"searchForm"
-);
+document.getElementById("searchForm");
 
 const searchInput =
-document.getElementById(
-"searchInput"
-);
-
-const menuButton =
-document.getElementById(
-"menuButton"
-);
-
-const mobileMenu =
-document.getElementById(
-"mobileMenu"
-);
+document.getElementById("searchInput");
 
 const newsletterForm =
-document.getElementById(
-"newsletterForm"
-);
+document.getElementById("newsletterForm");
+
+const menuButton =
+document.getElementById("menuButton");
+
+const mobileMenu =
+document.getElementById("mobileMenu");
 
 //==============================
 // MOBILE MENU
 //==============================
 
-menuButton?.addEventListener(
-"click",
-()=>{
+menuButton?.addEventListener("click", () => {
 
-    mobileMenu?.classList.toggle(
-        "active"
-    );
+    mobileMenu?.classList.toggle("active");
 
 });
 
@@ -103,480 +66,107 @@ menuButton?.addEventListener(
 
 async function loadStats(){
 
-    if(businessCount){
+    try{
 
-        businessCount.textContent =
-        "...";
+        if(businessCount){
 
-    }
+            businessCount.textContent = "...";
 
-    if(jobCount){
-
-        jobCount.textContent =
-        "...";
-
-    }
-
-    const {
-
-        count:businesses
-
-    } = await supabase
-
-    .from("businesses")
-
-    .select("*",{
-
-        count:"exact",
-        head:true
-
-    })
-
-    .eq(
-        "status",
-        "active"
-    );
-
-
-
-    const {
-
-        count:jobs
-
-    } = await supabase
-
-    .from("jobs")
-
-    .select("*",{
-
-        count:"exact",
-        head:true
-
-    })
-
-    .eq(
-        "status",
-        "active"
-    );
-
-
-
-    if(businessCount){
-
-        businessCount.textContent =
-        businesses ?? 0;
-
-    }
-
-    if(jobCount){
-
-        jobCount.textContent =
-        jobs ?? 0;
-
-    }
-
-}
-
-//==============================
-// FEATURED BUSINESSES
-//==============================
-
-async function loadFeaturedBusinesses(){
-
-    if(!featuredBusinesses) return;
-
-    featuredBusinesses.innerHTML =
-
-    `<p class="loading">
-    Loading businesses...
-    </p>`;
-
-    const {
-
-        data,
-        error
-
-    } = await supabase
-
-    .from("businesses")
-
-    .select("*")
-
-    .eq(
-        "status",
-        "active"
-    )
-
-    .gt(
-        "featured_until",
-        new Date().toISOString()
-    )
-
-    .order(
-        "featured_until",
-        {
-            ascending:false
         }
-    )
 
-    .limit(6);
+        if(jobCount){
 
-    if(error){
+            jobCount.textContent = "...";
 
-        featuredBusinesses.innerHTML =
-        "<p>Unable to load businesses.</p>";
-
-        return;
-
-    }
-
-    if(!data.length){
-
-        featuredBusinesses.innerHTML =
-        "<p>No featured businesses available.</p>";
-
-        return;
-
-    }
-
-    featuredBusinesses.innerHTML = "";
-    data.forEach(business=>{
-
-        featuredBusinesses.innerHTML += `
-
-<article class="business-card">
-
-<img
-src="${
-business.logo_url ||
-"assets/default-business.jpg"
-}"
-alt="${business.business_name}">
-
-<div class="business-content">
-
-<span class="business-category">
-
-${
-Array.isArray(business.categories)
-? business.categories[0]
-: "Business"
-}
-
-</span>
-
-<h3>
-
-${business.business_name}
-
-</h3>
-
-<p>
-
-${
-business.description
-? business.description.substring(0,120)
-: "No description available."
-}
-
-...
-
-</p>
-
-<div class="business-meta">
-
-<span>
-
-<i class="fa-solid fa-location-dot"></i>
-
-${business.state},
-${business.country}
-
-</span>
-
-<span>
-
-<i class="fa-solid fa-eye"></i>
-
-${business.views || 0}
-
-</span>
-
-</div>
-
-<a
-class="business-btn"
-href="business.html?slug=${business.slug}">
-
-View Business
-
-</a>
-
-</div>
-
-</article>
-
-`;
-
-    });
-
-}
-
-//==============================
-// LATEST JOBS
-//==============================
-
-async function loadLatestJobs(){
-
-    if(!latestJobs) return;
-
-    latestJobs.innerHTML =
-
-`<p class="loading">
-
-Loading latest jobs...
-
-</p>`;
-
-    const {
-
-        data,
-        error
-
-    } = await supabase
-
-    .from("jobs")
-
-    .select("*")
-
-    .eq(
-        "status",
-        "active"
-    )
-
-    .order(
-        "created_at",
-        {
-            ascending:false
         }
-    )
 
-    .limit(8);
+        const {
 
-    if(error){
+            count: businesses,
+            error: businessError
 
-        latestJobs.innerHTML =
-        "<p>Unable to load jobs.</p>";
+        } = await supabase
 
-        return;
+        .from("businesses")
 
-    }
+        .select("id",{
 
-    if(!data.length){
+            count:"exact",
+            head:true
 
-        latestJobs.innerHTML =
-        "<p>No jobs available.</p>";
+        })
 
-        return;
+        .eq("status","active");
 
-    }
+        if(businessError){
 
-    latestJobs.innerHTML = "";
+            console.error(businessError);
 
-    data.forEach(job=>{
-
-        latestJobs.innerHTML += `
-
-<article class="job-card">
-
-<span class="job-type">
-
-${job.category || "General"}
-
-</span>
-
-<h3>
-
-${job.title}
-
-</h3>
-
-<p>
-
-<i class="fa-solid fa-location-dot"></i>
-
-${job.state},
-${job.country}
-
-</p>
-
-<p>
-
-<i class="fa-solid fa-money-bill-wave"></i>
-
-${job.salary || "Negotiable"}
-
-</p>
-
-<div class="job-footer">
-
-<span>
-
-${new Date(
-job.created_at
-).toLocaleDateString()}
-
-</span>
-
-<a
-href="job.html?id=${job.id}">
-
-View Job
-
-</a>
-
-</div>
-
-</article>
-
-`;
-
-    });
-
-}
-
-//==============================
-// RECENT BUSINESSES
-//==============================
-
-async function loadRecentBusinesses(){
-
-    if(!recentBusinesses) return;
-
-    recentBusinesses.innerHTML =
-
-`<p class="loading">
-
-Loading businesses...
-
-</p>`;
-
-    const {
-
-        data,
-        error
-
-    } = await supabase
-
-    .from("businesses")
-
-    .select("*")
-
-    .eq(
-        "status",
-        "active"
-    )
-
-    .order(
-        "created_at",
-        {
-            ascending:false
         }
-    )
 
-    .limit(6);
+        const {
 
-    if(error){
+            count: jobs,
+            error: jobError
 
-        recentBusinesses.innerHTML =
-        "<p>Unable to load businesses.</p>";
+        } = await supabase
 
-        return;
+        .from("jobs")
+
+        .select("id",{
+
+            count:"exact",
+            head:true
+
+        })
+
+        .eq("status","active");
+
+        if(jobError){
+
+            console.error(jobError);
+
+        }
+
+        if(businessCount){
+
+            businessCount.textContent =
+            businesses ?? 0;
+
+        }
+
+        if(jobCount){
+
+            jobCount.textContent =
+            jobs ?? 0;
+
+        }
 
     }
 
-    recentBusinesses.innerHTML = "";
-    data.forEach(business=>{
+    catch(error){
 
-        recentBusinesses.innerHTML += `
+        console.error(error);
 
-<article class="business-card">
+        if(businessCount){
 
-<img
-src="${
-business.logo_url ||
-"assets/default-business.jpg"
-}"
-alt="${business.business_name}">
+            businessCount.textContent = "0";
 
-<div class="business-content">
+        }
 
-<span class="business-category">
+        if(jobCount){
 
-${
-Array.isArray(business.categories)
-? business.categories[0]
-: "Business"
-}
+            jobCount.textContent = "0";
 
-</span>
+        }
 
-<h3>
-
-${business.business_name}
-
-</h3>
-
-<p>
-
-${
-business.description
-? business.description.substring(0,120)
-: "No description available."
-}
-
-...
-
-</p>
-
-<div class="business-meta">
-
-<span>
-
-<i class="fa-solid fa-location-dot"></i>
-
-${business.state},
-${business.country}
-
-</span>
-
-<span>
-
-<i class="fa-solid fa-eye"></i>
-
-${business.views || 0}
-
-</span>
-
-</div>
-
-<a
-class="business-btn"
-href="business.html?slug=${business.slug}">
-
-View Business
-
-</a>
-
-</div>
-
-</article>
-
-`;
-
-    });
+    }
 
 }
+//======================================================
+// index.js (Part 2)
+// WorkBridge Africa
+//======================================================
 
 //==============================
 // LOAD CATEGORIES
@@ -586,54 +176,57 @@ async function loadCategories(){
 
     if(!categoriesGrid) return;
 
-    const {
+    try{
 
-        data,
-        error
+        const {
 
-    } = await supabase
+            data,
+            error
 
-    .from("businesses")
+        } = await supabase
 
-    .select("categories")
+        .from("businesses")
 
-    .eq(
-        "status",
-        "active"
-    );
+        .select("categories")
 
-    if(error) return;
+        .eq("status","active");
 
-    const categories =
-    new Set();
+        if(error){
 
-    data.forEach(item=>{
-
-        if(Array.isArray(item.categories)){
-
-            item.categories.forEach(category=>{
-
-                if(category){
-
-                    categories.add(category);
-
-                }
-
-            });
+            console.error(error);
+            return;
 
         }
 
-    });
+        const categories = new Set();
 
-    categoriesGrid.innerHTML = "";
+        data.forEach(item=>{
 
-    [...categories]
+            if(Array.isArray(item.categories)){
 
-    .sort()
+                item.categories.forEach(category=>{
 
-    .forEach(category=>{
+                    if(category){
 
-        categoriesGrid.innerHTML += `
+                        categories.add(category);
+
+                    }
+
+                });
+
+            }
+
+        });
+
+        categoriesGrid.innerHTML = "";
+
+        [...categories]
+
+        .sort()
+
+        .forEach(category=>{
+
+            categoriesGrid.innerHTML += `
 
 <a
 href="businesses.html?category=${encodeURIComponent(category)}"
@@ -641,23 +234,23 @@ class="category-card">
 
 <i class="fa-solid fa-layer-group"></i>
 
-<h3>
+<h3>${category}</h3>
 
-${category}
-
-</h3>
-
-<p>
-
-Browse Businesses
-
-</p>
+<p>Browse Businesses</p>
 
 </a>
 
 `;
 
-    });
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
 
 }
 
@@ -669,68 +262,71 @@ async function loadCountries(){
 
     if(!countriesGrid) return;
 
-    const {
+    try{
 
-        data,
-        error
+        const {
 
-    } = await supabase
+            data,
+            error
 
-    .from("businesses")
+        } = await supabase
 
-    .select("country")
+        .from("businesses")
 
-    .eq(
-        "status",
-        "active"
-    );
+        .select("country")
 
-    if(error) return;
+        .eq("status","active");
 
-    const countries =
-    new Set();
+        if(error){
 
-    data.forEach(item=>{
-
-        if(item.country){
-
-            countries.add(item.country);
+            console.error(error);
+            return;
 
         }
 
-    });
+        const countries = new Set();
 
-    countriesGrid.innerHTML = "";
+        data.forEach(item=>{
 
-    [...countries]
+            if(item.country){
 
-    .sort()
+                countries.add(item.country);
 
-    .forEach(country=>{
+            }
 
-        countriesGrid.innerHTML += `
+        });
+
+        countriesGrid.innerHTML = "";
+
+        [...countries]
+
+        .sort()
+
+        .forEach(country=>{
+
+            countriesGrid.innerHTML += `
 
 <a
 href="businesses.html?country=${encodeURIComponent(country)}"
 class="country-card">
 
-<h4>
+<h4>${country}</h4>
 
-${country}
-
-</h4>
-
-<p>
-
-Explore Listings
-
-</p>
+<p>Explore Listings</p>
 
 </a>
 
 `;
 
-    });
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
 
 }
 
@@ -738,19 +334,18 @@ Explore Listings
 // SMART SEARCH
 //==============================
 
-async function smartSearch(keyword){
+function smartSearch(keyword){
 
-    keyword =
-    keyword.trim();
+    keyword = keyword.trim();
 
-    if(keyword==="") return;
+    if(keyword === "") return;
 
     window.location.href =
 `search.html?q=${encodeURIComponent(keyword)}`;
 
 }
 //======================================================
-// index.js (Part 4)
+// index.js (Part 3)
 // WorkBridge Africa
 //======================================================
 
@@ -762,53 +357,15 @@ searchForm?.addEventListener(
 
 "submit",
 
-async(e)=>{
-
-    e.preventDefault();
-
-    await smartSearch(
-
-        searchInput.value
-
-    );
-
-}
-
-);
-
-//==============================
-// NEWSLETTER
-//==============================
-
-newsletterForm?.addEventListener(
-
-"submit",
-
 function(e){
 
     e.preventDefault();
 
-    const email =
+    smartSearch(
 
-    this.querySelector(
-        "input"
-    ).value.trim();
-
-    if(email===""){
-
-        return;
-
-    }
-
-    alert(
-
-`Thank you for subscribing!
-
-You'll receive updates from WorkBridge Africa.`
+        searchInput.value
 
     );
-
-    this.reset();
 
 }
 
@@ -824,13 +381,15 @@ window.addEventListener(
 
 ()=>{
 
-    if(window.scrollY>120){
+    if(window.scrollY > 120){
 
         document.body.classList.add(
             "scrolled"
         );
 
-    }else{
+    }
+
+    else{
 
         document.body.classList.remove(
             "scrolled"
@@ -854,7 +413,7 @@ document.addEventListener(
 
     const element = event.target;
 
-    if(element.tagName==="IMG"){
+    if(element.tagName === "IMG"){
 
         element.src =
         "assets/default-business.jpg";
@@ -879,12 +438,6 @@ async()=>{
 
     await loadStats();
 
-    await loadFeaturedBusinesses();
-
-    await loadLatestJobs();
-
-    await loadRecentBusinesses();
-
     await loadCategories();
 
     await loadCountries();
@@ -895,4 +448,4 @@ async()=>{
 
 //======================================================
 // END OF index.js
-//======================================================l
+//======================================================
