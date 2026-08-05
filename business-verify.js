@@ -1,6 +1,7 @@
 // business-verify.js
 
 const SUPABASE_URL = "https://razemjveqtmnutvluxab.supabase.co";
+
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
 
 
@@ -68,7 +69,21 @@ form.addEventListener("submit", async(e)=>{
 
 
         const password =
-        sessionStorage.getItem("signup_password");
+        sessionStorage.getItem("signup_password") || "";
+
+
+        const otp =
+        otpInput.value.trim();
+
+
+
+        if(!email || !password || !otp){
+
+            throw new Error(
+                "Email, OTP and password are required."
+            );
+
+        }
 
 
 
@@ -96,8 +111,7 @@ form.addEventListener("submit", async(e)=>{
 
                     email,
 
-                    otp:
-                    otpInput.value.trim(),
+                    otp,
 
                     password
 
@@ -122,7 +136,7 @@ form.addEventListener("submit", async(e)=>{
             );
 
         }
-// Part 2
+
 
 
         message.textContent =
@@ -153,7 +167,10 @@ form.addEventListener("submit", async(e)=>{
     } catch(error){
 
 
-        console.error(error);
+        console.error(
+            "VERIFY ERROR:",
+            error
+        );
 
 
         message.textContent =
@@ -183,7 +200,21 @@ resendButton.addEventListener("click", async()=>{
     resendButton.disabled = true;
 
 
+    message.textContent = "";
+
+
+
     try{
+
+
+        if(!email){
+
+            throw new Error(
+                "Signup email not found."
+            );
+
+        }
+
 
 
         const response =
@@ -240,6 +271,12 @@ resendButton.addEventListener("click", async()=>{
 
 
     } catch(error){
+
+
+        console.error(
+            "RESEND ERROR:",
+            error
+        );
 
 
         message.textContent =
