@@ -3,6 +3,7 @@
 const SUPABASE_URL = "https://razemjveqtmnutvluxab.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
 
+
 const signupFunctionUrl =
 `${SUPABASE_URL}/functions/v1/signup-init`;
 
@@ -24,7 +25,9 @@ form.addEventListener("submit", async (e)=>{
 
 
     button.disabled = true;
-    button.textContent = "Creating account...";
+
+    button.textContent =
+    "Creating account...";
 
 
     message.textContent = "";
@@ -56,6 +59,7 @@ form.addEventListener("submit", async (e)=>{
                     method:"POST",
 
                     headers:{
+
                         "Authorization":
                         `Bearer ${SUPABASE_ANON_KEY}`,
 
@@ -64,11 +68,13 @@ form.addEventListener("submit", async (e)=>{
 
                         "Content-Type":
                         logoFile.type
+
                     },
 
                     body:logoFile
                 }
             );
+
 
 
             if(!uploadResponse.ok){
@@ -80,71 +86,111 @@ form.addEventListener("submit", async (e)=>{
             }
 
 
+
             logo_url =
             `${SUPABASE_URL}/storage/v1/object/public/uploads/${fileName}`;
 
         }
-// Part 2
+
+
 
         const payload = {
 
+
             business_name:
-            document.getElementById("businessName").value.trim(),
+            document.getElementById("businessName")
+            .value.trim(),
+
+
 
             email:
-            document.getElementById("email").value.trim(),
+            document.getElementById("email")
+            .value.trim(),
+
+
 
             password:
-            document.getElementById("password").value,
+            document.getElementById("password")
+            .value,
+
 
 
             phone:
-            document.getElementById("phone").value.trim(),
+            document.getElementById("phone")
+            .value.trim(),
+
+
 
             whatsapp:
-            document.getElementById("whatsapp").value.trim(),
+            document.getElementById("whatsapp")
+            .value.trim(),
+
 
 
             country:
-            document.getElementById("country").value.trim(),
+            document.getElementById("country")
+            .value.trim(),
+
+
 
             state:
-            document.getElementById("state").value.trim(),
+            document.getElementById("state")
+            .value.trim(),
+
+
 
             lga:
-            document.getElementById("lga").value.trim(),
+            document.getElementById("lga")
+            .value.trim(),
+
 
 
             address:
-            document.getElementById("address").value.trim(),
+            document.getElementById("address")
+            .value.trim(),
+
 
 
             categories:
-            document.getElementById("categories").value.trim(),
+            document.getElementById("categories")
+            .value.trim(),
+
 
 
             description:
-            document.getElementById("description").value.trim(),
+            document.getElementById("description")
+            .value.trim(),
+
 
 
             website:
-            document.getElementById("website").value.trim(),
+            document.getElementById("website")
+            .value.trim(),
+
 
 
             facebook:
-            document.getElementById("facebook").value.trim(),
+            document.getElementById("facebook")
+            .value.trim(),
+
 
 
             instagram:
-            document.getElementById("instagram").value.trim(),
+            document.getElementById("instagram")
+            .value.trim(),
+
 
 
             x:
-            document.getElementById("x").value.trim(),
+            document.getElementById("x")
+            .value.trim(),
+
 
 
             telegram:
-            document.getElementById("telegram").value.trim(),
+            document.getElementById("telegram")
+            .value.trim(),
+
 
 
             logo_url
@@ -153,23 +199,46 @@ form.addEventListener("submit", async (e)=>{
 
 
 
+        // Save temporarily for OTP verification
+
+        sessionStorage.setItem(
+            "signup_email",
+            payload.email
+        );
+
+
+        sessionStorage.setItem(
+            "signup_password",
+            payload.password
+        );
+
+
+
         const response =
         await fetch(
+
             signupFunctionUrl,
+
             {
+
                 method:"POST",
 
                 headers:{
+
                     "Content-Type":
                     "application/json",
 
                     "apikey":
                     SUPABASE_ANON_KEY
+
                 },
+
 
                 body:
                 JSON.stringify(payload)
+
             }
+
         );
 
 
@@ -182,35 +251,27 @@ form.addEventListener("submit", async (e)=>{
         if(!response.ok){
 
             throw new Error(
+
                 result.error ||
                 "Signup failed."
+
             );
 
         }
 
 
-message.textContent =
-"Verification code sent. Check your email.";
+
+        message.textContent =
+        "Verification code sent. Check your email.";
 
 
-sessionStorage.setItem(
-    "signup_email",
-    payload.email
-);
 
+        setTimeout(()=>{
 
-sessionStorage.setItem(
-    "signup_password",
-    payload.password
-);
+            window.location.href =
+            "business-verify.html";
 
-
-setTimeout(()=>{
-
-    window.location.href =
-    "business-verify.html";
-
-},1000);
+        },1000);
 
 
 
@@ -220,8 +281,21 @@ setTimeout(()=>{
         console.error(error);
 
 
+
+        sessionStorage.removeItem(
+            "signup_email"
+        );
+
+
+        sessionStorage.removeItem(
+            "signup_password"
+        );
+
+
+
         message.textContent =
         error.message;
+
 
 
     } finally {
@@ -229,8 +303,10 @@ setTimeout(()=>{
 
         button.disabled = false;
 
+
         button.textContent =
         "Create Business Account";
+
 
     }
 
