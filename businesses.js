@@ -1,517 +1,404 @@
 //======================================================
 // WorkBridge Africa
-// businesses.js (Part 1)
+// businesses.js
+// Part 1
 //======================================================
 
+
 //==============================
-// SUPABASE
+// SUPABASE CONFIG
 //==============================
 
-const SUPABASE_URL = "https://razemjveqtmnutvluxab.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_2utxbSM-OS6QTitKo6MobA_spBvL_2r";
+const SUPABASE_URL =
+"https://razemjveqtmnutvluxab.supabase.co";
 
-const supabase = window.supabase.createClient(
+
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
+
+
+const supabase =
+window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
+
+
 
 //==============================
 // DOM
 //==============================
 
 const businessGrid =
-document.getElementById("businessGrid");
+document.getElementById(
+    "businessGrid"
+);
 
-const resultCount =
-document.getElementById("resultCount");
-
-const emptyState =
-document.getElementById("emptyState");
 
 const searchForm =
-document.getElementById("searchForm");
+document.getElementById(
+    "businessSearchForm"
+);
+
 
 const searchInput =
-document.getElementById("searchInput");
+document.getElementById(
+    "businessSearchInput"
+);
 
-const countryFilter =
-document.getElementById("countryFilter");
 
-const stateFilter =
-document.getElementById("stateFilter");
+const businessCount =
+document.getElementById(
+    "businessCount"
+);
 
-const categoryFilter =
-document.getElementById("categoryFilter");
 
-const sortFilter =
-document.getElementById("sortFilter");
+const menuButton =
+document.getElementById(
+    "menuButton"
+);
 
-const previousPage =
-document.getElementById("previousPage");
 
-const nextPage =
-document.getElementById("nextPage");
+const mobileMenu =
+document.getElementById(
+    "mobileMenu"
+);
 
-const pageNumber =
-document.getElementById("pageNumber");
+
+
 
 //==============================
 // MOBILE MENU
 //==============================
 
-const menuButton =
-document.getElementById("menuButton");
+menuButton?.addEventListener(
+"click",
+()=>{
 
-const mobileMenu =
-document.getElementById("mobileMenu");
-
-menuButton?.addEventListener("click",()=>{
-
-    mobileMenu.classList.toggle("active");
+    mobileMenu?.classList.toggle(
+        "active"
+    );
 
 });
 
-//==============================
-// PAGINATION
-//==============================
 
-const PAGE_SIZE = 12;
 
-let currentPage = 1;
-
-let totalBusinesses = 0;
-
-//==============================
-// URL PARAMETERS
-//==============================
-
-const params =
-new URLSearchParams(window.location.search);
-
-searchInput.value =
-params.get("search") || "";
-
-if(params.get("country")){
-
-    countryFilter.value =
-    params.get("country");
-
-}
-
-if(params.get("category")){
-
-    categoryFilter.value =
-    params.get("category");
-
-}
-
-//==============================
-// LOAD FILTERS
-//==============================
-
-async function loadFilters(){
-
-    // Countries
-
-    const {
-
-        data:countries
-
-    } = await supabase
-
-    .from("businesses")
-
-    .select("country,state,categories")
-
-    .eq("status","active");
-
-    if(!countries) return;
-
-    const countrySet = new Set();
-
-    const stateSet = new Set();
-
-    const categorySet = new Set();
-
-    countries.forEach(item=>{
-
-        if(item.country){
-
-            countrySet.add(item.country);
-
-        }
-
-        if(item.state){
-
-            stateSet.add(item.state);
-
-        }
-
-        if(Array.isArray(item.categories)){
-
-            item.categories.forEach(category=>{
-
-                if(category){
-
-                    categorySet.add(category);
-
-                }
-
-            });
-
-        }
-
-    });
-
-    [...countrySet]
-    .sort()
-    .forEach(country=>{
-
-        countryFilter.innerHTML +=
-
-`<option value="${country}">
-
-${country}
-
-</option>`;
-
-    });
-
-    [...stateSet]
-    .sort()
-    .forEach(state=>{
-
-        stateFilter.innerHTML +=
-
-`<option value="${state}">
-
-${state}
-
-</option>`;
-
-    });
-
-    [...categorySet]
-    .sort()
-    .forEach(category=>{
-
-        categoryFilter.innerHTML +=
-
-`<option value="${category}">
-
-${category}
-
-</option>`;
-
-    });
-
-}
-
-//==============================
-// BUILD QUERY
-//==============================
-
-function buildQuery(){
-
-    let query =
-
-    supabase
-
-    .from("businesses")
-
-    .select("*",{count:"exact"})
-
-    .eq("status","active");
-
-    // Search
-
-    if(searchInput.value.trim()){
-
-        const keyword =
-
-        searchInput.value.trim();
-
-        query = query.or(
-
-`business_name.ilike.%${keyword}%,
-description.ilike.%${keyword}%,
-keywords.cs.{${keyword}}`
-
-        );
-
-    }
-
-    // Country
-
-    if(countryFilter.value){
-
-        query = query.eq(
-
-            "country",
-
-            countryFilter.value
-
-        );
-
-    }
-
-    // State
-
-    if(stateFilter.value){
-
-        query = query.eq(
-
-            "state",
-
-            stateFilter.value
-
-        );
-
-    }
-
-    // Category
-
-    if(categoryFilter.value){
-
-        query = query.contains(
-
-            "categories",
-
-            [categoryFilter.value]
-
-        );
-
-    }
-
-    return query;
-
-}
-//======================================================
-// businesses.js (Part 2)
-//======================================================
 
 //==============================
 // LOAD BUSINESSES
 //==============================
 
-async function loadBusinesses(){
+async function loadBusinesses(
+keyword = ""
+){
 
-    businessGrid.innerHTML =
 
-    `<p class="loading">Loading businesses...</p>`;
+    if(!businessGrid){
 
-    emptyState.classList.add("hidden");
-
-    let query = buildQuery();
-
-    //==========================
-    // SORTING
-    //==========================
-
-    switch(sortFilter.value){
-
-        case "featured":
-
-            query = query
-
-            .order(
-                "featured_until",
-                {
-                    ascending:false,
-                    nullsFirst:false
-                }
-            )
-
-            .order(
-                "created_at",
-                {
-                    ascending:false
-                }
-            );
-
-            break;
-
-        case "popular":
-
-            query = query
-
-            .order(
-                "views",
-                {
-                    ascending:false
-                }
-            );
-
-            break;
-
-        case "name":
-
-            query = query
-
-            .order(
-                "business_name",
-                {
-                    ascending:true
-                }
-            );
-
-            break;
-
-        default:
-
-            query = query
-
-            .order(
-                "created_at",
-                {
-                    ascending:false
-                }
-            );
+        return;
 
     }
 
-    //==========================
-    // PAGINATION
-    //==========================
 
-    const from =
+    businessGrid.innerHTML =
 
-    (currentPage - 1)
+    `
+    <p class="loading">
+    Loading businesses...
+    </p>
+    `;
 
-    * PAGE_SIZE;
 
-    const to =
 
-    from + PAGE_SIZE - 1;
+    let query =
+    supabase
+
+    .from("businesses")
+
+    .select("*")
+
+    .eq(
+        "status",
+        "active"
+    );
+
+
+
+
+    if(keyword){
+
+
+        query =
+        query.or(
+
+        `
+        business_name.ilike.%${keyword}%,
+        description.ilike.%${keyword}%,
+        state.ilike.%${keyword}%,
+        country.ilike.%${keyword}%
+        `
+
+        );
+
+
+    }
+
+
 
     const {
 
         data,
+        error
 
-        error,
+    } = await query;
 
-        count
 
-    }
 
-    = await query.range(from,to);
 
     if(error){
 
-        businessGrid.innerHTML =
-
-        "<p>Unable to load businesses.</p>";
-
         console.error(error);
 
-        return;
+        businessGrid.innerHTML =
 
-    }
-
-    totalBusinesses = count || 0;
-
-    resultCount.textContent =
-
-    `${totalBusinesses} Businesses`;
-
-    pageNumber.textContent =
-
-    `Page ${currentPage}`;
-
-    previousPage.disabled =
-
-    currentPage === 1;
-
-    nextPage.disabled =
-
-    to + 1 >= totalBusinesses;
-
-    if(!data.length){
-
-        businessGrid.innerHTML = "";
-
-        emptyState.classList.remove("hidden");
+        `
+        <p>
+        Unable to load businesses.
+        </p>
+        `;
 
         return;
 
     }
+
+
+
+
+    if(!data || data.length === 0){
+
+
+        businessGrid.innerHTML =
+
+        `
+        <p>
+        No businesses found.
+        </p>
+        `;
+
+
+        return;
+
+    }
+
+
+
+
+    // Ranking:
+    // 1. Featured
+    // 2. Verified
+    // 3. Normal
+
+
+    data.sort(
+    (a,b)=>{
+
+
+        const featuredA =
+        a.featured_until &&
+        new Date(a.featured_until) > new Date()
+        ? 1 : 0;
+
+
+        const featuredB =
+        b.featured_until &&
+        new Date(b.featured_until) > new Date()
+        ? 1 : 0;
+
+
+
+        if(featuredA !== featuredB){
+
+            return featuredB - featuredA;
+
+        }
+
+
+
+        const verifiedA =
+        a.verified ? 1 : 0;
+
+
+        const verifiedB =
+        b.verified ? 1 : 0;
+
+
+
+        return verifiedB - verifiedA;
+
+
+    });
+
+
+
+    if(businessCount){
+
+        businessCount.textContent =
+        data.length;
+
+    }
+
+
+
+    renderBusinesses(data);
+
+
+}
+//======================================================
+// WorkBridge Africa
+// businesses.js
+// Part 2
+//======================================================
+
+
+//==============================
+// RENDER BUSINESSES
+//==============================
+
+function renderBusinesses(
+businesses
+){
+
 
     businessGrid.innerHTML = "";
 
-    data.forEach(renderBusinessCard);
 
-}
 
-//==============================
-// RENDER CARD
-//==============================
+    businesses.forEach(
+    business=>{
 
-function renderBusinessCard(
 
-    business
+        const isFeatured =
 
-){
+        business.featured_until &&
 
-    const featured =
+        new Date(
+            business.featured_until
+        ) > new Date();
 
-    business.featured_until &&
 
-    new Date(
 
-        business.featured_until
+        const isVerified =
+        business.verified === true;
 
-    ) > new Date();
 
-    const card =
 
-    document.createElement("article");
+        businessGrid.innerHTML += `
 
-    card.className =
 
-    "business-card";
+<article class="business-card">
 
-    card.innerHTML =
 
-`
+
 <div class="business-image">
+
 
 <img
 
-src="${business.logo_url ||
+src="${
+business.logo_url ||
+"assets/default-business.jpg"
+}"
 
-'assets/default-business.webp'}"
+alt="${business.business_name}">
 
-alt="${business.business_name}"
-
-loading="lazy">
-
-${featured ?
-
-'<span class="featured-badge"><i class="fa-solid fa-star"></i> Featured</span>'
-
-:
-
-''}
-
-${business.verified ?
-
-'<span class="verified-badge"><i class="fa-solid fa-check"></i></span>'
-
-:
-
-''}
 
 </div>
 
+
+
+
+
 <div class="business-content">
+
+
+
+<div class="business-badges">
+
+
+${
+isFeatured
+
+?
+
+`
+<span class="featured-badge">
+
+<i class="fa-solid fa-star"></i>
+
+Featured
+
+</span>
+`
+
+:
+
+""
+
+}
+
+
+
+${
+isVerified
+
+?
+
+`
+<span class="verified-badge">
+
+<i class="fa-solid fa-circle-check"></i>
+
+Verified
+
+</span>
+`
+
+:
+
+""
+
+}
+
+
+
+</div>
+
+
+
+
 
 <span class="business-category">
 
-${business.categories?.[0] ||
+${
+Array.isArray(
+business.categories
+)
 
-'Business'}
+?
+
+business.categories[0]
+
+:
+
+"Business"
+
+}
 
 </span>
+
+
+
+
 
 <h3>
 
@@ -519,456 +406,213 @@ ${business.business_name}
 
 </h3>
 
-<p class="business-description">
+
+
+
+
+<p>
 
 ${
+business.description
 
-(business.description ||
+?
 
-'')
+business.description.substring(
+0,
+140
+)
 
-.substring(0,130)
+:
+
+"No description available."
 
 }
 
-...
-
 </p>
+
+
+
+
 
 <div class="business-location">
 
+
 <i class="fa-solid fa-location-dot"></i>
 
-<span>
 
 ${business.state},
 
 ${business.country}
 
-</span>
 
 </div>
 
-<div class="business-phone">
 
-<i class="fa-solid fa-phone"></i>
+
+
+
+<div class="business-contact">
+
 
 <a href="tel:${business.phone}">
 
-${business.phone}
+<i class="fa-solid fa-phone"></i>
+
+Call
 
 </a>
 
-</div>
 
-${
-business.whatsapp ?
 
-`
 
-<div class="business-whatsapp">
-
-<i class="fa-brands fa-whatsapp"></i>
-
-<a
-
-target="_blank"
-
-href="https://wa.me/${business.whatsapp.replace(/\D/g,'')}">
-
-Chat on WhatsApp
-
-</a>
-
-</div>
-
-`
-
-:
-
-""
-}
-
-<div class="business-footer">
-
-<div class="business-views">
-
-<i class="fa-solid fa-eye"></i>
-
-${business.views || 0}
-
-</div>
-
-<a
-
-class="view-business"
-
-href="business.html?slug=${business.slug}">
+<a href="business.html?slug=${business.slug}">
 
 View Business
 
 </a>
 
-</div>
 
 </div>
+
+
+
+</div>
+
+
+
+</article>
+
 
 `;
 
-    businessGrid.appendChild(card);
 
-}
-
-//==============================
-// PAGINATION
-//==============================
-
-previousPage.onclick = async ()=>{
-
-    if(currentPage===1)
-
-        return;
-
-    currentPage--;
-
-    await loadBusinesses();
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
 
     });
 
-};
 
-nextPage.onclick = async ()=>{
-
-    if(
-
-        currentPage * PAGE_SIZE
-
-        >=
-
-        totalBusinesses
-
-    )
-
-    return;
-
-    currentPage++;
-
-    await loadBusinesses();
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
-
-    });
-
-};
-//======================================================
-// businesses.js (Part 3)
-//======================================================
-
-//==============================
-// UPDATE URL
-//==============================
-
-function updateURL(){
-
-    const url = new URL(window.location);
-
-    if(searchInput.value.trim()){
-
-        url.searchParams.set(
-            "search",
-            searchInput.value.trim()
-        );
-
-    }else{
-
-        url.searchParams.delete("search");
-
-    }
-
-    if(countryFilter.value){
-
-        url.searchParams.set(
-            "country",
-            countryFilter.value
-        );
-
-    }else{
-
-        url.searchParams.delete("country");
-
-    }
-
-    if(stateFilter.value){
-
-        url.searchParams.set(
-            "state",
-            stateFilter.value
-        );
-
-    }else{
-
-        url.searchParams.delete("state");
-
-    }
-
-    if(categoryFilter.value){
-
-        url.searchParams.set(
-            "category",
-            categoryFilter.value
-        );
-
-    }else{
-
-        url.searchParams.delete("category");
-
-    }
-
-    if(sortFilter.value !== "latest"){
-
-        url.searchParams.set(
-            "sort",
-            sortFilter.value
-        );
-
-    }else{
-
-        url.searchParams.delete("sort");
-
-    }
-
-    history.replaceState(
-        {},
-        "",
-        url
-    );
 
 }
+//======================================================
+// WorkBridge Africa
+// businesses.js
+// Part 3
+//======================================================
+
 
 //==============================
-// FILTER EVENTS
+// SEARCH FORM
 //==============================
-
-async function reload(){
-
-    currentPage = 1;
-
-    updateURL();
-
-    await loadBusinesses();
-
-}
 
 searchForm?.addEventListener(
 
 "submit",
 
-async(e)=>{
+(e)=>{
 
     e.preventDefault();
 
-    await reload();
 
-});
+    const keyword =
 
-countryFilter.addEventListener(
+    searchInput.value.trim();
 
-"change",
 
-reload
 
-);
-
-stateFilter.addEventListener(
-
-"change",
-
-reload
-
-);
-
-categoryFilter.addEventListener(
-
-"change",
-
-reload
-
-);
-
-sortFilter.addEventListener(
-
-"change",
-
-reload
-
-);
-
-//==============================
-// BUSINESS CLICK
-//==============================
-
-document.addEventListener(
-
-"click",
-
-async(event)=>{
-
-    const button =
-
-    event.target.closest(
-
-        ".view-business"
-
+    loadBusinesses(
+        keyword
     );
 
-    if(!button) return;
 
-    event.preventDefault();
+}
 
-    const href =
+);
 
-    button.getAttribute("href");
 
-    const slug =
 
-    href.split("=")[1];
-
-    try{
-
-        // Find business
-
-        const {
-
-            data:business
-
-        }
-
-        = await supabase
-
-        .from("businesses")
-
-        .select("id,views")
-
-        .eq("slug",slug)
-
-        .single();
-
-        if(business){
-
-            await supabase
-
-            .from("businesses")
-
-            .update({
-
-                views:
-
-                (business.views || 0) + 1
-
-            })
-
-            .eq(
-
-                "id",
-
-                business.id
-
-            );
-
-        }
-
-    }catch(err){
-
-        console.error(err);
-
-    }
-
-    window.location.href = href;
-
-});
 
 //==============================
-// MOBILE MENU
+// URL SEARCH SUPPORT
+//==============================
+
+const params =
+
+new URLSearchParams(
+    window.location.search
+);
+
+
+
+const urlKeyword =
+
+params.get("q") || "";
+
+
+
+
+//==============================
+// IMAGE FALLBACK
 //==============================
 
 document.addEventListener(
 
-"click",
+"error",
 
 (event)=>{
 
+
+    const element =
+    event.target;
+
+
+
     if(
-
-        !mobileMenu.contains(event.target)
-
-        &&
-
-        !menuButton.contains(event.target)
-
+        element.tagName === "IMG"
     ){
 
-        mobileMenu.classList.remove(
-
-            "active"
-
-        );
+        element.src =
+        "assets/default-business.jpg";
 
     }
 
+
+},
+
+true
+
+);
+
+
+
+
+//==============================
+// PAGE START
+//==============================
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+async()=>{
+
+
+    if(searchInput){
+
+        searchInput.value =
+        urlKeyword;
+
+    }
+
+
+
+    await loadBusinesses(
+        urlKeyword
+    );
+
+
 });
 
-//==============================
-// RESTORE URL FILTERS
-//==============================
 
-const sortValue =
-
-params.get("sort");
-
-if(sortValue){
-
-    sortFilter.value =
-
-    sortValue;
-
-}
-
-const stateValue =
-
-params.get("state");
-
-if(stateValue){
-
-    stateFilter.value =
-
-    stateValue;
-
-}
-
-//==============================
-// INITIALIZE
-//==============================
-
-async function initialize(){
-
-    await loadFilters();
-
-    await loadBusinesses();
-
-}
-
-initialize();
 
 //======================================================
-// END businesses.js
+// END OF businesses.js
 //======================================================
