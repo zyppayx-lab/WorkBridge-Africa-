@@ -1,6 +1,7 @@
 //======================================================
 // WorkBridge Africa
-// index.js (Part 1)
+// index.js
+// Part 1
 //======================================================
 
 //==============================
@@ -29,6 +30,12 @@ document.getElementById("businessCount");
 const jobCount =
 document.getElementById("jobCount");
 
+const featuredBusinesses =
+document.getElementById("featuredBusinesses");
+
+const recentBusinesses =
+document.getElementById("recentBusinesses");
+
 const categoriesGrid =
 document.getElementById("categoriesGrid");
 
@@ -41,9 +48,6 @@ document.getElementById("searchForm");
 const searchInput =
 document.getElementById("searchInput");
 
-const newsletterForm =
-document.getElementById("newsletterForm");
-
 const menuButton =
 document.getElementById("menuButton");
 
@@ -54,7 +58,7 @@ document.getElementById("mobileMenu");
 // MOBILE MENU
 //==============================
 
-menuButton?.addEventListener("click", () => {
+menuButton?.addEventListener("click",()=>{
 
     mobileMenu?.classList.toggle("active");
 
@@ -70,22 +74,22 @@ async function loadStats(){
 
         if(businessCount){
 
-            businessCount.textContent = "...";
+            businessCount.textContent="...";
 
         }
 
         if(jobCount){
 
-            jobCount.textContent = "...";
+            jobCount.textContent="...";
 
         }
 
-        const {
+        const{
 
-            count: businesses,
-            error: businessError
+            count:businesses,
+            error:businessError
 
-        } = await supabase
+        }=await supabase
 
         .from("businesses")
 
@@ -104,12 +108,12 @@ async function loadStats(){
 
         }
 
-        const {
+        const{
 
-            count: jobs,
-            error: jobError
+            count:jobs,
+            error:jobError
 
-        } = await supabase
+        }=await supabase
 
         .from("jobs")
 
@@ -130,15 +134,15 @@ async function loadStats(){
 
         if(businessCount){
 
-            businessCount.textContent =
-            businesses ?? 0;
+            businessCount.textContent=
+            businesses??0;
 
         }
 
         if(jobCount){
 
-            jobCount.textContent =
-            jobs ?? 0;
+            jobCount.textContent=
+            jobs??0;
 
         }
 
@@ -150,13 +154,13 @@ async function loadStats(){
 
         if(businessCount){
 
-            businessCount.textContent = "0";
+            businessCount.textContent="0";
 
         }
 
         if(jobCount){
 
-            jobCount.textContent = "0";
+            jobCount.textContent="0";
 
         }
 
@@ -164,8 +168,231 @@ async function loadStats(){
 
 }
 //======================================================
-// index.js (Part 2)
 // WorkBridge Africa
+// index.js
+// Part 2
+//======================================================
+
+//==============================
+// LOAD BUSINESSES
+//==============================
+
+async function loadBusinesses(){
+
+    if(!featuredBusinesses || !recentBusinesses){
+
+        return;
+
+    }
+
+    featuredBusinesses.innerHTML =
+
+    `<p class="loading">
+
+        Loading businesses...
+
+    </p>`;
+
+    recentBusinesses.innerHTML =
+
+    `<p class="loading">
+
+        Loading businesses...
+
+    </p>`;
+
+    try{
+
+        const{
+
+            data,
+            error
+
+        }=await supabase
+
+        .from("businesses")
+
+        .select("*")
+
+        .eq(
+            "status",
+            "active"
+        )
+
+        .order(
+            "featured_until",
+            {
+
+                ascending:false,
+
+                nullsFirst:false
+
+            }
+
+        )
+
+        .order(
+            "created_at",
+            {
+
+                ascending:false
+
+            }
+
+        )
+
+        .limit(12);
+
+        if(error){
+
+            console.error(error);
+
+            featuredBusinesses.innerHTML =
+            "<p>Unable to load businesses.</p>";
+
+            recentBusinesses.innerHTML =
+            "<p>Unable to load businesses.</p>";
+
+            return;
+
+        }
+
+        if(!data || data.length===0){
+
+            featuredBusinesses.innerHTML =
+            "<p>No businesses available.</p>";
+
+            recentBusinesses.innerHTML = "";
+
+            return;
+
+        }
+
+        featuredBusinesses.innerHTML = "";
+
+        recentBusinesses.innerHTML = "";
+
+        data.forEach((business,index)=>{
+
+            const card = `
+
+<article class="business-card">
+
+<img
+
+src="${business.logo_url || "assets/default-business.jpg"}"
+
+alt="${business.business_name}">
+
+<div class="business-content">
+
+<span class="business-category">
+
+${
+
+Array.isArray(business.categories)
+
+?
+
+business.categories[0]
+
+:
+
+"Business"
+
+}
+
+</span>
+
+<h3>
+
+${business.business_name}
+
+</h3>
+
+<p>
+
+${
+
+business.description
+
+?
+
+business.description.substring(0,120)
+
+:
+
+"No description available."
+
+}
+
+...
+
+</p>
+
+<div class="business-meta">
+
+<span>
+
+<i class="fa-solid fa-location-dot"></i>
+
+${business.state},
+${business.country}
+
+</span>
+
+<span>
+
+<i class="fa-solid fa-eye"></i>
+
+${business.views || 0}
+
+</span>
+
+</div>
+
+<a
+
+class="business-btn"
+
+href="business.html?slug=${business.slug}">
+
+View Business
+
+</a>
+
+</div>
+
+</article>
+
+`;
+
+            if(index < 6){
+
+                featuredBusinesses.innerHTML += card;
+
+            }
+
+            else{
+
+                recentBusinesses.innerHTML += card;
+
+            }
+
+        });
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+}//======================================================
+// WorkBridge Africa
+// index.js
+// Part 3
 //======================================================
 
 //==============================
@@ -178,12 +405,7 @@ async function loadCategories(){
 
     try{
 
-        const {
-
-            data,
-            error
-
-        } = await supabase
+        const { data, error } = await supabase
 
         .from("businesses")
 
@@ -194,6 +416,7 @@ async function loadCategories(){
         if(error){
 
             console.error(error);
+
             return;
 
         }
@@ -218,7 +441,7 @@ async function loadCategories(){
 
         });
 
-        categoriesGrid.innerHTML = "";
+        categoriesGrid.innerHTML="";
 
         [...categories]
 
@@ -264,12 +487,7 @@ async function loadCountries(){
 
     try{
 
-        const {
-
-            data,
-            error
-
-        } = await supabase
+        const { data, error } = await supabase
 
         .from("businesses")
 
@@ -280,6 +498,7 @@ async function loadCountries(){
         if(error){
 
             console.error(error);
+
             return;
 
         }
@@ -296,7 +515,7 @@ async function loadCountries(){
 
         });
 
-        countriesGrid.innerHTML = "";
+        countriesGrid.innerHTML="";
 
         [...countries]
 
@@ -338,16 +557,16 @@ function smartSearch(keyword){
 
     keyword = keyword.trim();
 
-    if(keyword === "") return;
+    if(keyword===""){
+
+        return;
+
+    }
 
     window.location.href =
 `search.html?q=${encodeURIComponent(keyword)}`;
 
 }
-//======================================================
-// index.js (Part 3)
-// WorkBridge Africa
-//======================================================
 
 //==============================
 // SEARCH FORM
@@ -370,6 +589,11 @@ function(e){
 }
 
 );
+//======================================================
+// WorkBridge Africa
+// index.js
+// Part 4
+//======================================================
 
 //==============================
 // SCROLL EFFECT
@@ -381,7 +605,7 @@ window.addEventListener(
 
 ()=>{
 
-    if(window.scrollY > 120){
+    if(window.scrollY>120){
 
         document.body.classList.add(
             "scrolled"
@@ -399,8 +623,6 @@ window.addEventListener(
 
 }
 
-);
-
 //==============================
 // IMAGE FALLBACK
 //==============================
@@ -413,7 +635,7 @@ document.addEventListener(
 
     const element = event.target;
 
-    if(element.tagName === "IMG"){
+    if(element.tagName==="IMG"){
 
         element.src =
         "assets/default-business.jpg";
@@ -436,15 +658,25 @@ document.addEventListener(
 
 async()=>{
 
-    await loadStats();
+    try{
 
-    await loadCategories();
+        await loadStats();
 
-    await loadCountries();
+        await loadBusinesses();
 
-}
+        await loadCategories();
 
-);
+        await loadCountries();
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
+});
 
 //======================================================
 // END OF index.js
