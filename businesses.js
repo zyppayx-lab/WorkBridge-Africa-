@@ -12,7 +12,7 @@ const SUPABASE_URL =
 "https://razemjveqtmnutvluxab.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"sb_publishable_2utxbSM-OS6QTitKo6MobA_spBvL_2r";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
 
 const supabase =
 window.supabase.createClient(
