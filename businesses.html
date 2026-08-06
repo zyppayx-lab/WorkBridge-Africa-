@@ -1,104 +1,104 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>
 Businesses | WorkBridge Africa 🌍
 </title>
 
-
 <meta name="description"
-content="Discover verified and featured businesses across Africa on WorkBridge Africa.">
+content="Discover businesses across Africa.">
 
+<link rel="stylesheet"
+href="businesses.css">
 
-<link rel="stylesheet" href="businesses.css">
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
 rel="stylesheet">
 
-
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 
 <script defer src="businesses.js"></script>
 
-
 </head>
-
-
 
 <body>
 
-
 <header class="header">
-
 
 <nav class="navbar">
 
-
-<a href="index.html" class="logo">
+<a href="index.html"
+class="logo">
 
 🌍
 
 <span>
+
 WorkBridge Africa
+
 </span>
 
 </a>
 
-
-
 <ul class="nav-links">
 
 <li>
+
 <a href="businesses.html">
+
 Businesses
+
 </a>
+
 </li>
 
-
 <li>
+
 <a href="jobs.html">
+
 Jobs
+
 </a>
+
 </li>
 
-
 <li>
+
 <a href="about.html">
-About
-</a>
-</li>
 
+About
+
+</a>
+
+</li>
 
 <li>
-<a href="contact.html">
-Contact
-</a>
-</li>
 
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</li>
 
 </ul>
-
-
 
 <button id="menuButton">
 
@@ -106,14 +106,9 @@ Contact
 
 </button>
 
-
 </nav>
 
-
 </header>
-
-
-
 
 <div id="mobileMenu">
 
@@ -121,33 +116,23 @@ Contact
 Businesses
 </a>
 
-
 <a href="jobs.html">
 Jobs
 </a>
-
 
 <a href="about.html">
 About
 </a>
 
-
 <a href="contact.html">
 Contact
 </a>
 
-
 </div>
-
-
-
-
 
 <main>
 
-
-<section class="business-hero">
-
+<section class="hero">
 
 <h1>
 
@@ -155,34 +140,26 @@ Discover Businesses Across Africa
 
 </h1>
 
-
 <p>
 
-Find trusted companies, verified businesses and featured brands.
+Find trusted businesses, services and companies.
 
 </p>
 
-
-
-<form id="businessSearchForm"
+<form
+id="searchForm"
 class="search-box">
-
 
 <div class="search-input">
 
-
 <i class="fa-solid fa-magnifying-glass"></i>
 
-
 <input
-id="businessSearchInput"
+id="searchInput"
 type="text"
 placeholder="Search businesses...">
 
-
 </div>
-
-
 
 <button type="submit">
 
@@ -190,126 +167,84 @@ Search
 
 </button>
 
-
 </form>
 
-
-</section>
-
-
-
-<section class="business-list-section">
-
-
-<div class="section-header">
-
-
-<h2>
-
-Businesses
-
-</h2>
-
-
-<p id="businessTotal">
-
-Loading businesses...
-
-</p>
-
-
-</div>
-
-
-
-<div id="businessGrid"
-class="business-grid">
-
-
-</div>
-
-
-</section>
-
-<section class="trust-section">
-
-
-<div class="trust-card">
-
-<i class="fa-solid fa-star"></i>
-
-<h3>
-Featured Businesses
-</h3>
-
-<p>
-Top businesses promoted on WorkBridge Africa.
-</p>
-
-</div>
-
-
-
-
-<div class="trust-card">
-
-<i class="fa-solid fa-circle-check"></i>
-
-<h3>
-Verified Businesses
-</h3>
-
-<p>
-Businesses with verified profiles and trusted information.
-</p>
-
-</div>
-
-
-
-
-<div class="trust-card">
-
-<i class="fa-solid fa-earth-africa"></i>
-
-<h3>
-Africa Wide
-</h3>
-
-<p>
-Discover businesses from African countries.
-</p>
-
-</div>
-
-
-</section>
-
-
-
-
-<section class="cta-section">
-
+<div class="stats">
 
 <div>
 
+<h2 id="businessCount">
 
-<h2>
-
-Are you a business owner?
+0
 
 </h2>
 
-
 <p>
 
-Create your business profile and reach more customers across Africa.
+Businesses
 
 </p>
 
+</div>
 
+<div>
 
-<a href="business-signup.html">
+<h2>
+
+54
+
+</h2>
+
+<p>
+
+Countries
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="business-section">
+
+<div
+id="businessGrid"
+class="business-grid">
+
+</div>
+<div class="load-more-wrapper">
+
+<button
+id="loadMoreBtn"
+class="load-more-btn">
+
+Load More
+
+</button>
+
+</div>
+
+</section>
+
+<section class="business-info">
+
+<h2>
+
+Why List Your Business?
+
+</h2>
+
+<p>
+
+Increase your online visibility, help customers discover your services, and grow your business across Africa with WorkBridge Africa.
+
+</p>
+
+<a
+href="business-signup.html"
+class="cta-btn">
 
 List Your Business
 
@@ -317,28 +252,15 @@ List Your Business
 
 </a>
 
-
-</div>
-
-
 </section>
-
-
 
 </main>
 
-
-
-
-
 <footer>
-
 
 <div class="footer-container">
 
-
-<div class="footer-brand">
-
+<div>
 
 <h2>
 
@@ -346,21 +268,15 @@ List Your Business
 
 </h2>
 
-
 <p>
 
-Connecting African businesses and opportunities through technology.
+Connecting businesses and opportunities across Africa.
 
 </p>
 
-
 </div>
 
-
-
-
 <div class="footer-links">
-
 
 <a href="index.html">
 
@@ -368,13 +284,11 @@ Home
 
 </a>
 
-
 <a href="businesses.html">
 
 Businesses
 
 </a>
-
 
 <a href="jobs.html">
 
@@ -382,23 +296,17 @@ Jobs
 
 </a>
 
-
 <a href="contact.html">
 
 Contact
 
 </a>
 
-
 </div>
 
-
 </div>
-
-
 
 <div class="footer-bottom">
-
 
 <p>
 
@@ -406,15 +314,10 @@ Contact
 
 </p>
 
-
 </div>
-
 
 </footer>
 
-
-
 </body>
-
 
     </html>
