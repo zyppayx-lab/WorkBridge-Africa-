@@ -13,7 +13,7 @@ const SUPABASE_URL =
 "https://razemjveqtmnutvluxab.supabase.co";
 
 const SUPABASE_ANON_KEY =
-"sb_publishable_2utxbSM-OS6QTitKo6MobA_spBvL_2r";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
 
 const supabase =
 window.supabase.createClient(
@@ -86,78 +86,25 @@ async function loadBusinesses(reset = false){
 
     }
 
-    const from = page * PAGE_SIZE;
-    const to = from + PAGE_SIZE - 1;
-
-    let query = supabase
+    const { data, error } = await supabase
     .from("businesses")
-    .select("*",{count:"exact"})
-    .eq("status","active");
-
-    if(currentKeyword !== ""){
-
-        query = query.ilike(
-            "business_name",
-            `%${currentKeyword}%`
-        );
-
-    }
-
-    const { data, error, count } = await query
-    .order("featured_until",{
-        ascending:false,
-        nullsFirst:false
-    })
-    .order("verified",{
-        ascending:false
-    })
-    .order("created_at",{
-        ascending:false
-    })
-    .range(from,to);
+    .select("*")
+    .eq("status","active")
+    .order("featured_until",{ascending:false,nullsFirst:false})
+    .order("created_at",{ascending:false});
 
     if(error){
 
         console.error(error);
-
-        businessGrid.innerHTML =
-        "<p>Unable to load businesses.</p>";
-
         return;
 
     }
 
-    if(reset){
-
-        businessCount.textContent =
-        count ?? 0;
-
-    }
-
-    if(!data || data.length===0){
-
-        if(reset){
-
-            businessGrid.innerHTML =
-            "<p>No businesses found.</p>";
-
-        }
-
-        loadMoreBtn.style.display="none";
-
-        return;
-
-    }
+    businessCount.textContent = data.length;
 
     renderBusinesses(data);
 
-    page++;
-
-    loadMoreBtn.style.display =
-    data.length < PAGE_SIZE ? "none" : "inline-flex";
-
-        }
-
+}
 //======================================================
 // Part 3
 // RENDER BUSINESSES
