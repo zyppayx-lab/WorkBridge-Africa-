@@ -20,7 +20,7 @@ window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
-
+console.log("businesses.js loaded");
 
 //==============================
 // DOM
@@ -76,7 +76,7 @@ let currentKeyword = "";
 // Part 2
 // LOAD BUSINESSES
 //======================================================
-
+console.log("Loading businesses...");
 async function loadBusinesses(reset = false){
 
     if(reset){
