@@ -1,7 +1,9 @@
 //======================================================
 // WorkBridge Africa
 // search.js
+// Part 1
 //======================================================
+
 
 //==============================
 // SUPABASE CONFIG
@@ -10,53 +12,102 @@
 const SUPABASE_URL =
 "https://razemjveqtmnutvluxab.supabase.co";
 
-const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJyYXplbWp2ZXF0bW51dHZsdXhhYiIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzg1NzUxODEzLCJleHAiOjIxMDEzMjc4MTN9.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
 
-const supabase =
+const SUPABASE_ANON_KEY =
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhemVtanZlcXRtbnV0dmx1eGFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU3NTE4MTMsImV4cCI6MjEwMTMyNzgxM30.e7JhaJ6DEZsH3WNUYGjdk8TvdsITNDKgLIzkbcLk-Yw";
+
+
+const supabaseClient =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_ANON_KEY
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
 );
 
+
+
+
 //==============================
-// DOM
+// DOM ELEMENTS
 //==============================
 
 const searchForm =
 document.getElementById(
-"searchForm"
+    "searchForm"
 );
+
 
 const searchInput =
 document.getElementById(
-"searchInput"
+    "searchInput"
 );
 
-const searchText =
+
+const searchTitle =
 document.getElementById(
-"searchText"
+    "searchTitle"
 );
+
 
 const businessResults =
 document.getElementById(
-"businessResults"
+    "businessResults"
 );
+
 
 const jobResults =
 document.getElementById(
-"jobResults"
+    "jobResults"
 );
+
 
 const businessSection =
 document.getElementById(
-"businessSection"
+    "businessSection"
 );
+
 
 const jobSection =
 document.getElementById(
-"jobSection"
+    "jobSection"
 );
+
+
+const noResults =
+document.getElementById(
+    "noResults"
+);
+
+
+const menuButton =
+document.getElementById(
+    "menuButton"
+);
+
+
+const mobileMenu =
+document.getElementById(
+    "mobileMenu"
+);
+
+
+
+
+//==============================
+// MOBILE MENU
+//==============================
+
+menuButton?.addEventListener(
+"click",
+()=>{
+
+    mobileMenu?.classList.toggle(
+        "active"
+    );
+
+});
+
+
+
 
 //==============================
 // GET SEARCH QUERY
@@ -64,240 +115,405 @@ document.getElementById(
 
 const params =
 new URLSearchParams(
-window.location.search
+    window.location.search
 );
+
 
 let keyword =
 params.get("q") || "";
 
+
 keyword =
 keyword.trim();
 
+
+
+
 //==============================
-// LOAD BUSINESS RESULTS
+// DISPLAY TITLE
 //==============================
 
-async function searchBusinesses() {
+if(searchTitle){
 
-    if (!keyword) return;
+    searchTitle.textContent =
+    keyword
+    ? `Results for "${keyword}"`
+    : "Search WorkBridge Africa";
 
-    const { data, error } = await supabase.rpc(
-        "search_businesses",
-        {
-            search_term: keyword
+}
+
+
+if(searchInput){
+
+    searchInput.value =
+    keyword;
+
+}
+//======================================================
+// WorkBridge Africa
+// search.js
+// Part 2
+//======================================================
+
+
+
+//==============================
+// SEARCH BUSINESSES
+//==============================
+
+async function searchBusinesses(){
+
+
+    if(!keyword){
+
+        return;
+
+    }
+
+
+
+    try{
+
+
+        const {
+
+            data,
+            error
+
+        } = await supabaseClient
+
+
+        .from("businesses")
+
+
+        .select("*")
+
+
+        .eq(
+            "status",
+            "active"
+        )
+
+
+        .or(
+
+`
+business_name.ilike.%${keyword}%,
+description.ilike.%${keyword}%,
+state.ilike.%${keyword}%,
+country.ilike.%${keyword}%
+`
+
+        )
+
+
+        .limit(20);
+
+
+
+
+        if(error){
+
+            console.error(error);
+
+            return;
+
         }
-    );
 
-    if (error) {
-        console.error(error);
-        businessResults.innerHTML =
-            "<p>Unable to load businesses.</p>";
-        return;
-    }
 
-    if (!data || data.length === 0) {
-        businessSection.style.display = "none";
-        return;
-    }
 
-    businessSection.style.display = "block";
-    businessResults.innerHTML = "";
 
-    data.forEach(business => {
+        if(!data || data.length === 0){
 
-        businessResults.innerHTML += `
+            businessSection.style.display =
+            "none";
 
-<article class="business-card">
+            return;
 
-<img
-src="${business.logo_url || "assets/default-business.jpg"}"
-alt="${business.business_name}">
+        }
 
-<div class="business-content">
 
-<span class="business-category">
-${business.categories?.[0] || "Business"}
-</span>
 
-<h3>${business.business_name}</h3>
+
+        businessResults.innerHTML = "";
+
+
+
+
+        data.forEach(
+        business=>{
+
+
+            businessResults.innerHTML += `
+
+
+<article class="result-card">
+
+
+<h3>
+
+${business.business_name}
+
+</h3>
+
+
 
 <p>
-${business.description
-? business.description.substring(0,120) + "..."
-: "No description available."}
+
+${business.description || "No description available."}
+
 </p>
 
-<div class="business-meta">
+
 
 <span>
+
 <i class="fa-solid fa-location-dot"></i>
-${business.state}, ${business.country}
+
+${business.state || ""}
+
+${business.country || ""}
+
 </span>
 
-<span>
-<i class="fa-solid fa-eye"></i>
-${business.views}
-</span>
 
-</div>
 
-<a
-href="business.html?slug=${business.slug}"
-class="business-btn">
+<a href="business.html?slug=${business.slug}">
 
 View Business
 
 </a>
 
-</div>
 
 </article>
 
+
 `;
 
-    });
+        });
+
+
+    }
+
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
 
 }
+
+
+
+
+
 
 //==============================
 // SEARCH JOBS
 //==============================
 
-async function searchJobs() {
+async function searchJobs(){
 
-    if (!keyword) return;
 
-    const { data, error } = await supabase.rpc(
-        "search_jobs",
-        {
-            search_term: keyword
+    if(!keyword){
+
+        return;
+
+    }
+
+
+
+
+    try{
+
+
+        const {
+
+            data,
+            error
+
+        } = await supabaseClient
+
+
+
+        .from("jobs")
+
+
+
+        .select("*")
+
+
+
+        .eq(
+
+            "status",
+
+            "active"
+
+        )
+
+
+
+        .or(
+
+`
+title.ilike.%${keyword}%,
+description.ilike.%${keyword}%,
+category.ilike.%${keyword}%,
+state.ilike.%${keyword}%,
+country.ilike.%${keyword}%
+`
+
+        )
+
+
+
+        .limit(20);
+
+
+
+
+        if(error){
+
+            console.error(error);
+
+            return;
+
         }
-    );
 
-    if (error) {
-        console.error(error);
-        jobResults.innerHTML =
-            "<p>Unable to load jobs.</p>";
-        return;
-    }
 
-    if (!data || data.length === 0) {
-        jobSection.style.display = "none";
-        return;
-    }
 
-    jobSection.style.display = "block";
-    jobResults.innerHTML = "";
+        if(!data || data.length === 0){
 
-    data.forEach(job => {
+            jobSection.style.display =
+            "none";
 
-        jobResults.innerHTML += `
+            return;
 
-<article class="job-card">
+        }
 
-<span class="job-type">
-${job.category || "General"}
-</span>
 
-<h3>${job.title}</h3>
+
+        jobResults.innerHTML = "";
+
+
+
+        data.forEach(
+        job=>{
+
+
+            jobResults.innerHTML += `
+
+
+<article class="result-card">
+
+
+<h3>
+
+${job.title}
+
+</h3>
+
+
 
 <p>
-<i class="fa-solid fa-location-dot"></i>
-${job.state}, ${job.country}
+
+${job.description || "No description available."}
+
 </p>
 
-<p>
-<i class="fa-solid fa-money-bill-wave"></i>
-${job.salary || "Negotiable"}
-</p>
 
-<div class="job-footer">
 
 <span>
-${new Date(job.created_at).toLocaleDateString()}
+
+<i class="fa-solid fa-location-dot"></i>
+
+${job.state || ""}
+
+${job.country || ""}
+
 </span>
 
+
+
 <a href="job.html?id=${job.id}">
+
 View Job
+
 </a>
 
-</div>
 
 </article>
 
+
 `;
 
-    });
+
+        });
+
+
+
+    }
+
+
+    catch(error){
+
+        console.error(error);
+
+    }
+
 
 }
+//======================================================
+// WorkBridge Africa
+// search.js
+// Part 3
+//======================================================
+
+
 //==============================
-// SEARCH FORM
+// SEARCH FORM REDIRECT
 //==============================
 
 searchForm?.addEventListener(
 
 "submit",
 
-(e)=>{
-
-e.preventDefault();  
+(event)=>{
 
 
-const value =  
-searchInput.value.trim();  
+    event.preventDefault();
 
 
-if(value){  
 
-    window.location.href =  
-    `search.html?q=${encodeURIComponent(value)}`;  
+    const value =
+    searchInput.value.trim();
 
-}
 
-}
 
-);
+    if(value === ""){
 
-//==============================
-// DISPLAY SEARCH TERM
-//==============================
+        return;
 
-if(searchText){
+    }
 
-searchText.textContent =  
-keyword  
-? `Search results for "${keyword}"`  
-: "Search WorkBridge Africa";
 
-}
 
-//==============================
-// MOBILE MENU
-//==============================
+    window.location.href =
+    "search.html?q=" +
+    encodeURIComponent(value);
 
-const menuButton =
-document.getElementById(
-"menuButton"
-);
 
-const mobileMenu =
-document.getElementById(
-"mobileMenu"
-);
-
-menuButton?.addEventListener(
-
-"click",
-
-()=>{
-
-mobileMenu?.classList.toggle(  
-    "active"  
-);
 
 }
 
 );
+
+
+
+
 
 //==============================
 // IMAGE FALLBACK
@@ -309,16 +525,21 @@ document.addEventListener(
 
 (event)=>{
 
-const element =  
-event.target;  
+
+    const element =
+    event.target;
 
 
-if(element.tagName==="IMG"){  
 
-    element.src =  
-    "assets/default-business.jpg";  
+    if(
+        element.tagName === "IMG"
+    ){
 
-}
+        element.src =
+        "assets/default-business.jpg";
+
+    }
+
 
 },
 
@@ -326,8 +547,12 @@ true
 
 );
 
+
+
+
+
 //==============================
-// PAGE START
+// LOAD SEARCH RESULTS
 //==============================
 
 document.addEventListener(
@@ -336,23 +561,92 @@ document.addEventListener(
 
 async()=>{
 
-if(searchInput){  
 
-    searchInput.value =  
-    keyword;  
+    if(!keyword){
 
-}  
+        if(noResults){
+
+            noResults.style.display =
+            "block";
+
+        }
+
+
+        if(
+            document.getElementById("loadingMessage")
+        ){
+
+            document.getElementById(
+                "loadingMessage"
+            ).style.display =
+            "none";
+
+        }
+
+
+        return;
+
+    }
 
 
 
-await searchBusinesses();  
+    await searchBusinesses();
 
 
-await searchJobs();
 
-}
+    await searchJobs();
 
-);
+
+
+
+    const businessesFound =
+    businessResults &&
+    businessResults.children.length > 0;
+
+
+
+    const jobsFound =
+    jobResults &&
+    jobResults.children.length > 0;
+
+
+
+    if(!businessesFound && !jobsFound){
+
+
+        if(noResults){
+
+            noResults.style.display =
+            "block";
+
+        }
+
+
+    }
+
+
+
+
+    const loading =
+    document.getElementById(
+        "loadingMessage"
+    );
+
+
+
+    if(loading){
+
+        loading.style.display =
+        "none";
+
+    }
+
+
+
+});
+
+
+
 
 //======================================================
 // END OF search.js
