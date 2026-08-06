@@ -1,590 +1,420 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Businesses | 🌍 WorkBridge Africa</title>
 
-    <meta name="description"
-        content="Browse trusted businesses across Africa. Search by business name, category, country or state on WorkBridge Africa.">
+<title>
+Businesses | WorkBridge Africa 🌍
+</title>
 
-    <meta name="keywords"
-        content="African businesses,business directory,Nigeria businesses,Ghana businesses,Kenya businesses,services in Africa">
 
-    <meta property="og:title"
-        content="Businesses | WorkBridge Africa">
+<meta name="description"
+content="Discover verified and featured businesses across Africa on WorkBridge Africa.">
 
-    <meta property="og:description"
-        content="Discover trusted businesses across Africa.">
 
-    <meta property="og:type"
-        content="website">
+<link rel="stylesheet" href="businesses.css">
 
-    <link rel="canonical"
-        href="/businesses.html">
 
-    <link rel="stylesheet"
-        href="businesses.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
 
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com">
 
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
-        rel="stylesheet">
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-    <script defer
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-    <script defer
-        src="businesses.js"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script defer src="businesses.js"></script>
+
 
 </head>
 
+
+
 <body>
+
 
 <header class="header">
 
-    <nav class="navbar">
 
-        <a href="index.html"
-            class="logo">
+<nav class="navbar">
 
-            🌍
 
-            <span>
+<a href="index.html" class="logo">
 
-                WorkBridge Africa
+🌍
 
-            </span>
+<span>
+WorkBridge Africa
+</span>
 
-        </a>
+</a>
 
-        <ul class="nav-links">
 
-            <li>
 
-                <a class="active"
-                    href="businesses.html">
+<ul class="nav-links">
 
-                    Businesses
+<li>
+<a href="businesses.html">
+Businesses
+</a>
+</li>
 
-                </a>
 
-            </li>
+<li>
+<a href="jobs.html">
+Jobs
+</a>
+</li>
 
-            <li>
 
-                <a href="jobs.html">
+<li>
+<a href="about.html">
+About
+</a>
+</li>
 
-                    Jobs
 
-                </a>
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
 
-            </li>
 
-            <li>
+</ul>
 
-                <a href="about.html">
 
-                    About
 
-                </a>
+<button id="menuButton">
 
-            </li>
+<i class="fa-solid fa-bars"></i>
 
-            <li>
+</button>
 
-                <a href="contact.html">
 
-                    Contact
+</nav>
 
-                </a>
-
-            </li>
-
-        </ul>
-
-        <button id="menuButton">
-
-            <i class="fa-solid fa-bars"></i>
-
-        </button>
-
-    </nav>
 
 </header>
 
+
+
+
 <div id="mobileMenu">
 
-    <a href="businesses.html">
+<a href="businesses.html">
+Businesses
+</a>
 
-        Businesses
 
-    </a>
+<a href="jobs.html">
+Jobs
+</a>
 
-    <a href="jobs.html">
 
-        Jobs
+<a href="about.html">
+About
+</a>
 
-    </a>
 
-    <a href="about.html">
+<a href="contact.html">
+Contact
+</a>
 
-        About
-
-    </a>
-
-    <a href="contact.html">
-
-        Contact
-
-    </a>
 
 </div>
 
+
+
+
+
 <main>
 
-<section class="hero">
 
-    <div class="hero-content">
+<section class="business-hero">
 
-        <span>
 
-            🌍 Business Directory
+<h1>
 
-        </span>
+Discover Businesses Across Africa
 
-        <h1>
+</h1>
 
-            Find Trusted Businesses Across Africa
 
-        </h1>
+<p>
 
-        <p>
+Find trusted companies, verified businesses and featured brands.
 
-            Search thousands of businesses by category,
-            country, state or business name.
-            Contact businesses directly using their phone,
-            WhatsApp or email.
+</p>
 
-        </p>
 
-    </div>
 
-</section>
+<form id="businessSearchForm"
+class="search-box">
 
-<section class="search-section">
 
-    <form
-        id="searchForm"
-        class="search-box">
+<div class="search-input">
 
-        <div class="search-input">
 
-            <i class="fa-solid fa-magnifying-glass"></i>
+<i class="fa-solid fa-magnifying-glass"></i>
 
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search businesses...">
 
-        </div>
+<input
+id="businessSearchInput"
+type="text"
+placeholder="Search businesses...">
 
-        <button type="submit">
 
-            Search
+</div>
 
-        </button>
 
-    </form>
+
+<button type="submit">
+
+Search
+
+</button>
+
+
+</form>
+
 
 </section>
 
-<section class="filters">
 
-    <select id="countryFilter">
 
-        <option value="">
+<section class="business-list-section">
 
-            All Countries
 
-        </option>
+<div class="section-header">
 
-    </select>
 
-    <select id="stateFilter">
+<h2>
 
-        <option value="">
+Businesses
 
-            All States
+</h2>
 
-        </option>
 
-    </select>
+<p id="businessTotal">
 
-    <select id="categoryFilter">
+Loading businesses...
 
-        <option value="">
+</p>
 
-            All Categories
 
-        </option>
+</div>
 
-    </select>
 
-    <select id="sortFilter">
 
-        <option value="latest">
+<div id="businessGrid"
+class="business-grid">
 
-            Latest
 
-        </option>
+</div>
 
-        <option value="featured">
-
-            Featured
-
-        </option>
-
-        <option value="popular">
-
-            Most Viewed
-
-        </option>
-
-        <option value="name">
-
-            A-Z
-
-        </option>
-
-    </select>
 
 </section>
 
-<section class="results-header">
-
-    <h2>
-
-        Businesses
-
-    </h2>
-
-    <span id="resultCount">
-
-        Loading...
-
-    </span>
-
-</section>
-
-<section
-    id="businessGrid"
-    class="business-grid">
-
-    <!-- Businesses rendered here -->
-
-</section>
-<!-- ===================================== -->
-<!-- PAGINATION -->
-<!-- ===================================== -->
-
-<section class="pagination-section">
-
-    <button
-        id="previousPage"
-        class="page-btn">
-
-        <i class="fa-solid fa-arrow-left"></i>
-
-        Previous
-
-    </button>
+<section class="trust-section">
 
 
-    <span id="pageNumber">
+<div class="trust-card">
 
-        Page 1
+<i class="fa-solid fa-star"></i>
 
-    </span>
+<h3>
+Featured Businesses
+</h3>
+
+<p>
+Top businesses promoted on WorkBridge Africa.
+</p>
+
+</div>
 
 
-    <button
-        id="nextPage"
-        class="page-btn">
 
-        Next
 
-        <i class="fa-solid fa-arrow-right"></i>
+<div class="trust-card">
 
-    </button>
+<i class="fa-solid fa-circle-check"></i>
+
+<h3>
+Verified Businesses
+</h3>
+
+<p>
+Businesses with verified profiles and trusted information.
+</p>
+
+</div>
+
+
+
+
+<div class="trust-card">
+
+<i class="fa-solid fa-earth-africa"></i>
+
+<h3>
+Africa Wide
+</h3>
+
+<p>
+Discover businesses from African countries.
+</p>
+
+</div>
+
 
 </section>
 
 
-<!-- ===================================== -->
-<!-- EMPTY STATE -->
-<!-- ===================================== -->
 
-<section
-    id="emptyState"
-    class="empty-state hidden">
 
-    <i class="fa-solid fa-building-circle-exclamation"></i>
+<section class="cta-section">
 
-    <h2>
 
-        No Businesses Found
+<div>
 
-    </h2>
 
-    <p>
+<h2>
 
-        We couldn't find a business matching your search.
-        Try another category, location, or keyword.
+Are you a business owner?
 
-    </p>
+</h2>
+
+
+<p>
+
+Create your business profile and reach more customers across Africa.
+
+</p>
+
+
+
+<a href="business-signup.html">
+
+List Your Business
+
+<i class="fa-solid fa-arrow-right"></i>
+
+</a>
+
+
+</div>
+
 
 </section>
 
-
-<!-- ===================================== -->
-<!-- BUSINESS OWNER CTA -->
-<!-- ===================================== -->
-
-<section class="business-owner-section">
-
-    <div class="owner-content">
-
-        <span>
-
-            Grow Your Business
-
-        </span>
-
-        <h2>
-
-            Is Your Business Missing?
-
-        </h2>
-
-        <p>
-
-            Add your business profile to WorkBridge Africa
-            and help customers discover your services.
-
-        </p>
-
-        <a
-            href="business-signup.html"
-            class="owner-button">
-
-            List Your Business
-
-            <i class="fa-solid fa-arrow-right"></i>
-
-        </a>
-
-    </div>
-
-</section>
-
-
-<!-- ===================================== -->
-<!-- SEO CONTENT SECTION -->
-<!-- ===================================== -->
-
-<section class="directory-info">
-
-    <article>
-
-        <h2>
-
-            Explore Businesses Across Africa
-
-        </h2>
-
-        <p>
-
-            WorkBridge Africa helps people discover
-            businesses, professionals, and services
-            across African countries.
-
-            From local services to growing companies,
-            visitors can search businesses by category,
-            location, and industry.
-
-        </p>
-
-        <p>
-
-            Each business profile provides important
-            information such as business description,
-            location, phone number, WhatsApp contact,
-            website and social media links where available.
-
-        </p>
-
-    </article>
-
-</section>
 
 
 </main>
 
 
-<!-- ===================================== -->
-<!-- FOOTER -->
-<!-- ===================================== -->
+
+
 
 <footer>
 
-    <div class="footer-container">
 
+<div class="footer-container">
 
-        <div class="footer-brand">
 
-            <h2>
+<div class="footer-brand">
 
-                🌍 WorkBridge Africa
 
-            </h2>
+<h2>
 
-            <p>
+🌍 WorkBridge Africa
 
-                Connecting customers with businesses
-                and opportunities across Africa.
+</h2>
 
-            </p>
 
-        </div>
+<p>
 
+Connecting African businesses and opportunities through technology.
 
-        <div class="footer-links">
+</p>
 
 
-            <div>
+</div>
 
-                <h3>
 
-                    Explore
 
-                </h3>
 
+<div class="footer-links">
 
-                <a href="businesses.html">
 
-                    Businesses
+<a href="index.html">
 
-                </a>
+Home
 
+</a>
 
-                <a href="jobs.html">
 
-                    Jobs
+<a href="businesses.html">
 
-                </a>
+Businesses
 
+</a>
 
-                <a href="about.html">
 
-                    About
+<a href="jobs.html">
 
-                </a>
+Jobs
 
+</a>
 
-            </div>
 
+<a href="contact.html">
 
+Contact
 
-            <div>
+</a>
 
-                <h3>
 
-                    Business
+</div>
 
-                </h3>
 
+</div>
 
-                <a href="business-signup.html">
 
-                    List Business
 
-                </a>
+<div class="footer-bottom">
 
 
-                <a href="business-login.html">
+<p>
 
-                    Business Login
+© 2026 WorkBridge Africa. All rights reserved.
 
-                </a>
+</p>
 
 
-            </div>
-
-
-
-            <div>
-
-                <h3>
-
-                    Legal
-
-                </h3>
-
-
-                <a href="privacy.html">
-
-                    Privacy Policy
-
-                </a>
-
-
-                <a href="terms.html">
-
-                    Terms
-
-                </a>
-
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-
-    <div class="footer-bottom">
-
-
-        <p>
-
-            © 2026 🌍 WorkBridge Africa.
-            All rights reserved.
-
-        </p>
-
-
-    </div>
+</div>
 
 
 </footer>
 
 
+
 </body>
 
-  </html>
+
+    </html>
