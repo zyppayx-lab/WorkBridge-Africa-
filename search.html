@@ -3,35 +3,38 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-    <title>Search | WorkBridge Africa</title>
+<title>Search | WorkBridge Africa</title>
 
-    <meta name="description"
-        content="Search businesses and jobs across Africa on WorkBridge Africa.">
+<meta name="description"
+content="Search businesses and jobs across Africa on WorkBridge Africa.">
 
-    <link rel="stylesheet"
-        href="search.css">
+<meta name="robots"
+content="index,follow">
 
-    <link rel="preconnect"
-        href="https://fonts.googleapis.com">
+<link rel="stylesheet"
+href="search.css">
 
-    <link rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin>
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <script defer src="search.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script defer src="search.js"></script>
 
 </head>
 
@@ -39,84 +42,76 @@
 
 <header class="header">
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <a href="index.html"
-            class="logo">
+<a href="index.html"
+class="logo">
 
-            🌍
+🌍
 
-            <span>
+<span>
 
-                WorkBridge Africa
+WorkBridge Africa
 
-            </span>
+</span>
 
-        </a>
+</a>
 
-        <ul class="nav-links">
+<ul class="nav-links">
 
-            <li>
+<li>
+<a href="businesses.html">
+Businesses
+</a>
+</li>
 
-                <a href="businesses.html">
+<li>
+<a href="jobs.html">
+Jobs
+</a>
+</li>
 
-                    Businesses
+<li>
+<a href="about.html">
+About
+</a>
+</li>
 
-                </a>
+<li>
+<a href="contact.html">
+Contact
+</a>
+</li>
 
-            </li>
+</ul>
 
-            <li>
+<button id="menuButton">
 
-                <a href="jobs.html">
+<i class="fa-solid fa-bars"></i>
 
-                    Jobs
+</button>
 
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="about.html">
-
-                    About
-
-                </a>
-
-            </li>
-
-            <li>
-
-                <a href="contact.html">
-
-                    Contact
-
-                </a>
-
-            </li>
-
-        </ul>
-
-        <button id="menuButton">
-
-            <i class="fa-solid fa-bars"></i>
-
-        </button>
-
-    </nav>
+</nav>
 
 </header>
 
 <div id="mobileMenu">
 
-    <a href="businesses.html">Businesses</a>
+<a href="businesses.html">
+Businesses
+</a>
 
-    <a href="jobs.html">Jobs</a>
+<a href="jobs.html">
+Jobs
+</a>
 
-    <a href="about.html">About</a>
+<a href="about.html">
+About
+</a>
 
-    <a href="contact.html">Contact</a>
+<a href="contact.html">
+Contact
+</a>
 
 </div>
 
@@ -124,266 +119,261 @@
 
 <section class="search-hero">
 
-    <h1>
+<h1 id="searchText">
 
-        Search WorkBridge Africa
+Search WorkBridge Africa
 
-    </h1>
+</h1>
 
-    <p>
+<p>
 
-        Find businesses and job opportunities across Africa.
+Search thousands of businesses and job opportunities across Africa.
 
-    </p>
+</p>
 
-    <form id="searchForm"
-        class="search-box">
+<form
+id="searchForm"
+class="search-box">
 
-        <div class="search-input">
+<div class="search-input">
 
-            <i class="fa-solid fa-magnifying-glass"></i>
+<i class="fa-solid fa-magnifying-glass"></i>
 
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search businesses, services or jobs...">
+<input
+id="searchInput"
+type="text"
+autocomplete="off"
+placeholder="Search businesses, services, categories, locations or jobs...">
 
-        </div>
+</div>
 
-        <button type="submit">
+<button type="submit">
 
-            Search
+Search
 
-        </button>
+</button>
 
-    </form>
-
-</section>
-
-<section class="results-section">
-
-    <div class="section-title">
-
-        <h2>
-
-            Businesses
-
-        </h2>
-
-    </div>
-
-    <div id="businessResults"
-        class="business-grid">
-
-        <p class="loading">
-
-            Searching businesses...
-
-        </p>
-
-    </div>
+</form>
 
 </section>
+<!-- ===========================
+SEARCH RESULTS
+=========================== -->
 
-<section class="results-section">
+<section
+id="businessSection"
+class="results-section">
 
-    <div class="section-title">
+<div class="section-title">
 
-        <h2>
+<h2>
 
-            Jobs
+Businesses
 
-        </h2>
+</h2>
 
-    </div>
+</div>
 
-    <div id="jobResults"
-        class="jobs-grid">
+<div
+id="businessResults"
+class="business-grid">
 
-        <p class="loading">
+<p class="loading">
 
-            Searching jobs...
+Searching businesses...
 
-        </p>
+</p>
 
-    </div>
+</div>
 
 </section>
 
 <section
-    id="noResults"
-    class="no-results"
-    style="display:none;">
+id="jobSection"
+class="results-section">
 
-    <i class="fa-solid fa-magnifying-glass"></i>
+<div class="section-title">
 
-    <h2>
+<h2>
 
-        No Results Found
+Jobs
 
-    </h2>
+</h2>
 
-    <p>
+</div>
 
-        Try searching with another keyword, business name, category or location.
+<div
+id="jobResults"
+class="jobs-grid">
 
-    </p>
+<p class="loading">
+
+Searching jobs...
+
+</p>
+
+</div>
 
 </section>
+
 </main>
+
+<!-- ===========================
+FOOTER
+=========================== -->
 
 <footer>
 
-    <div class="footer-container">
+<div class="footer-container">
 
-        <div class="footer-brand">
+<div class="footer-brand">
 
-            <h2>
+<h2>
 
-                🌍 WorkBridge Africa
+🌍 WorkBridge Africa
 
-            </h2>
+</h2>
 
-            <p>
+<p>
 
-                Connecting businesses,
-                professionals and opportunities
-                across Africa.
+Connecting businesses,
+professionals and opportunities
+across Africa.
 
-            </p>
+</p>
 
-        </div>
+</div>
 
-        <div class="footer-links">
+<div class="footer-links">
 
-            <div>
+<div>
 
-                <h3>
+<h3>
 
-                    Discover
+Discover
 
-                </h3>
+</h3>
 
-                <a href="businesses.html">
+<a href="businesses.html">
 
-                    Businesses
+Businesses
 
-                </a>
+</a>
 
-                <a href="jobs.html">
+<a href="jobs.html">
 
-                    Jobs
+Jobs
 
-                </a>
+</a>
 
-                <a href="about.html">
+<a href="about.html">
 
-                    About
+About
 
-                </a>
+</a>
 
-                <a href="contact.html">
+<a href="contact.html">
 
-                    Contact
+Contact
 
-                </a>
+</a>
 
-            </div>
+</div>
 
-            <div>
+<div>
 
-                <h3>
+<h3>
 
-                    Business
+Business
 
-                </h3>
+</h3>
 
-                <a href="business-signup.html">
+<a href="business-signup.html">
 
-                    List Your Business
+List Your Business
 
-                </a>
+</a>
 
-                <a href="login.html">
+<a href="login.html">
 
-                    Business Login
+Business Login
 
-                </a>
+</a>
 
-            </div>
+</div>
 
-            <div>
+<div>
 
-                <h3>
+<h3>
 
-                    Legal
+Legal
 
-                </h3>
+</h3>
 
-                <a href="privacy.html">
+<a href="privacy.html">
 
-                    Privacy Policy
+Privacy Policy
 
-                </a>
+</a>
 
-                <a href="terms.html">
+<a href="terms.html">
 
-                    Terms & Conditions
+Terms & Conditions
 
-                </a>
+</a>
 
-            </div>
+</div>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
-    <div class="footer-bottom">
+<div class="footer-bottom">
 
-        <p>
+<p>
 
-            © 2026 WorkBridge Africa. All rights reserved.
+© 2026 WorkBridge Africa. All rights reserved.
 
-        </p>
+</p>
 
-        <div class="social-links">
+<div class="social-links">
 
-            <a href="#" aria-label="Facebook">
+<a href="#">
 
-                <i class="fab fa-facebook-f"></i>
+<i class="fab fa-facebook-f"></i>
 
-            </a>
+</a>
 
-            <a href="#" aria-label="Instagram">
+<a href="#">
 
-                <i class="fab fa-instagram"></i>
+<i class="fab fa-instagram"></i>
 
-            </a>
+</a>
 
-            <a href="#" aria-label="X">
+<a href="#">
 
-                <i class="fab fa-x-twitter"></i>
+<i class="fab fa-x-twitter"></i>
 
-            </a>
+</a>
 
-            <a href="#" aria-label="LinkedIn">
+<a href="#">
 
-                <i class="fab fa-linkedin-in"></i>
+<i class="fab fa-linkedin-in"></i>
 
-            </a>
+</a>
 
-            <a href="#" aria-label="YouTube">
+<a href="#">
 
-                <i class="fab fa-youtube"></i>
+<i class="fab fa-youtube"></i>
 
-            </a>
+</a>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
 </footer>
 
 </body>
 
-  </html>
+    </html>
