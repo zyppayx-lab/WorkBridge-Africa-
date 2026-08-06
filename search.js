@@ -196,15 +196,8 @@ async function searchBusinesses(){
 
 
         .or(
-
-`
-business_name.ilike.%${keyword}%,
-description.ilike.%${keyword}%,
-state.ilike.%${keyword}%,
-country.ilike.%${keyword}%
-`
-
-        )
+`business_name.ilike.%${keyword}%,description.ilike.%${keyword}%,state.ilike.%${keyword}%,country.ilike.%${keyword}%`
+)
 
 
         .limit(20);
@@ -357,16 +350,8 @@ async function searchJobs(){
 
 
         .or(
-
-`
-title.ilike.%${keyword}%,
-description.ilike.%${keyword}%,
-category.ilike.%${keyword}%,
-state.ilike.%${keyword}%,
-country.ilike.%${keyword}%
-`
-
-        )
+`title.ilike.%${keyword}%,description.ilike.%${keyword}%,category.ilike.%${keyword}%,state.ilike.%${keyword}%,country.ilike.%${keyword}%`
+)
 
 
 
