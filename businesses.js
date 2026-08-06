@@ -6,16 +6,14 @@
 
 
 //==============================
-// SUPABASE CONFIG
+// SUPABASE
 //==============================
 
 const SUPABASE_URL =
 "https://razemjveqtmnutvluxab.supabase.co";
 
-
 const SUPABASE_ANON_KEY =
 "sb_publishable_2utxbSM-OS6QTitKo6MobA_spBvL_2r";
-
 
 const supabase =
 window.supabase.createClient(
@@ -24,47 +22,30 @@ window.supabase.createClient(
 );
 
 
-
 //==============================
 // DOM
 //==============================
 
 const businessGrid =
-document.getElementById(
-    "businessGrid"
-);
-
-
-const searchForm =
-document.getElementById(
-    "businessSearchForm"
-);
-
-
-const searchInput =
-document.getElementById(
-    "businessSearchInput"
-);
-
+document.getElementById("businessGrid");
 
 const businessCount =
-document.getElementById(
-    "businessCount"
-);
+document.getElementById("businessCount");
 
+const searchForm =
+document.getElementById("searchForm");
+
+const searchInput =
+document.getElementById("searchInput");
+
+const loadMoreBtn =
+document.getElementById("loadMoreBtn");
 
 const menuButton =
-document.getElementById(
-    "menuButton"
-);
-
+document.getElementById("menuButton");
 
 const mobileMenu =
-document.getElementById(
-    "mobileMenu"
-);
-
-
+document.getElementById("mobileMenu");
 
 
 //==============================
@@ -82,278 +63,190 @@ menuButton?.addEventListener(
 });
 
 
-
-
 //==============================
+// PAGINATION
+//==============================
+
+let page = 0;
+
+const PAGE_SIZE = 20;
+
+let currentKeyword = "";
+//======================================================
+// Part 2
 // LOAD BUSINESSES
-//==============================
+//======================================================
 
-async function loadBusinesses(
-keyword = ""
-){
+async function loadBusinesses(reset = false){
 
+if(reset){
 
-    if(!businessGrid){
+page = 0;
 
-        return;
+businessGrid.innerHTML = "";
 
-    }
+}
 
 
-    businessGrid.innerHTML =
+const from = page * PAGE_SIZE;
 
-    `
-    <p class="loading">
-    Loading businesses...
-    </p>
-    `;
+const to = from + PAGE_SIZE - 1;
 
 
+let query =
 
-    let query =
-    supabase
+supabase
 
-    .from("businesses")
+.from("businesses")
 
-    .select("*")
+.select("*",{count:"exact"})
 
-    .eq(
-        "status",
-        "active"
-    );
+.eq("status","active");
 
 
+if(currentKeyword){
 
+query = query.or(
 
-    if(keyword){
+`business_name.ilike.%${currentKeyword}%,
+description.ilike.%${currentKeyword}%,
+state.ilike.%${currentKeyword}%,
+country.ilike.%${currentKeyword}%`
 
+);
 
-        query =
-        query.or(
+}
 
-        `
-        business_name.ilike.%${keyword}%,
-        description.ilike.%${keyword}%,
-        state.ilike.%${keyword}%,
-        country.ilike.%${keyword}%
-        `
 
-        );
+const {
 
+data,
+count,
+error
 
-    }
+}
 
+=
 
+await query
 
-    const {
+.order(
 
-        data,
-        error
+"featured_until",
 
-    } = await query;
+{
 
+ascending:false,
 
+nullsFirst:false
 
+}
 
-    if(error){
+)
 
-        console.error(error);
+.order(
 
-        businessGrid.innerHTML =
+"created_at",
 
-        `
-        <p>
-        Unable to load businesses.
-        </p>
-        `;
+{
 
-        return;
+ascending:false
 
-    }
+}
 
+)
 
+.range(from,to);
 
 
-    if(!data || data.length === 0){
+if(error){
 
+console.error(error);
 
-        businessGrid.innerHTML =
+return;
 
-        `
-        <p>
-        No businesses found.
-        </p>
-        `;
+}
 
 
-        return;
+if(reset){
 
-    }
+businessCount.textContent =
+count ?? 0;
 
+}
 
 
+renderBusinesses(data);
 
-    // Ranking:
-    // 1. Featured
-    // 2. Verified
-    // 3. Normal
 
+page++;
 
-    data.sort(
-    (a,b)=>{
 
+if(data.length < PAGE_SIZE){
 
-        const featuredA =
-        a.featured_until &&
-        new Date(a.featured_until) > new Date()
-        ? 1 : 0;
+loadMoreBtn.style.display =
+"none";
 
+}
 
-        const featuredB =
-        b.featured_until &&
-        new Date(b.featured_until) > new Date()
-        ? 1 : 0;
+else{
 
+loadMoreBtn.style.display =
+"inline-flex";
 
-
-        if(featuredA !== featuredB){
-
-            return featuredB - featuredA;
-
-        }
-
-
-
-        const verifiedA =
-        a.verified ? 1 : 0;
-
-
-        const verifiedB =
-        b.verified ? 1 : 0;
-
-
-
-        return verifiedB - verifiedA;
-
-
-    });
-
-
-
-    if(businessCount){
-
-        businessCount.textContent =
-        data.length;
-
-    }
-
-
-
-    renderBusinesses(data);
-
+}
 
 }
 //======================================================
-// WorkBridge Africa
-// businesses.js
-// Part 2
+// Part 3
+// RENDER BUSINESSES
 //======================================================
 
+function renderBusinesses(businesses){
 
-//==============================
-// RENDER BUSINESSES
-//==============================
+businesses.forEach(business=>{
 
-function renderBusinesses(
-businesses
-){
+const featured =
 
+business.featured_until &&
 
-    businessGrid.innerHTML = "";
+new Date(business.featured_until) > new Date();
 
 
-
-    businesses.forEach(
-    business=>{
-
-
-        const isFeatured =
-
-        business.featured_until &&
-
-        new Date(
-            business.featured_until
-        ) > new Date();
+const verified =
+business.verified === true;
 
 
-
-        const isVerified =
-        business.verified === true;
-
-
-
-        businessGrid.innerHTML += `
-
+businessGrid.innerHTML += `
 
 <article class="business-card">
 
-
-
 <div class="business-image">
-
 
 <img
 
-src="${
-business.logo_url ||
-"assets/default-business.jpg"
-}"
+src="${business.logo_url || "assets/default-business.jpg"}"
 
 alt="${business.business_name}">
 
-
 </div>
-
-
-
-
 
 <div class="business-content">
 
-
-
 <div class="business-badges">
 
+${featured ? `
 
-${
-isFeatured
-
-?
-
-`
 <span class="featured-badge">
 
-<i class="fa-solid fa-star"></i>
-
-Featured
+⭐ Sponsored
 
 </span>
-`
 
-:
+` : ""}
 
-""
+${verified ? `
 
-}
-
-
-
-${
-isVerified
-
-?
-
-`
 <span class="verified-badge">
 
 <i class="fa-solid fa-circle-check"></i>
@@ -361,28 +254,16 @@ isVerified
 Verified
 
 </span>
-`
 
-:
-
-""
-
-}
-
-
+` : ""}
 
 </div>
-
-
-
-
 
 <span class="business-category">
 
 ${
-Array.isArray(
-business.categories
-)
+
+Array.isArray(business.categories)
 
 ?
 
@@ -396,31 +277,21 @@ business.categories[0]
 
 </span>
 
-
-
-
-
 <h3>
 
 ${business.business_name}
 
 </h3>
 
-
-
-
-
 <p>
 
 ${
+
 business.description
 
 ?
 
-business.description.substring(
-0,
-140
-)
+business.description.substring(0,120)
 
 :
 
@@ -428,125 +299,82 @@ business.description.substring(
 
 }
 
+...
+
 </p>
-
-
-
-
 
 <div class="business-location">
 
-
 <i class="fa-solid fa-location-dot"></i>
-
 
 ${business.state},
 
 ${business.country}
 
-
 </div>
-
-
-
-
 
 <div class="business-contact">
 
-
 <a href="tel:${business.phone}">
-
-<i class="fa-solid fa-phone"></i>
 
 Call
 
 </a>
 
-
-
-
 <a href="business.html?slug=${business.slug}">
 
-View Business
+View
 
 </a>
 
-
 </div>
 
-
-
 </div>
-
-
 
 </article>
 
-
 `;
 
-
-
-    });
-
-
+});
 
 }
 //======================================================
-// WorkBridge Africa
-// businesses.js
-// Part 3
+// Part 4
+// SEARCH + LOAD MORE + START
 //======================================================
 
 
 //==============================
-// SEARCH FORM
+// SEARCH
 //==============================
 
 searchForm?.addEventListener(
-
 "submit",
-
 (e)=>{
 
-    e.preventDefault();
+e.preventDefault();
 
+currentKeyword =
+searchInput.value.trim();
 
-    const keyword =
-
-    searchInput.value.trim();
-
-
-
-    loadBusinesses(
-        keyword
-    );
-
+loadBusinesses(true);
 
 }
-
 );
 
 
-
-
 //==============================
-// URL SEARCH SUPPORT
+// LOAD MORE
 //==============================
 
-const params =
+loadMoreBtn?.addEventListener(
+"click",
+()=>{
 
-new URLSearchParams(
-    window.location.search
+loadBusinesses();
+
+}
 );
-
-
-
-const urlKeyword =
-
-params.get("q") || "";
-
-
 
 
 //==============================
@@ -559,21 +387,15 @@ document.addEventListener(
 
 (event)=>{
 
+const element =
+event.target;
 
-    const element =
-    event.target;
+if(element.tagName === "IMG"){
 
+element.src =
+"assets/default-business.jpg";
 
-
-    if(
-        element.tagName === "IMG"
-    ){
-
-        element.src =
-        "assets/default-business.jpg";
-
-    }
-
+}
 
 },
 
@@ -582,37 +404,37 @@ true
 );
 
 
-
-
 //==============================
-// PAGE START
+// PAGE LOAD
 //==============================
 
 document.addEventListener(
 
 "DOMContentLoaded",
 
-async()=>{
+()=>{
 
+const params =
+new URLSearchParams(
+window.location.search
+);
 
-    if(searchInput){
+currentKeyword =
+params.get("q") || "";
 
-        searchInput.value =
-        urlKeyword;
+if(searchInput){
 
-    }
+searchInput.value =
+currentKeyword;
 
+}
 
+loadBusinesses(true);
 
-    await loadBusinesses(
-        urlKeyword
-    );
+}
 
-
-});
-
-
+);
 
 //======================================================
-// END OF businesses.js
+// END
 //======================================================
