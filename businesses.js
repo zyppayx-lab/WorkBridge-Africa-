@@ -79,124 +79,85 @@ let currentKeyword = "";
 
 async function loadBusinesses(reset = false){
 
-if(reset){
+    if(reset){
 
-page = 0;
+        page = 0;
+        businessGrid.innerHTML = "";
 
-businessGrid.innerHTML = "";
+    }
 
-}
+    const from = page * PAGE_SIZE;
+    const to = from + PAGE_SIZE - 1;
 
+    let query = supabase
+    .from("businesses")
+    .select("*",{count:"exact"})
+    .eq("status","active");
 
-const from = page * PAGE_SIZE;
+    if(currentKeyword !== ""){
 
-const to = from + PAGE_SIZE - 1;
+        query = query.ilike(
+            "business_name",
+            `%${currentKeyword}%`
+        );
 
+    }
 
-let query =
+    const { data, error, count } = await query
+    .order("featured_until",{
+        ascending:false,
+        nullsFirst:false
+    })
+    .order("verified",{
+        ascending:false
+    })
+    .order("created_at",{
+        ascending:false
+    })
+    .range(from,to);
 
-supabase
+    if(error){
 
-.from("businesses")
+        console.error(error);
 
-.select("*",{count:"exact"})
+        businessGrid.innerHTML =
+        "<p>Unable to load businesses.</p>";
 
-.eq("status","active");
+        return;
 
+    }
 
-if(currentKeyword){
+    if(reset){
 
-query = query.or(
+        businessCount.textContent =
+        count ?? 0;
 
-`business_name.ilike.%${currentKeyword}%,
-description.ilike.%${currentKeyword}%,
-state.ilike.%${currentKeyword}%,
-country.ilike.%${currentKeyword}%`
+    }
 
-);
+    if(!data || data.length===0){
 
-}
+        if(reset){
 
+            businessGrid.innerHTML =
+            "<p>No businesses found.</p>";
 
-const {
+        }
 
-data,
-count,
-error
+        loadMoreBtn.style.display="none";
 
-}
+        return;
 
-=
+    }
 
-await query
+    renderBusinesses(data);
 
-.order(
+    page++;
 
-"featured_until",
+    loadMoreBtn.style.display =
+    data.length < PAGE_SIZE ? "none" : "inline-flex";
 
-{
+        }
 
-ascending:false,
-
-nullsFirst:false
-
-}
-
-)
-
-.order(
-
-"created_at",
-
-{
-
-ascending:false
-
-}
-
-)
-
-.range(from,to);
-
-
-if(error){
-
-console.error(error);
-
-return;
-
-}
-
-
-if(reset){
-
-businessCount.textContent =
-count ?? 0;
-
-}
-
-
-renderBusinesses(data);
-
-
-page++;
-
-
-if(data.length < PAGE_SIZE){
-
-loadMoreBtn.style.display =
-"none";
-
-}
-
-else{
-
-loadMoreBtn.style.display =
-"inline-flex";
-
-}
-
-}
 //======================================================
 // Part 3
 // RENDER BUSINESSES
