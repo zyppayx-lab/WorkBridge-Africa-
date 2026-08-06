@@ -1,63 +1,81 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 
 <head>
 
+
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
 
-<title>Search | WorkBridge Africa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>
+Search | WorkBridge Africa 🌍
+</title>
+
 
 <meta name="description"
-content="Search businesses and jobs across Africa on WorkBridge Africa.">
+content="Search businesses, services and jobs across Africa with WorkBridge Africa.">
 
-<meta name="robots"
-content="index,follow">
 
-<link rel="stylesheet"
-href="search.css">
+<meta name="keywords"
+content="Africa business search, jobs Africa, Nigerian businesses, African companies">
 
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+<link rel="stylesheet" href="search.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
 rel="stylesheet">
+
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script defer src="search.js"></script>
 
+
 </head>
+
+
 
 <body>
 
+
+
 <header class="header">
+
 
 <nav class="navbar">
 
-<a href="index.html"
-class="logo">
+
+<a href="index.html" class="logo">
 
 🌍
 
 <span>
-
 WorkBridge Africa
-
 </span>
 
 </a>
 
+
+
 <ul class="nav-links">
+
 
 <li>
 <a href="businesses.html">
@@ -65,11 +83,13 @@ Businesses
 </a>
 </li>
 
+
 <li>
 <a href="jobs.html">
 Jobs
 </a>
 </li>
+
 
 <li>
 <a href="about.html">
@@ -77,13 +97,17 @@ About
 </a>
 </li>
 
+
 <li>
 <a href="contact.html">
 Contact
 </a>
 </li>
 
+
 </ul>
+
+
 
 <button id="menuButton">
 
@@ -91,61 +115,91 @@ Contact
 
 </button>
 
+
 </nav>
+
 
 </header>
 
+
+
+
 <div id="mobileMenu">
+
 
 <a href="businesses.html">
 Businesses
 </a>
 
+
 <a href="jobs.html">
 Jobs
 </a>
+
 
 <a href="about.html">
 About
 </a>
 
+
 <a href="contact.html">
 Contact
 </a>
 
+
 </div>
+
+
+
+
 
 <main>
 
+
 <section class="search-hero">
 
-<h1 id="searchText">
+
+<h1>
 
 Search WorkBridge Africa
 
 </h1>
 
+
+
 <p>
 
-Search thousands of businesses and job opportunities across Africa.
+Find businesses, services and job opportunities across Africa.
 
 </p>
 
-<form
-id="searchForm"
-class="search-box">
+
+
+
+<form id="searchForm" class="search-box">
+
+
 
 <div class="search-input">
 
+
 <i class="fa-solid fa-magnifying-glass"></i>
 
+
+
 <input
+
 id="searchInput"
+
 type="text"
-autocomplete="off"
-placeholder="Search businesses, services, categories, locations or jobs...">
+
+placeholder="Search businesses, services, locations or jobs...">
+
 
 </div>
+
+
+
 
 <button type="submit">
 
@@ -153,80 +207,128 @@ Search
 
 </button>
 
+
+
 </form>
 
+
+
 </section>
-<!-- ===========================
-SEARCH RESULTS
-=========================== -->
 
-<section
-id="businessSection"
-class="results-section">
 
-<div class="section-title">
 
-<h2>
+
+<section class="results-container">
+
+
+<h2 id="searchTitle">
+
+Search Results
+
+</h2>
+
+
+
+<div id="loadingMessage">
+
+
+Searching...
+
+</div>
+
+
+
+<div id="businessSection">
+
+
+<h3>
 
 Businesses
 
-</h2>
+</h3>
+
+
+
+<div id="businessResults"
+class="results-grid">
+
 
 </div>
 
-<div
-id="businessResults"
-class="business-grid">
 
-<p class="loading">
-
-Searching businesses...
-
-</p>
 
 </div>
+<div id="jobSection">
 
-</section>
 
-<section
-id="jobSection"
-class="results-section">
-
-<div class="section-title">
-
-<h2>
+<h3>
 
 Jobs
 
-</h2>
+</h3>
+
+
+
+<div id="jobResults"
+class="results-grid">
+
 
 </div>
 
-<div
-id="jobResults"
-class="jobs-grid">
 
-<p class="loading">
 
-Searching jobs...
+</div>
+
+
+
+
+<div id="noResults"
+class="no-results"
+style="display:none;">
+
+
+<i class="fa-solid fa-magnifying-glass"></i>
+
+
+
+<h2>
+
+No Results Found
+
+</h2>
+
+
+
+<p>
+
+Try another business name, service, location or job keyword.
 
 </p>
 
+
+
 </div>
+
+
 
 </section>
 
+
+
 </main>
 
-<!-- ===========================
-FOOTER
-=========================== -->
+
+
+
 
 <footer>
 
+
 <div class="footer-container">
 
+
 <div class="footer-brand">
+
 
 <h2>
 
@@ -234,25 +336,23 @@ FOOTER
 
 </h2>
 
+
+
 <p>
 
-Connecting businesses,
-professionals and opportunities
-across Africa.
+Connecting African businesses, professionals and opportunities through technology.
 
 </p>
 
+
+
 </div>
+
+
+
 
 <div class="footer-links">
 
-<div>
-
-<h3>
-
-Discover
-
-</h3>
 
 <a href="businesses.html">
 
@@ -260,11 +360,15 @@ Businesses
 
 </a>
 
+
+
 <a href="jobs.html">
 
 Jobs
 
 </a>
+
+
 
 <a href="about.html">
 
@@ -272,63 +376,27 @@ About
 
 </a>
 
+
+
 <a href="contact.html">
 
 Contact
 
 </a>
 
-</div>
 
-<div>
-
-<h3>
-
-Business
-
-</h3>
-
-<a href="business-signup.html">
-
-List Your Business
-
-</a>
-
-<a href="login.html">
-
-Business Login
-
-</a>
 
 </div>
 
-<div>
 
-<h3>
-
-Legal
-
-</h3>
-
-<a href="privacy.html">
-
-Privacy Policy
-
-</a>
-
-<a href="terms.html">
-
-Terms & Conditions
-
-</a>
 
 </div>
 
-</div>
 
-</div>
+
 
 <div class="footer-bottom">
+
 
 <p>
 
@@ -336,44 +404,17 @@ Terms & Conditions
 
 </p>
 
-<div class="social-links">
 
-<a href="#">
-
-<i class="fab fa-facebook-f"></i>
-
-</a>
-
-<a href="#">
-
-<i class="fab fa-instagram"></i>
-
-</a>
-
-<a href="#">
-
-<i class="fab fa-x-twitter"></i>
-
-</a>
-
-<a href="#">
-
-<i class="fab fa-linkedin-in"></i>
-
-</a>
-
-<a href="#">
-
-<i class="fab fa-youtube"></i>
-
-</a>
 
 </div>
 
-</div>
+
 
 </footer>
 
+
+
 </body>
+
 
     </html>
