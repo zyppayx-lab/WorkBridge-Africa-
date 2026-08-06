@@ -1,6 +1,7 @@
 //======================================================
 // WorkBridge Africa
 // index.js
+// Part 1
 //======================================================
 
 
@@ -16,7 +17,7 @@ const SUPABASE_ANON_KEY =
 "sb_publishable_2utxbSM-OS6QTitKo6MobA_spBvL_2r";
 
 
-const supabase =
+const supabaseClient =
 window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
@@ -25,7 +26,7 @@ window.supabase.createClient(
 
 
 //==============================
-// DOM
+// DOM ELEMENTS
 //==============================
 
 const businessCount =
@@ -37,6 +38,12 @@ document.getElementById(
 const jobCount =
 document.getElementById(
     "jobCount"
+);
+
+
+const countryCount =
+document.getElementById(
+    "countryCount"
 );
 
 
@@ -78,25 +85,59 @@ menuButton?.addEventListener(
     );
 
 });
+
+
+
 //==============================
-// LOAD PLATFORM STATS
+// HARD CODED COUNTRIES
 //==============================
 
-async function loadStats(){
+function loadCountryCount(){
+
+    if(countryCount){
+
+        countryCount.textContent =
+        "54";
+
+    }
+
+}
+
+
+
+//==============================
+// LOAD BUSINESS COUNT
+//==============================
+
+async function loadBusinessCount(){
+
+
+    if(!businessCount){
+
+        return;
+
+    }
+
 
     try{
 
 
         const {
-            count: businesses
-        } = await supabase
+
+            count,
+            error
+
+        } = await supabaseClient
 
         .from("businesses")
 
-        .select("id", {
-            count:"exact",
-            head:true
-        })
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
 
         .eq(
             "status",
@@ -105,39 +146,24 @@ async function loadStats(){
 
 
 
-        const {
-            count: jobs
-        } = await supabase
+        if(error){
 
-        .from("jobs")
-
-        .select("id", {
-            count:"exact",
-            head:true
-        })
-
-        .eq(
-            "status",
-            "active"
-        );
-
-
-
-        if(businessCount){
+            console.error(
+                "Business count error:",
+                error
+            );
 
             businessCount.textContent =
-            businesses || 0;
+            "0";
+
+            return;
 
         }
 
 
 
-        if(jobCount){
-
-            jobCount.textContent =
-            jobs || 0;
-
-        }
+        businessCount.textContent =
+        count ?? 0;
 
 
 
@@ -145,31 +171,97 @@ async function loadStats(){
 
     catch(error){
 
-        console.error(
-            "Stats error:",
+        console.error(error);
+
+        businessCount.textContent =
+        "0";
+
+    }
+
+
+}
+//======================================================
+// WorkBridge Africa
+// index.js
+// Part 2
+//======================================================
+
+
+//==============================
+// LOAD JOB COUNT
+//==============================
+
+async function loadJobCount(){
+
+
+    if(!jobCount){
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const {
+
+            count,
             error
+
+        } = await supabaseClient
+
+        .from("jobs")
+
+        .select(
+            "id",
+            {
+                count:"exact",
+                head:true
+            }
+        )
+
+        .eq(
+            "status",
+            "active"
         );
 
 
-        if(businessCount){
 
-            businessCount.textContent =
-            "0";
+        if(error){
 
-        }
-
-
-        if(jobCount){
+            console.error(
+                "Job count error:",
+                error
+            );
 
             jobCount.textContent =
             "0";
 
+            return;
+
         }
+
+
+
+        jobCount.textContent =
+        count ?? 0;
+
+
 
     }
 
-}
+    catch(error){
 
+        console.error(error);
+
+        jobCount.textContent =
+        "0";
+
+    }
+
+
+}
 
 
 
@@ -179,11 +271,13 @@ async function loadStats(){
 //==============================
 
 searchForm?.addEventListener(
+
 "submit",
-(e)=>{
+
+(event)=>{
 
 
-    e.preventDefault();
+    event.preventDefault();
 
 
 
@@ -192,7 +286,7 @@ searchForm?.addEventListener(
 
 
 
-    if(!keyword){
+    if(keyword === ""){
 
         return;
 
@@ -201,26 +295,193 @@ searchForm?.addEventListener(
 
 
     window.location.href =
-    `search.html?q=${encodeURIComponent(keyword)}`;
+    "search.html?q=" +
+    encodeURIComponent(keyword);
 
 
 
-});
+}
+
+);
 
 
 
 
 
 //==============================
-// START
+// IMAGE FALLBACK
 //==============================
 
 document.addEventListener(
+
+"error",
+
+(event)=>{
+
+
+    const element =
+    event.target;
+
+
+
+    if(
+        element.tagName === "IMG"
+    ){
+
+        element.src =
+        "assets/default-business.jpg";
+
+    }
+
+
+},
+
+true
+
+);
+
+
+
+
+//==============================
+// START PAGE
+//==============================
+
+document.addEventListener(
+
 "DOMContentLoaded",
+
 ()=>{
 
 
-    loadStats();
+    loadBusinessCount();
+
+
+    loadJobCount();
+
+
+    loadCountryCount();
+
+
+
+}
+
+);
+
+
+//======================================================
+// END PART 2
+//======================================================
+//======================================================
+// WorkBridge Africa
+// index.js
+// Part 3
+//======================================================
+
+
+//==============================
+// SMOOTH SCROLL LINKS
+//==============================
+
+document.querySelectorAll(
+    'a[href^="#"]'
+)
+.forEach(link=>{
+
+
+    link.addEventListener(
+    "click",
+    function(event){
+
+
+        const target =
+        document.querySelector(
+            this.getAttribute("href")
+        );
+
+
+        if(target){
+
+            event.preventDefault();
+
+
+            target.scrollIntoView({
+
+                behavior:"smooth"
+
+            });
+
+        }
+
+
+    });
+
+});
+
+
+
+
+//==============================
+// ACTIVE NAV LINK
+//==============================
+
+const currentPage =
+window.location.pathname;
+
+
+document.querySelectorAll(
+    ".nav-links a"
+)
+.forEach(link=>{
+
+
+    if(
+        link.getAttribute("href") === currentPage.split("/").pop()
+    ){
+
+        link.classList.add(
+            "active"
+        );
+
+    }
 
 
 });
+
+
+
+
+//==============================
+// PAGE ERROR HANDLING
+//==============================
+
+window.addEventListener(
+
+"unhandledrejection",
+
+(event)=>{
+
+    console.error(
+        "Unhandled error:",
+        event.reason
+    );
+
+}
+
+);
+
+
+
+
+//==============================
+// FINAL START
+//==============================
+
+console.log(
+"WorkBridge Africa frontend loaded successfully 🌍"
+);
+
+
+//======================================================
+// END OF index.js
+//======================================================
